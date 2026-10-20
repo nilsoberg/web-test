@@ -1,0 +1,19 @@
+{% extends "core/core.html.twig" %}
+
+{% block tool_title %}
+{{ instance_title|default('Enzyme Function Initiative Tools') }}
+{% endblock %}
+
+{% block content %}
+
+    {% include '_partials/app_flashes.html.twig' %}
+
+    {% include 'home/home-intro.html.twig' %}
+    {% include 'home/home-articles.html.twig' %}
+    {% include 'home/home-about.html.twig' %}
+{% endblock %}
+
+{% block theme %}
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/about-home.css') }}">
+{% endblock %}
+

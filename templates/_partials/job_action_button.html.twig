@@ -1,0 +1,19 @@
+
+{% if job.actionIcon %}
+    <button type="button" class="btn btn-sm btn-outline-primary btn-icon {{ job.actionStyle }}"
+        data-controller="tooltip job-action"
+        data-bs-toggle="tooltip" title="{{ job.actionTooltip }}"
+        data-job-action-url-value="{{ job.actionUrl }}" data-action="job-action#archive"
+    >
+        <i class="bi bi-{{ job.actionIcon }}"></i>
+    </button>
+{% endif %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    <button type="button" class="btn btn-sm view-details-btn btn-action" 
+            data-bs-toggle="modal" 
+            data-bs-target="#jobDetailsModal"
+            data-job-details-url="{{ path('admin_job_details', { id: job.job.id }) }}">
+        <i class="bi bi-info-circle"></i>
+    </button>
+{% endif %}
+

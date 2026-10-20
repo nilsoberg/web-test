@@ -1,0 +1,141 @@
+/* UI Tabs */
+
+.page-tabs {
+    background: none;
+    padding: 0px;
+    border-width: 0px 0px 0px 0px;
+}
+
+.page-tabs .ui-tabs-nav { 
+    border-width: 0px 0px 0px 0px;
+    background-color: transparent;
+    padding-left: 7px;
+}
+
+.page-tabs .ui-tabs-nav .ui-state-active {
+    background-color: #8ABFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #AAAAAAFF
+}
+
+.page-tabs .ui-tabs-nav .ui-state-active a {
+    color: #4C4C4C;
+}
+
+.page-tabs .ui-tabs-nav .ui-state-active a:link {
+    color: #4C4C4CFF
+}
+
+.page-tabs .ui-tabs-nav .ui-state-active a:visited {
+    color: #4C4C4CFF
+}
+
+.page-tabs .ui-tabs-panel {
+    border-width: 1px;
+    border-radius: 3px;
+    border-style: solid;
+    box-shadow: -1px 1px 1px #00000026;
+    border-color: #A9A9A9FF;
+}
+
+.ui-widget.ui-widget-content {
+    border: 0;
+}
+
+a.ui-tabs-anchor {
+    font-weight: bold;
+}
+
+/* UI Tabs Content Styles */
+
+.tab-p-heading {
+    font-weight: bold;
+}
+
+/* Subtabs */
+
+#subtabs {
+    background: none;
+    padding: 0px;
+    border-width: 0px 0px 0px 0px;
+}
+
+/* Warnings in Query Search */
+
+.orange-text {
+    color: orange;
+    font-weight: bold;
+}
+
+.red-text {
+    color: red;
+    font-weight: bold;
+}
+
+/* Help Dialogs */
+
+span.question {
+    display: inline-block;
+    text-shadow: 1px 1px 0px #ffffff;
+    background-color: #ededed;
+    border-radius: 42px;
+    border: 1px solid #666;
+    padding: 0px 6px;
+    margin-left: 6px;
+    font-size: 80%;
+}
+
+.question {
+    display: inline-block;
+    text-shadow: 1px 1px 0px #ffffff;
+    background-color: #ededed;
+    border-radius: 42px;
+    border: 1px solid #666;
+    padding: 0px 6px;
+    margin-left: 6px;
+    font-size: 80%;
+}
+
+/* Subtabs */
+
+/* UI Tabs */
+
+.subtabs {
+    background: none;
+    padding: 0px;
+    border-width: 0px 0px 0px 0px !important;
+}
+
+.subtabs .ui-tabs-nav { 
+    border-width: 0px 0px 0px 0px;
+    background-color: transparent;
+    padding-left: 7px;
+}
+
+.subtabs .ui-tabs-nav .ui-state-active {
+    background-color: #8ABFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #AAAAAAFF
+}
+
+.subtabs .ui-tabs-nav .ui-state-active a {
+    color: #4C4C4C;
+}
+
+.subtabs .ui-tabs-nav .ui-state-active a:link {
+    color: #4C4C4CFF
+}
+
+.subtabs .ui-tabs-nav .ui-state-active a:visited {
+    color: #4C4C4CFF
+}
+
+.subtabs .ui-tabs-panel {
+    border-width: 1px;
+    border-radius: 3px;
+    border-style: solid;
+    box-shadow: -1px 1px 1px #00000026;
+    border-color: #A9A9A9FF;
+}

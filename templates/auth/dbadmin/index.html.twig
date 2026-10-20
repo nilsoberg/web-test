@@ -1,0 +1,127 @@
+
+{% extends "auth/core.html.twig" %}
+
+{% block title %}Database Configurations{% endblock %}
+
+{% block auth_content %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">Database Configurations</h1>
+            <p class="text-muted mb-0">Manage databases available to users.</p>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                New Database
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ path('app_admin_db_metadata_new') }}">New EST Database</a></li>
+                <li><a class="dropdown-item" href="{{ path('app_admin_db_metagenome_new') }}">New Metagenome Database</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            {% if databases is empty %}
+                <div class="text-center py-5">
+                    <p class="text-muted mb-0">No active or inactive database configurations registered yet.</p>
+                </div>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light fs-7">
+                            <tr>
+                                <th scope="col" class="ps-4" style="width: 80px;">ID</th>
+                                <th scope="col">Public Name</th>
+                                <th scope="col">Backend Database Name</th>
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    <th scope="col">Assigned Organization</th>
+                                {% endif %}
+                                <th scope="col">Status</th>
+                                <th scope="col">Type</th>
+                                <th scope="col" class="pe-4 text-end" style="width: 140px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for db in databases %}
+                                <tr>
+                                    <td class="ps-4 text-muted">
+                                        #{{ db.database.id }}
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="fw-bold text-dark">{{ db.database.publicName }}</div>
+                                        {% if db.database.description %}
+                                            <small class="text-muted d-block text-truncate" style="max-width: 350px;">
+                                                {{ db.database.description }}
+                                            </small>
+                                        {% endif %}
+                                    </td>
+                                    
+                                    {# Internal/Backend Config String #}
+                                    <td>
+                                        <code class="bg-light px-2 py-1 rounded text-danger border small">
+                                            {{ db.database.dbName }}
+                                        </code>
+                                    </td>
+                                    
+                                    {# Conditional Multi-Tenant Column #}
+                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <td>
+                                            <span class="badge bg-secondary-subtle text-secondary border border-secondary p-2">
+                                                {{ db.database.organization ? db.database.organization.name : 'Public' }}
+                                            </span>
+                                        </td>
+                                    {% endif %}
+                                    
+                                    {# Status Active Indicator #}
+                                    <td>
+                                        {% if db.database.isActive %}
+                                            <span class="badge bg-success-subtle text-success px-2 py-1 border border-success-subtle rounded-pill">
+                                                Active
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-danger-subtle text-danger px-2 py-1 border border-danger-subtle rounded-pill">
+                                                Inactive
+                                            </span>
+                                        {% endif %}
+                                        {% if db.isOrgDefault %}
+                                            <span class="badge bg-warning text-dark small" data-controller="tooltip" data-bs-toggle="tooltip" title="Default for organization"><i class="bi bi-star-fill"></i></span>
+                                        {% endif %}
+                                        {% if db.database.dbName == public_default_database %}
+                                            <span class="badge bg-warning text-dark small" data-controller="tooltip" data-bs-toggle="tooltip" title="Default for public"><i class="bi bi-star-fill"></i></span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        {% if db.database.databaseType is defined %}
+                                            {{ db.database.databaseType.getLabel }}
+                                        {% endif %}
+                                    </td>
+                                    
+                                    {# CRUD Actions Column #}
+                                    <td class="pe-4 text-end">
+                                        <div class="btn-group" role="group">
+                                            {% if is_granted('ROLE_SUPER_ADMIN') or not db.database.isPublic %}
+                                                <a href="{{ path('app_admin_db_edit', {'id': db.database.id}) }}" class="btn btn-sm btn-primary">
+                                                    Edit
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

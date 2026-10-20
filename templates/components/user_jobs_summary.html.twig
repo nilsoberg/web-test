@@ -1,0 +1,105 @@
+
+{% props 
+    jobs = [],
+    hideDashboardToggle = false,
+    sortBy = 'dco',
+    sortDir = ''
+%}
+
+{% set dashboardStyle = app.request.cookies.get('dashboard_style', 'new') %}
+
+{% set sortDirIcon = sortDir == 'rev' ? 'caret-up-fill' : 'caret-down-fill' %}
+{% set sortDirParam = sortDir == 'rev' ? '' : '&dir=rev' %}
+
+{% set id_sort_dir_icon = 'arrow-down-up' %}
+{% set date_created_sort_dir_icon = 'arrow-down-up' %}
+{% set date_completed_sort_dir_icon = 'arrow-down-up' %}
+
+{% if sortBy == 'id' %}
+    {% set idSortDirParam = sortDirParam %}
+    {% set dateCreatedSortDirParam = '' %}
+    {% set dateCompletedSortDirParam = '' %}
+    {% set id_sort_dir_icon = sortDirIcon %}
+{% elseif sortBy == 'dcr' %}
+    {% set idSortDirParam = '' %}
+    {% set dateCreatedSortDirParam = sortDirParam %}
+    {% set dateCompletedSortDirParam = '' %}
+    {% set date_created_sort_dir_icon = sortDirIcon %}
+{% else %}
+    {% set idSortDirParam = '' %}
+    {% set dateCreatedSortDirParam = '' %}
+    {% set dateCompletedSortDirParam = sortDirParam %}
+    {% set date_completed_sort_dir_icon = sortDirIcon %}
+{% endif %}
+
+{% set id_sort_link_start = '<a href="?sb=id">' %}
+{% set id_sort_link_end = '</a>' %}
+{% set id_sort_dir_link_start = '<a href="?sb=id' ~ idSortDirParam ~ '">' %}
+{% set id_sort_dir_link_end = '</a>' %}
+
+{% set date_created_link_start = '<a href="?sb=dcr">' %}
+{% set date_created_link_end = '</a>' %}
+{% set date_created_sort_dir_link_start = '<a href="?sb=dcr' ~ dateCreatedSortDirParam ~ '">' %}
+{% set date_created_sort_dir_link_end = '</a>' %}
+
+{% set date_completed_link_start = '<a href="?sb=dco">' %}
+{% set date_completed_link_end = '</a>' %}
+{% set date_completed_sort_dir_link_start = '<a href="?sb=dco' ~ dateCompletedSortDirParam ~ '">' %}
+{% set date_completed_sort_dir_link_end = '</a>' %}
+
+
+{% if jobs|length > 0 %}
+    <div class="user-jobs-summary-component">
+        <table class="pretty-nested job-table">
+            <thead>
+                {% if dashboardStyle|default('new') == 'new' %}
+                    <tr>
+                        <th class="id-col">{{ id_sort_link_start|raw }}ID{{ id_sort_link_end|raw }} {{ id_sort_dir_link_start|raw }}<i class="bi bi-{{ id_sort_dir_icon }}"></i>{{ id_sort_dir_link_end|raw }}</th>
+                        <th class="job-name">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Job Name</span>
+                                <span class="ms-auto">
+                                    <span>{{ date_created_link_start|raw }}Date Created{{ date_created_link_end|raw }} {{ date_created_sort_dir_link_start|raw }}<i class="bi bi-{{ date_created_sort_dir_icon }}"></i>{{ date_created_sort_dir_link_end|raw }}</span>
+                                    <span class="ms-3">{{ date_completed_link_start|raw }}Date Completed{{ date_completed_link_end|raw }} {{ date_completed_sort_dir_link_start|raw }}<i class="bi bi-{{ date_completed_sort_dir_icon }}"></i>{{ date_completed_sort_dir_link_end|raw }}</span>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="min-width"></th>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <th class="id-col">ID</th>
+                        <th class="job-name-col">Job Name</th>
+                        <th class="date-col">Date Created</th>
+                        <th class="date-col">Date Completed</th>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}<th></th>{% endif %}
+                    </tr>
+                {% endif %}
+            </thead>
+            <tbody>
+            {% for job in jobs %}
+                {% set job_row_class = 'job-row-' ~ cycle(['odd', 'even'], loop.index0) %}
+                {% if dashboardStyle|default('new') == 'new' %}
+                    <twig:job_summary_row job="{{ job }}" level="{{ 0 }}" job_row_class="{{ job_row_class }}" />
+                {% else %}
+                    <twig:job_summary_row_legacy job="{{ job }}" level="{{ 0 }}" job_row_class="{{ job_row_class }}" />
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if hideDashboardToggle|default(false) != true %}
+        <div class="my-2">
+            Dashboard style:
+            {% if dashboardStyle|default('new') == 'new' %}
+                <a class="btn btn-sm btn-primary" href="{{ path('app_dashboard_toggle', {style: 'old'}) }}">Old Style</a>
+                <button class="btn btn-sm btn-secondary">New Style</button>
+            {% else %}
+                <button class="btn btn-sm btn-secondary">Old Style</button>
+                <a class="btn btn-sm btn-primary" href="{{ path('app_dashboard_toggle', {style: 'new'}) }}">New Style</a> 
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}
+

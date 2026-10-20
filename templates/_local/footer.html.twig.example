@@ -1,0 +1,32 @@
+
+<div class="col">
+    <div class="address" style="min-width: 300px">
+        Physical address
+    </div>
+</div>
+
+<!-- Logo 1 -->
+<div class="col text-center">
+    <div class="footer-logo">
+        <img alt="Enzyme Function Initiative logo" src="{{ asset('images/efi_logo.png') }}" />
+    </div>
+</div>
+
+<!-- Logo 2 -->
+<div class="col text-center">
+    <div class="footer-logo">
+    	<a href="http://www.nigms.nih.gov/" target="_blank"><img alt="NIGMS" src="{{ asset('images/nighnew.png') }}" height="30" /></a>
+    </div>
+</div>
+
+<!-- Logo 3 -->
+<!-- Uncomment if third logo is needed -->
+<!--
+<div class="col text-center">
+    <div class="footer-logo">
+        <a href="#" target="_blank">
+        </a>
+    </div>
+</div>
+-->
+

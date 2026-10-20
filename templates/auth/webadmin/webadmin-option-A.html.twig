@@ -1,0 +1,134 @@
+<div id="WAoptionA">
+  <div class="container">
+
+      <p> This tool will provide a frontend solution for updating the version of the database across the website. </p>
+      <p> You can start by adding a new set of databases or editing an existing one. </p>
+      
+      {# Button to Add New Database #}
+      <div class="mb-3">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPublicDBModal">
+              Add Public Database
+          </button>
+      </div>
+
+      {# Add Database Modal #}
+      <div class="modal fade" id="addPublicDBModal" tabindex="-1" aria-labelledby="addPublicDBModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="{{ path('public_database_create') }}" method="post">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addPublicDBModalLabel">Add Public Database</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="_token" value="{{ csrf_token('create_public_database') }}">
+                <div class="mb-3">
+                    <label for="uniprot" class="form-label">UniProt:</label>
+                    <input type="text" id="uniprot" name="uniprot" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="interpro" class="form-label">InterPro:</label>
+                    <input type="text" id="interpro" name="interpro" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="ena" class="form-label">ENA:</label>
+                    <input type="text" id="ena" name="ena" class="form-control" required>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" id="active" name="active" class="form-check-input">
+                    <label for="active" class="form-check-label">Active Database</label>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {# Table of existing entries #}
+      <div class="table-container">
+          <br>
+          <h4>Public Databases</h4>
+          <br>
+          <table class="database-table table table-striped">
+              <thead>
+                  <tr>
+                      <th>Date</th>
+                      <th>UniProt</th>
+                      <th>InterPro</th>
+                      <th>ENA</th>
+                      <th>Active</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for database in databases %}
+                      <tr>
+                          <td>{{ database.date|date_skeleton('yMMMdjm') }}</td>
+                          <td>{{ database.uniprot }}</td>
+                          <td>{{ database.interpro }}</td>
+                          <td>{{ database.ena }}</td>
+                          <td>{{ database.active ? 'Yes' : 'No' }}</td>
+                          <td>
+                              {# Edit Modal #}
+                              <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#editPublicDBModal-{{ database.id }}">
+                                  Edit
+                              </button>
+                              {# Delete Form #}
+                              <form action="{{ path('public_database_delete', {id: database.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this database?');" class="d-inline">
+                                  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ database.id) }}">
+                                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                              </form>
+                          </td>
+                      </tr>
+
+                      {# Edit Database Modal #}
+                      <div class="modal fade" id="editPublicDBModal-{{ database.id }}" tabindex="-1" aria-labelledby="editPublicDBModalLabel-{{ database.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="{{ path('public_database_edit', {id: database.id}) }}" method="post">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editPublicDBModalLabel-{{ database.id }}">Edit Database #{{ database.id }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="uniprot-{{ database.id }}" class="form-label">UniProt:</label>
+                                    <input type="text" id="uniprot-{{ database.id }}" name="uniprot" class="form-control" value="{{ database.uniprot }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="interpro-{{ database.id }}" class="form-label">InterPro:</label>
+                                    <input type="text" id="interpro-{{ database.id }}" name="interpro" class="form-control" value="{{ database.interpro }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ena-{{ database.id }}" class="form-label">ENA:</label>
+                                    <input type="text" id="ena-{{ database.id }}" name="ena" class="form-control" value="{{ database.ena }}" required>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input type="checkbox" id="active-{{ database.id }}" name="active" class="form-check-input" {% if database.active %}checked{% endif %}>
+                                    <label for="active-{{ database.id }}" class="form-check-label">Active Database</label>
+                                </div>
+                                {# CSRF token handler #}
+                                <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ database.id) }}">
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                  {% else %}
+                      <tr>
+                          <td colspan="7">No entries found.</td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

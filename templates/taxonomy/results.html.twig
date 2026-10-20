@@ -1,0 +1,44 @@
+
+{% set page_subtitle = 'Taxonomy' %}
+
+{% extends "taxonomy/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Dataset Completed</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+{# Set up and display tabs #}
+
+{% set datasetSummaryContent %}
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+{% endset %}
+
+{% if page.sunburstParams is defined %}
+    {% set sunburstContent %}
+        {% include '_partials/taxonomy_sunburst.html.twig' with { job_type: page.jobType } %}
+        <twig:sunburst params="{{ page.sunburstParams }}" id="{{ page.id }}" key="{{ page.key }}" />
+    {% endset %}
+{% endif %}
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'Dataset Summary', content: datasetSummaryContent }
+] %}
+
+{% if sunburstContent is defined %}
+    {% set resultsTabs = resultsTabs|merge([
+        { id: 'sunburst', label: 'Taxonomy Sunburst', content: sunburstContent }
+    ]) %}
+{% endif %}
+
+{% set resultsTabs = resultsTabs|merge([
+    { id: 'histo', label: 'Length Histograms', template: 'taxonomy/results/histograms.html.twig', context: { images: page.resultImages } }
+]) %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

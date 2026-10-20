@@ -1,0 +1,92 @@
+
+{% set page_subtitle = 'Genome Neighborhood Tool' %}
+
+{% extends "efi-gnt/core.html.twig" %}
+
+
+{% set mainActiveTab = 0 %}
+{% set nestedActiveTab = -1 %}
+{% set nestedTabTarget = '' %}
+
+{% if is_granted('JOB_SUBMISSION') %}
+    {% set tabOffset = gnt_page.isLoggedIn ? 1 : 0 %}
+
+    {% if gnt_page.activeForm %}
+        {% if gnt_page.activeForm == 'gnnForm' %}
+            {% set mainActiveTab = tabOffset %}
+        {% elseif gnt_page.activeForm == 'blastForm' %}
+            {% set mainActiveTab = tabOffset + 1 %}
+            {% set nestedTabTarget = '#gnd-tabs' %}
+            {% set nestedActiveTab = 0 %}
+        {% elseif gnt_page.activeForm == 'sequenceIdForm' %}
+            {% set mainActiveTab = tabOffset + 1 %}
+            {% set nestedTabTarget = '#gnd-tabs' %}
+            {% set nestedActiveTab = 1 %}
+        {% elseif gnt_page.activeForm == 'fastaForm' %}
+            {% set mainActiveTab = tabOffset + 1 %}
+            {% set nestedTabTarget = '#gnd-tabs' %}
+            {% set nestedActiveTab = 2 %}
+        {% elseif gnt_page.activeForm == 'viewGndForm' %}
+            {% set mainActiveTab = tabOffset + 2 %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% block content %}
+
+{% include 'efi-gnt/_partials/intro.html.twig' %}
+{% include '_partials/app_flashes.html.twig' %}
+
+
+{#
+  Here we set up the tabs page using a custom component that renders the HTML code with both
+  stimulus controller code and server-side pre-styling.  Pre-styling prevents flash of unstyled
+  content issues.
+#}
+
+{% set previousJobsContent %}
+    {% if gnt_page.isLoggedIn and (gnt_page.userJobs|length > 0 or gnd_page.userJobs|length > 0) %}
+        <h3>GNT Jobs</h3>
+        <twig:user_jobs_summary jobs="{{ gnt_page.userJobs }}" sortBy="{{ gnt_page.dashboardSortBy }}" sortDir="{{ gnt_page.dashboardSortDir }}" />
+        <h3>GND Jobs</h3>
+        <twig:user_jobs_summary jobs="{{ gnd_page.userJobs }}" hideDashboardToggle="{{ true }}" sortBy="{{ gnd_page.dashboardSortBy }}" sortDir="{{ gnd_page.dashboardSortDir }}" />
+    {% elseif not gnt_page.isLoggedIn and is_app_public_mode %}
+        <twig:public_mode_jobs_notice />
+    {% else %}
+        No jobs are available to view
+    {% endif %}
+{% endset %}
+
+{# Always show the previous jobs tab #}
+{% set homeTabs = [
+    { id: 'PreviousJobs', label: 'Previous Jobs', content: previousJobsContent }
+] %}
+
+{# Add the other job submission tabs #}
+{% if is_granted('JOB_SUBMISSION') %}
+    {% set homeTabs = homeTabs|merge([
+        { id: 'GNT-form', label: 'GNT Submission', template: 'efi-gnt/home/gnn.html.twig' },
+        { id: 'GND-tabs', label: 'Retrieve Neighborhood Diagrams', template: 'efi-gnt/home/gnd.html.twig' }
+    ]) %}
+    {% if is_granted('FEATURE_ACTIVE', 'view_gnd') %}
+        {% set homeTabs = homeTabs|merge([
+            { id: 'ViewGND-form', label: 'View Saved Diagrams', template: 'efi-gnt/home/uploadgnd.html.twig' }
+        ]) %}
+    {% endif %}
+{% endif %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: homeTabs,
+    activeIndex: mainActiveTab,
+    nestedActiveIndex: nestedActiveTab,
+    nestedTarget: nestedTabTarget
+} %}
+
+{% include 'auth/job/partials/job_info_modal.html.twig' %}
+{% endblock %}
+
+{% block scripts %}
+{% include 'auth/job/partials/job_info_script.html.twig' %}
+{% endblock %}
+

@@ -1,0 +1,94 @@
+
+{% set page_subtitle = 'Cluster Analysis' %}
+
+{% extends "efi-est/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Cluster Analyses and Downloads</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+{% set datasetSummaryContent %}
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+{% endset %}
+
+<div>
+    <p>
+    The <b>Data File Download</b> tab provides the Color SSN with the nodes colored
+    according to <b>node.fillColor (Cluster Sequence Count)</b>.
+    </p>
+    
+    <p>
+    Six node attributes were added to the input SSN:  <b>Cluster Sequence Count</b>,
+    <b>Sequence Count Cluster Number</b>, <b>Cluster Node Count</b>,
+    <b>Node Count Cluster Number</b>,
+    <b>node.fillColor</b> (according to Cluster Sequence Count, hexadecimal), and
+    <b>Node Count Fill Color</b> (according to Cluster Node Count, hexadecimal).
+    <!--, and 7) Convergence Ratio.-->
+    </p>
+    
+    <p>
+    To change the node colors in Cytoscape to <b>Node Count Fill Color</b>:  1) select all nodes; 2) on
+    the Style Panel, click on the "?" in the Fill Color Property; 3) select "Remove
+    Bypass"; 4) deselect the nodes (default node color); and 5) open the Fill Color
+    Property and select "<b>Node Count Fill Color</b>" as the Column and "Passthrough
+    Mapping" as the Mapping Type.  The nodes will be recolored.
+    </p>
+    
+    <p>
+    The <b>Data File Download</b> tab also provides files for 1) UniProt ID-Color-Cluster
+    Number mapping table, 2) ID Lists and FASTA Files for each cluster, 3) cluster
+    sizes, and 4) SwissProt annotations for clusters and singletons.
+    <!-- and 5) convergence ratios for clusters.  The value of the convergence ratio for each cluster also
+    is displayed with the-->
+    The number of UniRef/UniProt IDs for each cluster is displayed in the
+    <b>WebLogos</b>, <b>HMMs</b>, and <b>Length Histograms</b> tabs.
+    </p>
+    
+    <p>
+    The <b>WebLogos</b> tab provides the WebLogo (generated using
+    <a href="http://weblogo.threeplusone.com/">http://weblogo.threeplusone.com/</a>) and MSA (generated using MUSCLE) for the node
+    IDs in each SSN cluster containing at least the specified "Minimum Node Count".
+    The MSA can be viewed with Jalview (<a href="https://www.jalview.org/">https://www.jalview.org/</a>).
+    This tab also provides the percent identity matrix for the multiple sequence alignment, as computed by Clustal-Omega.
+    </p>
+    
+    <p>
+    The <b>Consensus Residues</b> tab provides a tab-delimited text file with the number
+    of the conserved residues and their MSA positions for each specified residue in
+    each SSN cluster (numbered by <b>Cluster Sequence Count</b>) containing at least the
+    specified "<b>Minimum Node Count</b>". 
+    </p>
+    
+    <p>
+    The <b>HMMs</b> tab provides the HMM for each SSN cluster containing at least the
+    specified "<b>Minimum Node Count</b>". The Skylign download provides the image of the
+    HMM generated from the MSA (<a href="https://skylign.org/">https://skylign.org/</a>). The HMM text file can be
+    viewed interactively by uploading to <a href="https://skylign.org/">https://skylign.org/</a> and selecting
+    "Information Content – Above Background"; the probability of each amino acid
+    residue and probability and length of an insert at each position is provided.
+    The p
+    </p>
+    
+    <p>
+    The <b>Length Histograms</b> tab provides length histograms for each cluster
+    containing at least the specified "Minimum Node Count". 
+    </p>
+</div>
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'SSN Overview', content: datasetSummaryContent },
+    { id: 'download', label: 'Data File Download', template: 'efi-est/results/ssn_utility/cluster_analysis/download.html.twig', context: { page } },
+    { id: 'weblogos', label: 'WebLogos', template: 'efi-est/results/ssn_utility/cluster_analysis/weblogos.html.twig', context: { page } },
+    { id: 'cons_res', label: 'Consensus Residues', template: 'efi-est/results/ssn_utility/cluster_analysis/cons_res.html.twig', context: { page } },
+    { id: 'hmms', label: 'HMMs', template: 'efi-est/results/ssn_utility/cluster_analysis/hmms.html.twig', context: { page } },
+    { id: 'length_histo', label: 'Length Histograms', template: 'efi-est/results/ssn_utility/cluster_analysis/length_histo.html.twig', context: { page } },
+] %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

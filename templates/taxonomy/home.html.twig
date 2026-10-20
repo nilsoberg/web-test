@@ -1,0 +1,72 @@
+{% extends "taxonomy/core.html.twig" %}
+
+
+{% set mainActiveTab = 0 %}
+
+{% if is_granted('JOB_SUBMISSION') %}
+    {% set tabOffset = page.isLoggedIn ? 1 : 0 %}
+
+    {% if page.activeForm %}
+        {% if page.activeForm == 'familiesForm' %}
+            {% set mainActiveTab = tabOffset %}
+        {% elseif page.activeForm == 'fastaForm' %}
+            {% set mainActiveTab = tabOffset + 1 %}
+        {% elseif page.activeForm == 'accessionForm' %}
+            {% set mainActiveTab = tabOffset + 2 %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+{% block content %}
+
+{% include 'taxonomy/_partials/intro.html.twig' %}
+{% include '_partials/database_info.html.twig' %}
+{% include '_partials/app_flashes.html.twig' %}
+
+
+{#
+  Here we set up the tabs page using a custom component that renders the HTML code with both
+  stimulus controller code and server-side pre-styling.  Pre-styling prevents flash of unstyled
+  content issues.
+#}
+
+{% set previousJobsContent %}
+    <h3>Previous Jobs</h3>
+    {% if page.isLoggedIn and page.userJobs|length > 0 %}
+        <twig:user_jobs_summary jobs="{{ page.userJobs }}" sortBy="{{ page.dashboardSortBy }}" sortDir="{{ page.dashboardSortDir }}" />
+    {% elseif not page.isLoggedIn and is_app_public_mode %}
+        <twig:public_mode_jobs_notice />
+    {% else %}
+        No jobs are available to view
+    {% endif %}
+{% endset %}
+
+{# Always show the previous jobs tab #}
+{% set homeTabs = [
+    { id: 'PreviousJobs', label: 'Previous Jobs', content: previousJobsContent }
+] %}
+
+{# Add the other job submission tabs #}
+{% if is_granted('JOB_SUBMISSION') %}
+    {% set homeTabs = homeTabs|merge([
+        { id: 'Families-form', label: 'Families', template: 'taxonomy/home/families.html.twig', context: { defaultDatabaseId: page.defaultDatabaseId } },
+        { id: 'Fasta-form', label: 'FASTA', template: 'taxonomy/home/fasta.html.twig' },
+        { id: 'Accession-form', label: 'Accession', template: 'taxonomy/home/accession.html.twig' }
+    ]) %}
+{% endif %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: homeTabs,
+    activeIndex: mainActiveTab
+} %}
+
+
+{% include 'auth/job/partials/job_info_modal.html.twig' %}
+{% endblock %}
+
+{% block scripts %}
+{% include 'auth/job/partials/job_info_script.html.twig' %}
+{% endblock %}
+

@@ -1,0 +1,16 @@
+
+.filter-row {
+    display: flex;
+    align-items: center; /* Vertically aligns the dropdown, input, and button */
+    gap: 0.5rem;       /* Adds a little space between elements */
+    margin-bottom: 1rem; /* Space below each row */
+}
+
+.filter-row > .form-group {
+    flex-grow: 1; /* Makes the input fields expand to fill available space */
+}
+
+ul.taxonomy-filters-list li {
+	list-style-type: none;
+}
+

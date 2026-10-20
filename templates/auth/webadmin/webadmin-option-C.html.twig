@@ -1,0 +1,151 @@
+<div id="WAoptionC">
+  <div class="container">
+
+      <p> This tool will provide a frontend solution for updating the version of the database across the website. </p>
+      <p> You can start by adding a new set of databases or editing an existing one. </p>
+      
+      {# Button to Add Patents #}
+      <div class="mb-3">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPatentsModal">
+              Add Patents
+          </button>
+      </div>
+
+      {# Add Patents Modal #}
+      <div class="modal fade" id="addPatentsModal" tabindex="-1" aria-labelledby="addPatentsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="{{ path('patents_create') }}" method="post">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addPatentsModalLabel">Add Patents</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="_token" value="{{ csrf_token('create_patent') }}">
+                <div class="mb-3">
+                    <label for="number" class="form-label">Number:</label>
+                    <input type="text" id="number" name="number" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="author" class="form-label">Authors:</label>
+                    <input type="text" id="author" name="author" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year:</label>
+                    <input type="text" id="year" name="year" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="month" class="form-label">Month:</label>
+                    <input type="text" id="month" name="month" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="day" class="form-label">Day:</label>
+                    <input type="text" id="day" name="day" class="form-control" required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {# Table of existing patents #}
+      <div class="table-container">
+          <br>
+          <h4>Patents</h4>
+          <br>
+          <table class="patents-table table table-striped">
+              <thead>
+                  <tr>
+                      <th>Number</th>
+                      <th>Title</th>
+                      <th>Authors</th>
+                      <th>Year</th>
+                      <th>Month</th>
+                      <th>Day</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for patent in patents %}
+                      <tr>
+                          <td>{{ patent.number }}</td>
+                          <td>{{ patent.title }}</td>
+                          <td>{{ patent.author }}</td>
+                          <td>{{ patent.year }}</td>
+                          <td>{{ patent.month }}</td>
+                          <td>{{ patent.day }}</td>
+                          <td>
+                              {# Edit Modal #}
+                              <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#editPatentsModal-{{ patent.id }}">
+                                  Edit
+                              </button>
+                              {# Delete Form #}
+                              <form action="{{ path('patents_delete', {id: patent.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this patent?');" class="d-inline">
+                                  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ patent.id) }}">
+                                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                              </form>
+                          </td>
+                      </tr>
+
+                      {# Edit Patents Modal #}
+                      <div class="modal fade" id="editPatentsModal-{{ patent.id }}" tabindex="-1" aria-labelledby="editPatentsModal-{{ patent.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="{{ path('patents_edit', {id: patent.id}) }}" method="post">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editPatentsModal-{{ patent.id }}">Edit Patent #{{ patent.id }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="number-{{ patent.id }}" class="form-label">Number:</label>
+                                    <input type="text" id="number-{{ patent.id }}" name="number" class="form-control" value="{{ patent.number }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="title-{{ patent.id }}" class="form-label">Title:</label>
+                                    <input type="text" id="title-{{ patent.id }}" name="title" class="form-control" value="{{ patent.title }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="author-{{ patent.id }}" class="form-label">Authors:</label>
+                                    <input type="text" id="author-{{ patent.id }}" name="author" class="form-control" value="{{ patent.author }}" required>
+                                </div>       
+                                <div class="mb-3">
+                                    <label for="year-{{ patent.id }}" class="form-label">Year:</label>
+                                    <input type="text" id="year-{{ patent.id }}" name="year" class="form-control" value="{{ patent.year }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="month-{{ patent.id }}" class="form-label">Month:</label>
+                                    <input type="text" id="month-{{ patent.id }}" name="month" class="form-control" value="{{ patent.month }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="day-{{ patent.id }}" class="form-label">Day:</label>
+                                    <input type="text" id="day-{{ patent.id }}" name="day" class="form-control" value="{{ patent.day }}" required>
+                                </div>
+                                {# CSRF token handler #}
+                                <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ patent.id) }}">
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                  {% else %}
+                      <tr>
+                          <td colspan="9">No patents found.</td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

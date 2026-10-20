@@ -1,0 +1,32 @@
+
+{% set page_subtitle = 'Quantify Results' %}
+
+{% extends "efi-cgfp/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Quantify Results</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+{% include '_partials/app_flashes.html.twig' %}
+
+
+{# Set up and display tabs #}
+
+{% set datasetSummaryContent %}
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+{% endset %}
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'Dataset Summary', content: datasetSummaryContent },
+    { id: 'results', label: 'Quantify Results', template: 'efi-cgfp/quantify/results.html.twig' },
+    { id: 'plots', label: 'Heatmaps and Boxplots', template: 'efi-cgfp/quantify/plots.html.twig' },
+] %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

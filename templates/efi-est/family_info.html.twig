@@ -1,0 +1,184 @@
+
+{% set page_subtitle = 'Family Information' %}
+
+{% extends "efi-est/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Family Information</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="input-group position-relative shadow-sm" style="border-radius: 50px; overflow: hidden; border: 1px solid #dee2e6;">
+            <span class="input-group-text bg-white border-0 pe-1">
+                <i class="bi bi-search"></i>
+            </span>
+
+            <input type="text" name="search" id="familySearch" 
+                   class="form-control border-0 shadow-none ps-2"
+                   style="padding-right: 2.5rem; height: 45px;"
+                   placeholder="Search by ID or name..." 
+                   value="{{ currentSearch }}">
+
+            <button type="button" id="clearSearch" 
+                    class="btn position-absolute end-0 top-50 translate-middle-y border-0 {{ currentSearch is empty ? 'd-none' : '' }}" 
+                    style="z-index: 1050; padding: 0.5rem 0.75rem; background: transparent; cursor: pointer;">
+                <i class="bi bi-x-lg text-muted"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <select name="filter" id="filterSelect" class="form-select">
+            <option value="">All Family Types</option>
+            <option value="PF" {{ currentFilter == 'PF' ? 'selected' }}>Pfam</option>
+            <option value="CLAN" {{ currentFilter == 'CLAN' ? 'selected' }}>Pfam Clans</option>
+            <option value="IPR" {{ currentFilter == 'IPR' ? 'selected' }}>InterPro</option>
+            <option value="CLPF" {{ currentFilter == 'CLPF' ? 'selected' }}>Pfam-Clan Mapping</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="database-id" id="databaseSelect" class="form-select">
+            {% for database in databases %}
+                <option value="{{ database.id }}" {{ database.selected ? 'selected' : '' }}>{{ database.publicName }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            {% if not showAll %}
+                <div class="my-2">
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        name="show"
+                        value="all"
+                    >
+                        Show All
+                    </button>
+                </div>
+            {% endif %}
+
+            {% if currentFilter == 'CLPF' %}
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 10%">Clan ID</th>
+                            <th style="width: 15%">Short Name</th>
+                            <th style="width: 8%">Size</th>
+                            <th style="width: 8%">UniRef90</th>
+                            <th style="width: 8%">UniRef50</th>
+                            <th style="width: 10%">Pfam ID</th>
+                            <th style="width: 15%">Short Name</th>
+                            <th style="width: 8%">Size</th>
+                            <th style="width: 8%">UniRef90</th>
+                            <th style="width: 8%">UniRef50</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for clan in families %}
+                            {% for member in clan.members %}
+                                <tr>
+                                    {# Only show Clan details on the first member row #}
+                                    {% if loop.first %}
+                                        <td class="fw-bold border-bottom-0">{% if clan.url %}<a href="{{ clan.url }}">{% endif %}{{ clan.id }}{% if clan.url %}</a>{% endif %}</td>
+                                        <td class="border-bottom-0">{{ clan.name }}</td>
+                                        <td class="text-end border-bottom-0">{{ clan.size|number_format }}</td>
+                                        <td class="text-end border-bottom-0">{{ clan.u90|number_format }}</td>
+                                        <td class="text-end border-bottom-0">{{ clan.u50|number_format }}</td>
+                                    {% else %}
+                                        <td class="border-top-0 border-bottom-0"></td>
+                                        <td class="border-top-0 border-bottom-0"></td>
+                                        <td class="border-top-0 border-bottom-0"></td>
+                                        <td class="border-top-0 border-bottom-0"></td>
+                                        <td class="border-top-0 border-bottom-0"></td>
+                                    {% endif %}
+
+                                    <td class="fw-bold text-primary">{% if member.url %}<a href="{{ member.url }}">{% endif %}{{ member.id }}{% if member.url %}</a>{% endif %}</td>
+                                    <td>{{ member.name }}</td>
+                                    <td class="text-end">{{ member.size|number_format }}</td>
+                                    <td class="text-end">{{ member.u90|number_format }}</td>
+                                    <td class="text-end">{{ member.u50|number_format }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Family ID</th>
+                            <th>Short Name</th>
+                            <th class="text-end">UniProt</th>
+                            <th class="text-end">UniRef90</th>
+                            <th class="text-end">UniRef50</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fam in families %}
+                        <tr>
+                            <td class="fw-bold text-primary">{% if fam.url %}<a href="{{ fam.url }}">{% endif %}{{ fam.family }}{% if fam.url %}</a>{% endif %}</td>
+                            <td>{{ fam.short_name }}</td>
+                            <td class="text-end">{{ fam.num_members|number_format }}</td>
+                            <td class="text-end">{{ fam.num_uniref90_members|number_format }}</td>
+                            <td class="text-end">{{ fam.num_uniref50_members|number_format }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">No families found matching your criteria.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            <div class="my-2">
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    name="download"
+                    value="download"
+                >
+                    Download Current List
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('familySearch');
+    const clearBtn = document.getElementById('clearSearch');
+    const filterSelect = document.getElementById('filterSelect');
+    const form = searchInput.closest('form');
+
+    // Toggle button visibility based on input content
+    searchInput.addEventListener('input', function() {
+        if (this.value.length > 0) {
+            clearBtn.classList.remove('d-none');
+        } else {
+            clearBtn.classList.add('d-none');
+        }
+    });
+
+    // Clear input, hide button, and auto-submit form
+    clearBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        clearBtn.classList.add('d-none');
+        form.submit(); 
+    });
+
+    filterSelect.addEventListener('change', function() {
+        searchInput.value = '';
+        clearBtn.classList.add('d-none');
+        form.submit();
+    });
+});
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,36 @@
+<div id="{{ prefix }}-section-{{ index }}">
+    <h3>Filter by Taxonomy</h3>
+    <div class="accordion-content">
+        <div>
+            {% if filter_by_taxonomy_info %}<p>A taxonomy filter is applied to the list of UniProt, UniRef90, or UniRef50 cluster IDs retrieved by the BLAST.</p>{% endif %}
+            <p>From preselected conditions, the user can select "Bacteria, Archaea, Fungi", "Eukaryota, no Fungi", "Fungi", "Viruses", "Bacteria", "Eukaryota", or "Archaea" to restrict the retrieved sequences to these taxonomy groups.</p>
+            <p>"Bacteria, Archaea, Fungi", "Bacteria", "Archaea", and "Fungi" select organisms that may provide genome context (gene clusters/operons) useful for inferring functions.</p>
+            <p>The retrieved sequences also can be restricted to taxonomy categories within the Superkingdom, Kingdom, Phylum, Class, Order, Family, Genus, and Species ranks. Multiple conditions are combined to be a union of each other.</p>
+            <p>The sequences from the UniRef90 and UniRef50 databases are the UniRef90 and UniRef50 clusters for which the cluster ID ("representative sequence") matches the specified taxonomy categories. The UniProt members in these clusters that do not match the specified taxonomy categories are removed from the cluster.</p>
+        </div>
+        <div>
+            Preselected conditions:
+            <select id="{{ prefix }}-taxonomy-select" data-option-id="{{ prefix }}-tax-data">
+                <option disabled selected value="">-- select a preset to auto populate --</option>
+                <option value="bacteria_fungi">Bacteria, Archaea, Fungi</option>
+                <option value="eukaroyta_no_fungi">Eukaryota, no Fungi</option>
+                <option value="fungi">Fungi</option>
+                <option value="viruses">Viruses</option>
+                <option value="bacteria">Bacteria</option>
+                <option value="eukaryota">Eukaryota</option>
+                <option value="archaea">Archaea</option>
+            </select>
+        </div>
+        {# Base Template for Autopopulate Taxonomy Item #}
+        {# Connects with taxonomy_filter.js for dinamic functionality #}
+        <div id="{{ prefix }}-taxonomy-container" data-prefix="{{ prefix }}"></div>
+        <div style="display: none">
+            <input type="hidden" name="{{ prefix }}-taxonomy-preset-name" id="{{ prefix }}-taxonomy-preset-name" value="" />
+        </div>
+        <div>
+            <button type="button" class="light add-tax-btn" data-option-id="{{ prefix }}-tax-data" id="{{ prefix }}-taxonomy-add-btn">
+                Add Taxonomy Category
+            </button>
+        </div>
+    </div>
+</div>

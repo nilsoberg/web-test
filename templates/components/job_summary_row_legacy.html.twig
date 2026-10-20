@@ -1,0 +1,39 @@
+
+{% props job, level, job_row_class %}
+
+<tr class="{{ job_row_class }}">
+   <td class="job-name">
+       {% if level == 0 %}
+           {% if job.route %}<a href="{{ job.route }}">{{ job.job.id }}</a>{% else %}{{ job.job.id }}{% endif %}
+       {% endif %}
+    </td>
+    <td style="padding-left: {{ 10 + level * 50 }}px;">
+       {% if job.route %}<a href="{{ job.route }}">{% endif %}
+       {% if job.jobName %}<span class="job-name job-color-{{ job.color }}">{{ job.jobName }}</span><br>{% endif %}
+       <span class="job-metadata job-color-{{ job.color }}">{% include 'components/_job_metadata.html.twig' with { metadata: job.metadata } only %}</span>
+       {% if job.route %}</a>{% endif %}
+    </td>
+   <td class="job-date">
+       {% if job.job.timeCreated is defined and job.job.timeCreated is not null %}
+           {{ job.job.timeCreated | format_datetime('short', 'short') }}
+       {% endif %}
+    </td>
+   <td class="job-date">
+       {% if job.job.timeCompleted is defined and job.job.timeCompleted is not null and job.job.status != constant('App\\Enum\\JobStatus::Failed') %}
+           {{ job.job.timeCompleted | format_datetime('short', 'short') }}
+       {% else %}
+           {{ job.prettyStatus }}
+       {% endif %}
+    </td>
+    <td>
+        {% include('_partials/job_action_button.html.twig') with {'job': job} %}
+    </td>
+</tr>
+
+{# If the job has children, then add them, nested #}
+{% if job.children is not empty %}
+    {% for childJob in job.children %}
+        {# We pass the child object and increment the level for more indentation. #}
+        <twig:job_summary_row_legacy job="{{ childJob }}" level="{{ level + 1 }}" job_row_class="{{ job_row_class }}" />
+    {% endfor %}
+{% endif %}

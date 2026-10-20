@@ -1,0 +1,50 @@
+parameters:
+    # Disables the entire website
+    app.enable_website: true
+    # Allows all of the pages to function, forms are just disabled
+    app.enable_submission: true
+    app.show_funding: true
+    app.show_citation: false
+    app.max_file_upload: 10000000000
+    # Maximum number of sequences that can be processed
+    app.max_uniprot_seq_size: 100000
+    app.max_uniref50_seq_size: 100000
+    app.max_uniref90_seq_size: 100000
+    app.max_file_upload_size_text: '10G'
+    # The number of sessions before the user is automatically logged out
+    app.inactive_session_timeout: 86400
+    # Override these in config/instance.yaml, not here
+    app.timezone: 'America/Chicago'
+    app.user_default_timezone: 'Asia/Singapore'
+    app.default_locale: '%kernel.default_locale%'
+    app.results_subdirectory_name: 'results'
+    app.public_downloads: '%kernel.project_dir%/var/downloads/'
+    app.uploads_directory: '%env(resolve:UPLOADS_DIRECTORY)%'
+    app.resources_directory: '%kernel.project_dir%/var/resources'
+    app.results_directory: '%env(resolve:RESULTS_DIRECTORY)%'
+    app.gnd_uploads_directory: '%kernel.project_dir%/var/temp_uploads'
+    app.example_jobs_path: '%env(resolve:EXAMPLE_JOBS_PATH)%'
+    app.default_database_version: '%env(resolve:DEFAULT_DATABASE_VERSION)%'
+    app.sequence_metadata_url: 'https://efi-dev.igb.illinois.edu/seq-meta/search'
+    app.blast_bin_dir: ''
+    app.send_email_on_submit: false
+    app.use_html_email: false
+    app.retention_days: 30
+    # Number of batches to retrieve for every 'Show more'
+    app.gnd_viewer_batch_size: 10
+    # Number of GNDs retrieved in a single batch
+    app.gnd_viewer_set_size: 20
+    app.gnd_diagram_tutorial_asset: 'docs/diagram_tutorial.pdf'
+    app.taxonomy_reference_table: 'taxonomy'
+    # DBMS
+    app.ORGDATABASES: '%kernel.project_dir%/var/uploads/databases'
+    app.ORGDATABASES_STAGING: '%kernel.project_dir%/var/uploads/databases/rsync/'
+    # DBADMIN
+    app.databases_directory: '%kernel.project_dir%/var/uploads/databases'
+    app.DBADMIN_STAGING_PATH: '%kernel.project_dir%/var/uploads/databases/rsync'
+    app.DBADMIN_SERVER_ADDRESS: '127.0.0.1'
+    app.DBADMIN_USERNAME: 'dbadmin'
+    app.route_prefix: '%env(APP_ROUTE_PREFIX)%'
+    app.disabled_features: []
+    env(APP_ACCESS_MODE): !php/const App\Auth\AccessMode::PRIVATE
+    app.access_mode: '%env(APP_ACCESS_MODE)%'

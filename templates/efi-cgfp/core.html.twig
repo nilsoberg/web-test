@@ -1,0 +1,17 @@
+{% extends "core/core.html.twig" %}
+
+{% block tool_title %}
+EFI - Chemically-Guided Functional Profiling
+{% endblock %}
+
+{% block logoleft %}
+    {% if is_granted('FEATURE_ACTIVE', 'header_logo_links') %}<a href="{{ path('cgfp_home') }}">{% endif %}
+        <img src="{{ asset('images/efi_cgfp_logo.png') }}" height="75" alt="CGFP logo" />
+    {% if is_granted('FEATURE_ACTIVE', 'header_logo_links') %}</a>{% endif %}
+{% endblock %}
+
+{% block theme %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/cgfp-theme.css') }}" data-turbo-track="reload">
+{% endblock %}
+

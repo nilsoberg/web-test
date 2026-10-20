@@ -1,0 +1,67 @@
+
+{% if formId is defined %}
+    {% if tabTrigger is defined %}
+        {% set dataAction = 'external-family-field:changed@document->family-input#processExternalFieldChange global-tab-change@window->family-input#processUnirefTabChange'|raw %}
+    {% else %}
+        {% set dataAction = 'external-family-field:changed@document->family-input#processExternalFieldChange'|raw %}
+    {% endif %}
+
+    {% set externalAttr = {
+        'data-family-input-form-id': formId,
+        'data-action': dataAction,
+        'data-family-input-tab-trigger-id': tabTrigger is defined ? tabTrigger : '',
+    } %}
+{% else %}
+    {% set externalAttr = {} %}
+{% endif %}
+
+<div class="family-input">
+    {# 'form' here is the FormView for the entire FamilyInputType (e.g., form.familyInput) #}
+
+    <div class="family-input-component-wrapper border p-3 rounded mb-3 primary-input"
+        data-controller="family-input"
+        {% for attr, value in externalAttr %} {{ attr }}="{{ value }}" {% endfor %}
+        {% if disableForcedUniref is defined and disableForcedUniref %}data-family-input-disable-forced-uniref-value="true"{% endif %}
+        data-family-input-api-url-value="{{ path('api_calculate_family_size') }}"
+        data-family-input-csrf-token-value="{{ csrf_token('family_size_ajax') }}"
+        data-family-input-default-database-id-value="{{ defaultDatabaseId }}"
+    >
+        <div class="mb-3">
+            <label for="{{ form.families.vars.id }}" class="form-label">
+                <strong>Pfam and/or InterPro Families and/or Pfam clans:</strong>
+            </label>
+            <div>
+                {{ form_widget(form.families, { 'attr': {
+                        'class': 'form-control families-field',
+                        'data-family-input-target': 'families',
+                        'data-action': 'input->family-input#processChange'
+                    } }) }}
+            </div>
+            <div class="alert alert-warning small align-items-center text-black mt-2 d-none" data-family-input-target="forcedUnirefSizeMessage"></div>
+            {% if form.vars.show_sequence_type_in_family_widget %}
+                <div class="uniref-options-wrapper p-2 d-flex align-items-center">
+                    <span class="me-3">Sequence database:</span>
+                    <twig:uniref_version form="{{ form }}" />
+                </div>
+            {% endif %}
+            <div>
+                The input format is a single family or comma/space separated list of families.
+                Families should be specified as PFxxxxx (five digits), IPRxxxxxx (six digits)
+                or CLxxxx (four digits) for Pfam clans.
+            </div>
+            <div>
+                <div class="submission-error">{{ form_errors(form.families) }}</div>
+                {% if form.vars.show_sequence_type_in_family_widget %}
+                    <div class="submission-error">{{ form_errors(form.unirefVersion) }}</div>
+                {% endif %}
+            </div>
+            <div id="{{ form.families.vars.id }}_help" class="form-text">
+                <center><div class="ms-2 fst-italic text-muted family-size-container" data-family-input-target="sizeContainer">(Type at least 3 characters)</div></center>
+            </div>
+            {% if not form.vars.hide_fraction_widget and form.vars.include_fraction %}
+                <twig:fraction form="{{ form.fraction }}" />
+            {% endif %}
+        </div>
+    </div>
+</div>
+

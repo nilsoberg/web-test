@@ -1,0 +1,18 @@
+
+services:
+###> doctrine/doctrine-bundle ###
+  database:
+    image: mariadb:11.4.2
+    environment:
+      MARIADB_DATABASE: ${MYSQL_DB:-sponsored_research}
+      MARIADB_USER: ${MYSQL_USER:-sponsored_research}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD:-ChangeMe!}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_PASSWORD:-ChangeMe!}
+    volumes:
+      - db:/var/lib/mysql:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  db:
+###< doctrine/doctrine-bundle ###

@@ -1,0 +1,8 @@
+<div class="actions">
+    {% if user.isDeleted %}
+        <button class="btn btn-sm btn-success recover-user" data-id="{{ user.id }}">Recover</button>
+    {% else %}
+        <button class="btn btn-sm btn-danger delete-user" data-id="{{ user.id }}">Delete</button>
+        <button class="btn btn-sm btn-primary edit-user" data-id="{{ user.id }}">Edit</button>
+    {% endif %}
+</div>

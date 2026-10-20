@@ -1,0 +1,59 @@
+
+<div class="job-form-container" data-job-type-config="gnd-fasta-form" data-controller="upload-progress">
+
+    <p>
+    The genomic neighborhoods are retreived for the UniProt, NCBI, EMBL-EBI
+    ENA, and PDB identifiers that are identified in the FASTA <b><u>headers</u></b>. Not all
+    identifiers may exist in the EFI-GNT database so the results will only
+    include diagrams for sequences that were identified.
+    </p>
+
+    {{ form_start(fastaForm, {
+        'attr': {
+            'data-upload-progress-target': 'form',
+            'data-action': 'submit->upload-progress#upload'
+        }
+    }) }}
+
+    <div>
+        <div><span class="input-heading">FASTA:<span></div>
+        <div>
+            <div>{{ form_widget(fastaForm.textUniprot) }}</div>
+            <div class="submission-error">{{ form_errors(fastaForm.textUniprot) }}</div>
+        </div>
+    </div>
+
+    <div>
+        <div><span class="input-heading">Alternatively, a file containing FASTA headers and sequences can be uploaded:</span> {% include('_partials/upload_file_size_tooltip.html.twig') %}</div>
+        <div class="input-description">
+            <div>{{ form_widget(fastaForm.fileUniprot) }}</div>
+        </div>
+        <div class="submission-error">{{ form_errors(fastaForm.fileUniprot) }}</div>
+    </div>
+
+    <div>
+        <div><span class="input-heading">Neighborhood Size:<span></div>
+        <div class="input-description">
+            <div>
+                {{ form_widget(fastaForm.neighborhoodSize) }}
+            </div>
+            <div class="submission-error">{{ form_errors(fastaForm.neighborhoodSize) }}</div>
+            <div>
+                <p>
+                The Pfam families for N neighboring genes upstream and
+                downstream will be collected and analyzed. The default value is
+                10 and the minimum and maximum are 3 and 20, respectively.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <twig:job_submit_input form="{{ fastaForm }}" />
+    </div>
+    {% include('_partials/file_upload_progress.html.twig') %}
+
+    {{ form_end(fastaForm) }}
+
+</div>
+

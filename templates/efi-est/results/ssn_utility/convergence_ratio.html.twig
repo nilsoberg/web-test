@@ -1,0 +1,14 @@
+<div>
+
+    {% if show_citation %}
+    {% include 'core/citation.html.twig' %}
+    {% endif %}
+
+    <p>
+    Convergence ratio has been computed.
+    </p>
+
+    {% include 'efi-est/results/ssn_utility/download_table.html.twig' with { files: page.files } %}
+
+</div>
+

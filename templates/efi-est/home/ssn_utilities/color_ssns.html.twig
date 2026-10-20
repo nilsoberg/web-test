@@ -1,0 +1,21 @@
+
+{% embed '_partials/conditional_parent_or_file_form_wrapper.html.twig' with {
+    'form': estColorSsnForm,
+    'form_name': 'estColorSsnForm',
+    'job_type_config': 'ColorSSN-form',
+    'file_heading': 'SSN File:'
+} %}
+
+    {% block description %}
+        <p><b>Clusters in the submitted SSN are identified, numbered and
+            colored.</b> Summary tables, sets of IDs and sequences per cluster are
+        provided for sequences identified by a UniProt ID.</p>
+
+        <p>The clusters are numbered and colored using two conventions:
+        1) <b>Sequence Count Cluster Number</b> assigned in order of decreasing
+        number of UniProt IDs in the cluster; 2) <b>Node Count Cluster Number</b>
+        assigned in order of decreasing number of nodes in the cluster.</p>
+    {% endblock %}
+
+{% endembed %}
+

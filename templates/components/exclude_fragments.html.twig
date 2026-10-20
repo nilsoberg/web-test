@@ -1,0 +1,23 @@
+
+<div class="exclude-fragments-input">
+    <div class="form-group">
+        <p>UniProt designates a Sequence Status for each member: Complete if the encoding DNA sequence has both start and
+        stop codons; Fragment if the start and/or stop codon is missing. Approximately 10% of the entries in UniProt are
+        fragments.</p>
+
+        <div>
+            <span class="input-heading">Exclude Fragments:</span>
+            <span>
+                {{ form_widget(form) }}
+            </span>
+        </div>
+        
+        <div class="input-description">
+            <p>For the UniRef90 and UniRef50 databases, clusters are excluded if the cluster ID ("representative sequence") is a fragment.</p>
+            <p>UniProt IDs in UniRef90 and UniRef50 clusters with complete cluster IDs are removed from the clusters if they are fragments.</p>
+        </div>
+
+        {{ form_errors(form) }}
+    </div>
+</div>
+

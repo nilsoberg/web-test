@@ -1,0 +1,39 @@
+<div>
+
+    {% if show_citation %}
+    {% include 'core/citation.html.twig' %}
+    {% endif %}
+
+    <p>
+    Two node attributes were added to the input SSN: 1) <b>Neighborhood
+    Connectivity</b> that quantitates the internode connections and 2) <b>Neighborhood
+    Connectivity Coloring</b> that assigns a color based on the value of the NC.
+    </p>
+
+    <p>
+    The <b>Data File Download</b> tab provides the SSN with the nodes colored
+    according to the value of the <b>Neighborhood Connectivity Coloring</b>.
+    </p>
+
+    <p>
+    The <b>Neighborhood Connectivity Color Scale</b> download provides the color scale
+    in the SSN. 
+    </p>
+
+
+    <h4>Colored SSN</h4>
+
+    <p>
+    Each node in the submitted SSN has been colored by NC, and a Neighborhood Connectivity attribute has been added with the NC factor.
+    </p>
+
+    <p>
+    <a class="btn btn-primary" href="{{ page.ssnDownloadRoute }}">Download ZIP {{ page.displaySsnFileSize }}</a>
+    </p>
+
+    <h4>Supplementary Files</h4>
+
+    {% include 'efi-est/results/ssn_utility/download_table.html.twig' with { files: page.files } %}
+
+</div>
+

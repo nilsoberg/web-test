@@ -1,0 +1,57 @@
+<div>
+
+    {% if show_citation %}
+    {% include 'core/citation.html.twig' %}
+    {% endif %}
+
+    <p>
+    Six node attributes were added to the input SSN: <b>Cluster Sequence Count,
+    Sequence Count Cluster Number, Cluster Node Count, Node Count Cluster
+    Number, node.fillColor</b> (according to Cluster Sequence Count, hexadecimal),
+    and <b>Node Count Fill Color</b> (according to Cluster Node Count, hexadecimal).
+    </p>
+
+    <p>
+    The <b>Data File Download</b> tab provides the Color SSN with the nodes colored
+    according to <b>Cluster Sequence Count (node.fillColor)</b>.
+    </p>
+
+    <p>
+    To change the node colors in Cytoscape to <b>Node Count Fill Color</b>: 1) select
+    all nodes; 2) on the Style Panel, click on the "?" in the Fill Color
+    Property; 3) select "Remove Bypass"; 4) deselect the nodes (now default
+    node color); and 5) open the Fill Color Property and select "<b>Node Count
+    Fill Color</b>" as the Column and "Passthrough Mapping" as the Mapping Type.
+    The nodes will be colored with the <b>Node Count Fill Color</b>.
+    </p>
+
+    <p>
+    The <b>Data File Download</b> tab also provides files for 1) the UniProt
+    ID-Color-Cluster Number mapping table, 2) ID Lists and FASTA Files for each
+    cluster, 3) cluster sizes, and 4) SwissProt annotations for clusters and
+    singletons. 
+    </p>
+
+    <h4>Colored SSN</h4>
+
+    <p>
+    Each cluster in the submitted SSN has been identified and assigned a unique
+    number and color.
+    </p>
+
+    <p>
+    <a class="btn btn-primary" href="{{ page.ssnDownloadRoute }}">Download ZIP {{ page.displaySsnFileSize }}</a>
+    <!--<a class="btn btn-primary" href="{{ page.convergenceRatioRoute }}">Transfer to CR</a>-->
+    </p>
+
+    <h4>Supplementary Files</h4>
+
+    {% include 'efi-est/results/ssn_utility/download_table.html.twig' with { files: page.files } %}
+
+    <!--
+    <p>
+    <a class="btn btn-primary" href="{{ page.cgfpRoute }}">Run CGFP on Colored SSN</a>
+    </p>
+    -->
+</div>
+

@@ -1,0 +1,53 @@
+
+{% if mainFormId is defined %}
+    {% set externalFamilyUpdateAttr = {
+            'data-action': 'input->external-family-field#broadcast'|raw,
+            'data-controller': 'external-family-field',
+            'data-external-family-field-form-id-value': mainFormId,
+            'data-external-family-field-field-name-value': 'dbMetadata',
+            'class': 'form-select db-version-field',
+       }
+    %}
+{% else %}
+    {% set externalFamilyUpdateAttr = { } %}
+{% endif %}
+
+<div class="job-submit-input">
+    <div class="form-group">
+        <div class="mb-3">
+            {# Handle the case where there is no job name on the form #}
+            {% if form.jobName is defined %}
+                {% set current_value = form.jobName.vars.value %}
+                <div class="mt-3">
+                    <span class="input-heading">Job name:</span>
+                    {{ form_widget(form.jobName, {
+                        'value': current_value is not empty ? current_value : defaultJobName|default('')
+                    }) }}
+                </div>
+                <div class="submission-error">{{ form_errors(form.jobName) }}</div>
+            {% endif %}
+
+            {% if form.dbMetadata is defined %}
+                <div class="mt-3">
+                    <span class="input-heading">Database Version:</span>
+                    {{ form_widget(form.dbMetadata, { 'attr': externalFamilyUpdateAttr }) }}
+                </div>
+                <div class="submission-error">{{ form_errors(form.dbMetadata) }}</div>
+            {% endif %}
+
+            <div class="mt-3">
+                <span class="input-heading">E-mail:</span>
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="submission-error">{{ form_errors(form.email) }}</div>
+
+            <div class="mt-3">
+                <p>You will be notified by e-mail when your submission has been processed.</p>
+            </div>
+            <div class="submit-job-container">
+                <button type="submit" class="btn btn-primary">Submit Analysis</button>
+            </div>
+        </div>
+    </div>
+</div>
+

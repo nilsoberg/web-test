@@ -1,0 +1,38 @@
+
+<twig:plotly_result_chart
+    image_url="{{ result_image }}"
+    plot_url="{{ plot_url|default('') }}"
+    alt="Percent Identity vs Alignment Score"
+    chart_key="percent_identity"
+    job_number="{{ job_number|default(null) }}"
+/>
+
+{% if is_domain %}
+
+<p>This box plot describes the pairwise percent sequence identity as a function 
+of alignment score. </p>
+<p>Complementing the "Alignment Length vs Alignment Score Box Plot" (previous 
+box plot), this plot describes a monophasic increase in sequence identity with 
+full-length domains.  Referring to the " Alignment Length vs Alignment Score 
+Box Plot" (previous box plot), the monophasic increase in sequence identity 
+occurs as the alignment score increases at a constant alignment length.</p>
+<p>For the initial SSN, we recommend that an alignment score corresponding to 
+35 to 40% pairwise identity be entered in the "SSN Finalization" tab. </p>
+
+{% else %}
+
+<p>This box plot describes the pairwise percent sequence identity as a function 
+of alignment score. </p>
+<p>Complementing the "Alignment Length vs Alignment Score Box Plot" (previous 
+box plot), this box plot describes a monophasic increase in sequence identity 
+for single domain proteins or a multiphasic increase in sequence identity for 
+datasets with multidomain proteins (one phase for each fusion length). In the 
+"Alignment Length vs Alignment Score" box plot (previous box plot), a 
+monophasic increase in sequence identity occurs as the alignment score 
+increases at a constant alignment length; multiphasic increases occur as the alignment 
+score increases at additional longer constant alignment lengths. </p>
+<p>For the initial SSN, we recommend that an alignment score corresponding to 
+35 to 40% pairwise identity be entered in the "SSN Finalization" tab (for the 
+first phase in multiphasic plots). </p>
+
+{% endif %}

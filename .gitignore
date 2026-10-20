@@ -1,0 +1,48 @@
+
+###> symfony/framework-bundle ###
+/.env
+/.env.local
+/.env.local.php
+/.env.dev
+/.env.dev.local
+/.env.test
+/.env.test.local
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
+### Remove files added by the operating system
+.DS_Store
+**/.DS_Store
+
+### Remove files with sensitive information
+
+### Exclude files that have local installation-specific content
+templates/_local/*.html.twig
+templates/_local/email/*.txt.twig
+templates/_local/email/*.html.twig
+
+/config/instance.yaml
+
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

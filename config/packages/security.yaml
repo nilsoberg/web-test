@@ -1,0 +1,39 @@
+security:
+    password_hashers:
+        App\Auth\Entity\UserEntity:
+            algorithm: 'auto'
+    providers:
+        Auth_User_Provider:
+            id: App\Auth\Repository\UserRepository
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: Auth_User_Provider
+            form_login:
+                login_path: auth_login
+                check_path: auth_login
+                success_handler: App\Auth\Security\LoginSuccessHandler
+            logout:
+                path: auth_logout
+                target: auth_login
+            security: true
+            user_checker: App\Auth\Security\AccountActivationChecker
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ORG_ADMIN]
+        ROLE_ORG_ADMIN: [ROLE_DATA_ADMIN]
+        ROLE_DATA_ADMIN: [ROLE_ORG_MEMBER]
+        ROLE_ORG_MEMBER: [ROLE_USER]
+    access_control:
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/auth/reset-password, roles: PUBLIC_ACCESS }
+        # Prevent access to "public" mode user account routes if the site is in "private" mode
+        - { path: ^/p/auth, roles: IS_PUBLIC_MODE }
+        # Supports ROLE_SUPER_ADMIN and ROLE_ORG_ADMIN
+        - { path: ^/admin, roles: ROLE_DATA_ADMIN }
+        - { path: ^/webadmin, roles: ROLE_DATA_ADMIN }
+        # Require users to be fully authenticated for all other pages, if in "private" mode
+        # If in "public" mode, all pages are available
+        - { path: ^/, allow_if: "is_granted('IS_PUBLIC_MODE') or is_granted('ROLE_USER')" }

@@ -1,0 +1,19 @@
+services:
+    App\Auth\Service\GlobalRoleService:
+        public: true
+        autowire: true
+    App\Auth\Voter\FeatureVoter:
+        arguments:
+            $disabledFeatures: []
+        tags:
+            - { name: security.voter }
+    App\EventListener\JobDatabaseVersionListener:
+        arguments:
+            $strictMode: false
+    App\Tests\Factory\:
+        resource: '../tests/Factory/'
+        tags: ['foundry.factory']
+        autowire: true
+        autoconfigure: true
+    App\EventListener\RateLimitListener:
+        tags: []

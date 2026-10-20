@@ -1,0 +1,21 @@
+
+{% props summary_table = [], download_url = null %}
+
+{% if summary_table is not empty %}
+    <table class="pretty">
+        <tbody>
+            {% for row in summary_table %}
+                <tr>
+                    <td>{% if row.is_html %}{{ row.label }}{{ row.help|raw }}{% else %}{{ row.label }}{{ row.help|nl2br }}{% endif %}</td>
+                    <td>{% if row.is_html %}{{ row.value|raw }}{% else %}{{ row.value|nl2br }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if download_url %}
+        <a class="btn btn-primary" href="{{ download_url }}">Download Summary</a>
+    {% endif %}
+{% else %}
+    <p>No summary data available for this context.</p>
+{% endif %}
+

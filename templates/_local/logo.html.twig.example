@@ -1,0 +1,7 @@
+
+{# put logo here, for example:
+
+<a href="https://www.igb.illinois.edu"><img src="{{ asset('images/illinois_igb_full.png') }}" height="75" alt="Institute for Genomic Biology at University of Illinois at Urbana-Champaign logo"></a>
+
+#}
+

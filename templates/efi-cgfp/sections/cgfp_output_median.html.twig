@@ -1,0 +1,37 @@
+<div id="{{ prefix }}-{{ suffix }}-{{ ending }}">
+
+    <p>
+        The default is for ShortBRED to report the abundance of metagenome hits for
+        CD-HIT families using the "median method." The numbers of metagenome hits
+        identified by all of the markers for a CD-HIT consensus sequence are arranged
+        in increasing numerical order; the value for the median marker is used as the
+        abundance. This method assumes that the distribution of hits across the markers
+        for CD-HIT consensus sequence is uniform (expected if the metagenome sequencing
+        is "deep," i.e., multiple coverage). For seed sequences with an even number of
+        markers, the average of the two "middle" markers is used as the abundance. 
+    </p>
+
+    <p>Files detailing the abundance information are available for download.</p>
+
+    <h4>Raw Abundance Data</h4>
+
+    <p>
+        Raw results for the individual proteins in the SSN (Protein abundance data (median))
+        as well as summarized by SSN cluster (Cluster abundance data (median))
+        are provided.  Units are in reads per kilobase of sequence per million sample reads (RPKM).
+    </p>
+
+    {{ render(controller('App\\Home\\Controller\\DownloadController::renderDownloadTable', { 'keys': 'sbq_protein_abundance_median,sbq_cluster_abundance_median' })) }}
+
+    <h4>Average Genome Size-Normalized Abundance Data</h4>
+
+    <p>
+        Data are provided using Average Genome Size (AGS) normalization for
+        individual proteins in the SSN 
+        as well as summarized by SSN cluster.
+        Units are have been converted from RPKM to counts per microbial genome, using AGS estimated by MicrobeCensus.
+    </p>
+
+    {{ render(controller('App\\Home\\Controller\\DownloadController::renderDownloadTable', { 'keys': 'sbq_protein_abundance_genome_norm_median,sbq_cluster_abundance_genome_norm_median' })) }}
+ 
+</div>

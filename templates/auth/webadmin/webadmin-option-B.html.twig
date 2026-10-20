@@ -1,0 +1,181 @@
+<div id="WAoptionB">
+  <div class="container">
+
+      <p> This tool will provide a frontend solution for updating the version of the database across the website. </p>
+      <p> You can start by adding a new set of databases or editing an existing one. </p>
+      
+      {# Button to Add Publications #}
+      <div class="mb-3">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPublicationsModal">
+              Add Publications
+          </button>
+      </div>
+
+      {# Add Publications Modal #}
+      <div class="modal fade" id="addPublicationsModal" tabindex="-1" aria-labelledby="addPublicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="{{ path('publications_create') }}" method="post">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addPublicationsModalLabel">Add Publications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="_token" value="{{ csrf_token('create_publication') }}">
+                <div class="mb-3">
+                    <label for="author" class="form-label">Authors:</label>
+                    <input type="text" id="author" name="author" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" id="title" name="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="secondaryTitle" class="form-label">Secondary Title:</label>
+                    <input type="text" id="secondaryTitle" name="secondaryTitle" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="publisher" class="form-label">Publisher:</label>
+                    <input type="text" id="publisher" name="publisher" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year:</label>
+                    <input type="text" id="year" name="year" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="edition" class="form-label">Edition:</label>
+                    <input type="text" id="edition" name="edition" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="number" class="form-label">Number:</label>
+                    <input type="text" id="number" name="number" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="pages" class="form-label">Pages:</label>
+                    <input type="text" id="pages" name="pages" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="url" class="form-label">URL:</label>
+                    <input type="text" id="url" name="url" class="form-control" required>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {# Table of existing publications #}
+      <div class="table-container">
+          <br>
+          <h4>Publications</h4>
+          <br>
+          <table class="publications-table table table-striped">
+              <thead>
+                  <tr>
+                      <th>Author</th>
+                      <th>Title</th>
+                      <th>Secondary Title</th>
+                      <th>Publisher</th>
+                      <th>Year</th>
+                      <th>Edition</th>
+                      <th>Number</th>
+                      <th>Pages</th>
+                      <th>URL</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for publication in publications %}
+                      <tr>
+                          <td>{{ publication.author }}</td>
+                          <td>{{ publication.title }}</td>
+                          <td>{{ publication.secondaryTitle }}</td>
+                          <td>{{ publication.publisher }}</td>
+                          <td>{{ publication.year }}</td>
+                          <td>{{ publication.edition }}</td>
+                          <td>{{ publication.number }}</td>
+                          <td>{{ publication.pages }}</td>
+                          <td>{{ publication.url }}</td>
+                          <td>
+                              {# Edit Modal #}
+                              <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#editPublicationsModal-{{ publication.id }}">
+                                  Edit
+                              </button>
+                              {# Delete Form #}
+                              <form action="{{ path('publications_delete', {id: publication.id}) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this publication?');" class="d-inline">
+                                  <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ publication.id) }}">
+                                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                              </form>
+                          </td>
+                      </tr>
+
+                      {# Edit Publications Modal #}
+                      <div class="modal fade" id="editPublicationsModal-{{ publication.id }}" tabindex="-1" aria-labelledby="editPublicationsModal-{{ publication.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form action="{{ path('publications_edit', {id: publication.id}) }}" method="post">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="editPublicationsModal-{{ publication.id }}">Edit Publication #{{ publication.id }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="author-{{ publication.id }}" class="form-label">Authors:</label>
+                                    <input type="text" id="author-{{ publication.id }}" name="author" class="form-control" value="{{ publication.author }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="title-{{ publication.id }}" class="form-label">Title:</label>
+                                    <input type="text" id="title-{{ publication.id }}" name="title" class="form-control" value="{{ publication.title }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="secondaryTitle-{{ publication.id }}" class="form-label">Secondary Title:</label>
+                                    <input type="text" id="secondaryTitle-{{ publication.id }}" name="secondaryTitle" class="form-control" value="{{ publication.secondaryTitle }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="publisher-{{ publication.id }}" class="form-label">Publisher:</label>
+                                    <input type="text" id="publisher-{{ publication.id }}" name="publisher" class="form-control" value="{{ publication.publisher }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="year-{{ publication.id }}" class="form-label">Year:</label>
+                                    <input type="text" id="year-{{ publication.id }}" name="year" class="form-control" value="{{ publication.year }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edition-{{ publication.id }}" class="form-label">Edition:</label>
+                                    <input type="text" id="edition-{{ publication.id }}" name="edition" class="form-control" value="{{ publication.edition }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="number-{{ publication.id }}" class="form-label">Number:</label>
+                                    <input type="text" id="number-{{ publication.id }}" name="number" class="form-control" value="{{ publication.number }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pages-{{ publication.id }}" class="form-label">Pages:</label>
+                                    <input type="text" id="pages-{{ publication.id }}" name="pages" class="form-control" value="{{ publication.pages }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="url-{{ publication.id }}" class="form-label">URL:</label>
+                                    <input type="text" id="url-{{ publication.id }}" name="url" class="form-control" value="{{ publication.url }}" required>
+                                </div>
+                                {# CSRF token handler #}
+                                <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ publication.id) }}">
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                  {% else %}
+                      <tr>
+                          <td colspan="9">No publications found.</td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

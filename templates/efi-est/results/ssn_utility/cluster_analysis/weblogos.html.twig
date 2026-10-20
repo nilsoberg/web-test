@@ -1,0 +1,78 @@
+
+<div>
+    <div>
+        If the WebLogo is missing for Node Cluster 1 (and additional clusters with large numbers of
+        nodes), repeat the job with a "Maximum Node Count" in the Sequence Filter input window.
+        MUSCLE can fail with a "large" number of sequences (variable, anywhere from &gt;750 to
+        &gt;1500).
+    </div>
+
+    <h4>WebLogos</h4>
+
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col-3">
+                <a href="{{ page.weblogos.zipDownloadUrl }}" class="btn btn-sm btn-primary">Download All (ZIP)</a>
+            </div>
+            <div class="col-7 text-start">
+                WebLogos for FASTA cluster (full length sequences)
+            </div>
+            <div class="col-2">
+                {{ page.weblogos.zipDownloadSize }}
+            </div>
+        </div>
+        <div class="row align-items-center my-2">
+            <div class="col-3">
+                <a href="{{ page.weblogos.pimZipDownloadUrl }}" class="btn btn-sm btn-primary">Download All (ZIP)</a>
+            </div>
+            <div class="col-7 text-start">
+                Percent Identity Matrix for FASTA cluster (full length sequences)
+            </div>
+            <div class="col-2">
+                {{ page.weblogos.pimZipDownloadSize }}
+            </div>
+        </div>
+    </div>
+
+    <div>
+        {% for row in page.weblogos.weblogos %}
+            {% set items = {
+                'Full': row.full,
+                'Domain': row.domain,
+            } %}
+            <div>
+                <h4>{{ row.clusterName }}</h4>
+                <div class="my-2 text-muted">
+                    Number of IDs:
+                    {% if row.numUniprotIds %}
+                        UniProt: {{ row.numUniprotIds }}
+                    {% endif %}
+                    {% if row.numUniref90Ids %}
+                        | UniRef90: {{ row.numUniref90Ids }}
+                    {% endif %}
+                    {% if row.numUniref50Ids %}
+                        | UniRef50: {{ row.numUniref50Ids }}
+                    {% endif %}
+                </div>
+
+                <div class="container px-0 mt-3">
+                    {% for label, item in items %}
+                        {% if item %}
+                            <div class="mb-2"><b>{{ label }} Sequences</b></div>
+                            <div>
+                                <div>
+                                    <a href="{{ item.msaDownloadUrl }}" class="btn btn-sm btn-primary">MSA <i class="bi bi-download"></i></a>
+                                    <a class="mx-3 btn btn-sm btn-primary" href="{{ item.imageDownloadUrl }}">PNG <i class="bi bi-download"></i></a>
+                                </div>
+                                <div>
+                                    <img src="{{ item.imagePath }}" width="100%" loading="lazy" />
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+

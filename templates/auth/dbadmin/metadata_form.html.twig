@@ -1,0 +1,94 @@
+
+{% extends "auth/core.html.twig" %}
+
+{% block title %}Register New Database{% endblock %}
+
+{% block auth_content %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <fieldset>
+            <legend class="h5 mb-3 border-bottom pb-2">Database Details</legend>
+            <div class="mb-3">
+                {{ form_row(form.publicName) }}
+                {{ form_errors(form.publicName) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.dbName, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.dbName, {'attr': {'class': 'form-control'}}) }}
+                <div class="form-text">{{ form_help(form.dbName) }}</div>
+                {{ form_errors(form.dbName) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_row(form.isActive) }}
+            </div>
+
+            {% if form.isPublic is defined %}
+                <div class="mb-3">
+                    {{ form_row(form.isPublic) }}
+                    <div class="form-text">When checked, this database bypasses multi-tenant restrictions and becomes visible globally to public users.</div>
+                </div>
+            {% endif %}
+
+            {% if form.organization is defined %}
+                <div class="mb-3 border-top pt-3">
+                    {{ form_label(form.organization, null, {'label_attr': {'class': 'form-label fw-bold text-danger'}}) }}
+                    {{ form_widget(form.organization, {'attr': {'class': 'form-select'}}) }}
+                    <div class="form-text text-muted">If the database is public, then leave this unspecified.</div>
+                    {{ form_errors(form.organization) }}
+                </div>
+            {% endif %}
+
+            {% if form.metagenomes is defined %}
+                <div class="mb-3">
+                    {{ form_row(form.metagenomes) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(form.metadata) }}
+                </div>
+            {% endif %}
+            <div class="mb-3">
+                {{ form_row(form.description) }}
+            </div>
+        </fieldset>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    {{ form_end(form) }}
+
+    {% if database is defined and form.metagenomes is not defined %}
+        {% if database.organization and database.organization.defaultDatabase !== database and database.isActive and not database.isPublic %}
+            <div class="mt-5">
+                {# Form button action to make this variant the organizational default #}
+                {{ form_start(set_org_default_form) }}
+                    <button type="submit" class="btn btn-warning">Make Org Default</button>
+                {{ form_end(set_org_default_form) }}
+            </div>
+        {% elseif database.organization and database.organization.defaultDatabase === database and database.isActive and not database.isPublic %}
+            <div class="mt-5">
+                <b>Database is organization default</b>
+            </div>
+        {% elseif database.organization is null and database.isPublic %}
+            {% if database_is_public_default %}
+                <div class="mt-5">
+                    <b>Database is public default</b>
+                </div>
+            {% else %}
+                <div class="mt-5">
+                    {{ form_start(set_public_default_form) }}
+                        <button type="submit" class="btn btn-warning">Make Public Default</button>
+                    {{ form_end(set_public_default_form) }}
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    <div class="mt-5">
+        <a href="{{ path('app_admin_db_index') }}">Back to list</a>
+    </div>
+{% endblock %}
+

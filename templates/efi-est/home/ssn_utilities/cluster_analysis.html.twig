@@ -1,0 +1,165 @@
+
+{% embed '_partials/conditional_parent_or_file_form_wrapper.html.twig' with {
+    'form': estCAForm,
+    'form_name': 'estCAForm',
+    'job_type_config': 'ClusterAnalysis-form'
+} %}
+
+    {% block description %}
+        <p style="color: red">
+        <b>
+        An input SSN from the EFI-EST FASTA option should be generated using "Read
+        FASTA headers" from FASTA files with UniProt IDs in the headers.  Otherwise,
+        sets of IDs and sequences, MSAs, WebLogos, HMMs, consensus residues, and length
+        histograms will not be generated.
+        </b>
+        </p>
+
+        <p>
+        <b>
+        Like the Color SSN utility, clusters in the submitted SSN are identified, 
+        numbered and colored.
+        </b>
+        </p>
+
+        <p>
+        The SSN clusters are numbered and colored using two conventions:
+        <b>Sequence Count Cluster Numbers</b>
+        are assigned in order of decreasing number of UniProt IDs in 
+        the cluster; <b>Node Count Cluster Numbers</b> are assigned in order of decreasing 
+        number of nodes in the cluster. 
+        </p>
+
+        <p>
+        <b>
+        Multiple sequence alignments (MSAs), WebLogos, hidden Markov models (HMMs), 
+        length histograms, and consensus residues are computed for each cluster. 
+        </b>
+        </p>
+
+        <p>
+        Options are available in the tabs below to select the desired analyses:
+        </p>
+
+        <p>
+        The <b>WebLogos</b> tab provides the WebLogo and MSA for the node IDs in each cluster 
+        containing greater than the "<b>Minimum Node Count</b>" specified in the
+        <b>Sequence Filter</b> tab.
+        The percent identity matrix for the MSA is also provided on this tab.
+        </p>
+
+        <p>
+        The <b>Consensus Residues</b> tab provides a tab-delimited text file with the number 
+        of the conserved residues and their MSA positions for each specified residue in 
+        each cluster containing greater than the "<b>Minimum Node Count</b>".  Note the 
+        default residue is "C" and the percent identity levels that are displayed are 
+        from 90 to 10% in intervals of 10%; a residue is counted as "conserved" if it 
+        occurs with &ge;80% identity.
+        </p>
+
+        <p>
+        The <b>HMMs</b> tab provides the HMM for each cluster containing greater than the 
+        specified "<b>Minimum Node Count</b>". 
+        </p>
+
+        <p>
+        The <b>Length Histograms</b> tab provides length histograms for each cluster 
+        containing greater than the specified "<b>Minimum Node Count</b>". 
+        </p>
+    {% endblock %}
+
+    {% block additional_fields %}
+        <div data-controller="accordion" data-accordion-initially-open-value="true">
+            <h3>Sequence Filter</h3>
+            <div class="accordion-content">
+                <div>
+                    <p>
+                     The MSA is generated with MUSCLE using the node IDs. Clusters
+                     containing less than the Minimum Node Count will be excluded
+                     from the analyses. Since MUSCLE can fail with a "large" number
+                     sequences (variable; anywhere from >750 to 1500), the Maximum
+                     Node Count parameter can be used to limit the number of
+                     sequences that MUSCLE uses.
+                    </p>
+                </div>
+                <div>
+                    <span class="input-name">Minimum Node Count:</span>
+                    <span class="input-field">
+                        {{ form_widget(estCAForm.minNumSequences) }}
+                    </span>
+                    <label for="{{ estCAForm.minNumSequences.vars.id }}">Minimum number of nodes in order to include a cluster in the computations [default: {{ app_constants.DEFAULT_MIN_NUM_SEQUENCES }}].</label>
+                </div>
+                <div class="submission-error">{{ form_errors(estCAForm.minNumSequences) }}</div>
+                <div>
+                    <span class="input-name">Maximum Node Count:</span>
+                    <span class="input-field">
+                        {{ form_widget(estCAForm.maxNumSequences) }}
+                    </span>
+                    <label for="{{ estCAForm.maxNumSequences.vars.id }}">Maximum number of nodes to include in the MSA [default: no maximum].</label>
+                </div>
+                <div class="submission-error">{{ form_errors(estCAForm.maxNumSequences) }}</div>
+            </div>
+        </div>
+
+        <div data-controller="accordion">
+            <h3>WebLogos</h3>
+            <div class="accordion-content">
+                <div>
+                    <p>A MSA for the (length-filtered) node IDs is generated using MUSCLE; the WebLogo
+                    is generated with the <a href="http://weblogo.threeplusone.com">http://weblogo.threeplusone.com</a> code.</p>
+                </div>
+                <div>
+                    {{ form_row(estCAForm.makeWeblogo) }}
+                </div>
+            </div>
+        </div>
+
+        <div data-controller="accordion">
+            <h3>Consensus Residues</h3>
+            <div class="accordion-content">
+                <div>
+                    <p>The positions and selected percent identities of the selected residues in the MSA are determined.</p>
+                </div>
+                <div>
+                    <div>
+                        {{ form_row(estCAForm.computeConsensusResidues) }}
+                    </div>
+                    <div>
+                        {{ form_row(estCAForm.consensusResidues) }}
+                    </div>
+                </div>
+                <div>
+                    <span class="input-name">Percent Identity Thresholds:</span>
+                    {{ form_row(estCAForm.pidThresholds) }}
+                </div>
+            </div>
+        </div>
+
+        <div data-controller="accordion">
+            <h3>HMMs</h3>
+            <div class="accordion-content">
+                <div>
+                    <p>The MSA for the (length-filtered) node IDs is used to generate the HMM with
+                    <i>hmmbuild</i> from <a href="http://hmmer.org">HMMER3 (http://hmmer.org)</a>.</p>
+                </div>
+                <div>
+                    {{ form_row(estCAForm.makeHmms) }}
+                </div>
+            </div>
+        </div>
+
+        <div data-controller="accordion">
+            <h3>Length Histograms</h3>
+            <div class="accordion-content">
+                <div>
+                    <p>Length histograms for the node IDs (where applicable, UniProt, UniRef90, and UniRef50 IDs).</p>
+                </div>
+                <div>
+                    {{ form_row(estCAForm.makeLengthHistograms) }}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+{% endembed %}
+

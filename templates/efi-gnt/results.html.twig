@@ -1,0 +1,27 @@
+
+{% set page_subtitle = 'GNT' %}
+
+{% extends "efi-gnt/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Results</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+{% set datasetSummaryContent %}
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+{% endset %}
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'Submission Summary', content: datasetSummaryContent },
+    { id: 'gnn-files', label: 'Networks and GND', template: 'efi-gnt/results/gnn_files.html.twig' },
+    { id: 'other-files', label: 'Other Files', template: 'efi-gnt/results/other_files.html.twig' }
+] %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

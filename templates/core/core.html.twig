@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% if page_subtitle is defined %}EFI - {{ page_subtitle }}{% if page_job_id is defined %} / Job {{ page_job_id }}{% endif %}{% else %}{% if page_title is defined %}{{ page_title }}{% else %}Enzyme Function Initiative Tools{% endif %}{% endif %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon_efi.ico') }}" />
+
+        {% block importmap %}
+            {{ importmap('app') }}
+        {% endblock %}
+
+        {% block theme %}
+        {% endblock %}
+
+    </head>
+    <body>
+    {% if enable_website %}
+        {% include 'core/navmenus.html.twig' %}
+
+        <div class="main-container pb-5" data-turbo="false">
+            {# Can be overwritten if necessary, e.g. by admin/auth pages #}
+            {% block content_header %}
+                <div class="header">
+                    <div class="logo">
+                        <div class="logo-left">
+                            {% block logoleft %}
+                                {% if is_granted('FEATURE_ACTIVE', 'header_logo_links') %}<a href="{{ path('home') }}">{% endif %}
+                                    <img src="{{ asset('images/efi_logo.png') }}" height="75" alt="Enzyme Function Initiative Logo">
+                                {% if is_granted('FEATURE_ACTIVE', 'header_logo_links') %}</a>{% endif %}
+                            {% endblock %}
+                        </div>
+                        <div class="logo-right">
+                            {# Right logo on the header; can be overwritten by pages if necessary #}
+                            {% block logoright %}
+                                {% include('core/logo.html.twig') %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+            <div class="content">
+            {# Shows heading, page info, titles, etc.  Can be overwritten if necessary, e.g. by admin/auth pages #}
+                {% block pre_content %}
+                    <h1 class="ruled">{% block tool_title %}{% endblock %}</h1>
+
+                    {% if show_funding %}
+                    {% include 'core/funding.html.twig' %}
+                    {% endif %}
+
+                    {{ render(controller('App\\Home\\Controller\\HomeController::render_global_notice')) }}
+
+                    {% if show_citation %}
+                    {% include 'core/citation.html.twig' %}
+                    {% endif %}
+
+                    {% if not enable_submission %}
+                    {% include('_partials/disabled_submission.html.twig') %}
+                    {% endif %}
+                {% endblock %}
+
+                {# This should always be used by all pages #}
+                {% block content %}
+                {% endblock %}
+            </div>
+
+            {# Shows footer, links etc.  Can be overwritten if necessary, e.g. by admin/auth pages #}
+            {% block content_footer %}
+            <div>
+                <p class="suggestions"><a href="/feedback">Click here to contact us for help, reporting issues, or suggestions.</a></p>
+                {% include 'core/footer.html.twig' %}
+            </div>
+            {% endblock %}
+        </div>
+
+        {# Scripts can be included here; however any type the scripts block is used 'parent()' must be the first line in the block #}
+        {% block scripts %}
+            <script>
+                const scrollToFirstError = () => {
+                    const errorElement = document.querySelector('.is-invalid');
+                    if (errorElement) {
+                        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                };
+                document.addEventListener('DOMContentLoaded', scrollToFirstError);
+                document.addEventListener('turbo:render', scrollToFirstError);
+            </script>
+        {% endblock %}
+    {% else %}
+        {% include 'core/maintenance.html.twig' %}
+    {% endif %}
+    </body>
+</html>

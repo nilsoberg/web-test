@@ -1,0 +1,228 @@
+
+/* TABLE *************************************************************************************************************/
+
+table.pretty {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    width: 100%;
+    display: table;
+/*    table-layout: fixed;*/
+}
+
+table.pretty td, table.pretty th {
+    border-left: 1px solid #aaa;
+    margin: 0;
+    padding: 7px;
+}
+
+table.pretty th {
+    background-color: #bbb;
+}
+
+table.pretty tr:nth-of-type(even) td {
+    background-color: #eee;
+}
+
+table.no-stretch tr td:first-child {
+    width: 1%;
+    white-space: nowrap;
+}
+
+/* Same as pretty but without the alternating row colors since we will handle that manually. */
+table.pretty-nested {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    width: 100%;
+}
+
+table.pretty-nested td, table.pretty-nested th {
+    border-left: 1px solid #aaa;
+    margin: 0;
+    padding: 7px;
+}
+
+table.pretty-nested th {
+    background-color: #bbb;
+}
+
+/* Widget-specific styles */
+
+table.job-table .id-col {
+    width: 1%;
+    white-space: nowrap;
+}
+
+table.job-table .type-col {
+    width: 1%;
+    white-space: nowrap;
+}
+
+table.job-table .date-col {
+    width: 1%;
+    white-space: nowrap;
+}
+
+table.job-table .min-width {
+    width: 1%;
+    white-space: nowrap;
+}
+
+table.job-table .job-name {
+    width: auto;
+}
+
+table.tutorial {
+    border-bottom: 1px darkgray solid;
+}
+
+
+
+
+table.pretty td.file-header-row {
+    font-weight: bold;
+    height: 40px;
+    font-size: 1.15em;
+    border: 0;
+    background-color: white;
+}
+
+table.pretty td.file-header-row-first {
+    border-top: 0;
+}
+
+table.no-border {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+}
+
+tr.file-row {
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
+
+tbody.file-group {
+    border: 1px solid #aaa;
+}
+
+table.tbl-center td {
+    text-align: center;
+}
+
+table.tbl-center th {
+    text-align: center;
+}
+
+
+
+.table td.actions {
+    width: 150px;
+}
+
+div.summary-date-row {
+    color: gray;
+    font-size: 0.85em;
+}
+
+.status-pill.child-job {
+    font-style: italics;
+    color: gray;
+}
+
+@keyframes status-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(13, 110, 253, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0); }
+}
+
+.status-pill {
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.status-failed   { background-color: #ffc107; color: #121212; }
+.status-running  { background-color: #839fd8; color: #121212; animation: status-pulse 2s infinite; }
+.status-new      { background-color: #e2e3e5; color: #121212; }
+
+.status-finished {
+    background-color: #b9dfd1;
+    color: #222222; 
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+}
+
+table.job-table tr:hover .status-finished {
+	opacity: 1;
+    background-color: #a7d5c4;
+    color: #222222;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.hourglass-flip {
+    display: inline-block;
+    animation: flip-half 2s infinite ease-in-out;
+    /* Adding weight to the icon as we discussed */
+    -webkit-text-stroke: 0.5px currentColor;
+}
+
+@keyframes flip-half {
+    0% { transform: rotate(0deg); }
+    20% { transform: rotate(0deg); }   /* Pause at the start */
+    80% { transform: rotate(180deg); } /* Do the flip */
+    100% { transform: rotate(180deg); } /* Pause at the end */
+}
+
+.btn-action {
+    /* Resets Bootstrap's rounded corners */
+    border-radius: 0 !important; 
+    
+    /* Forces a perfect square */
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    
+    /* Centers the icon perfectly */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Subtle border-only look to contrast with solid badges */
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: #555;
+    
+    transition: all 0.15s ease-in-out;
+}
+
+.btn-action:hover {
+    color: #0d6efd;
+    background-color: #e0e4e8 !important; /* Soft blue-grey tint */
+    border-radius: 4px; /* Or 50% for a circle */
+    border-color: #d1d9e0 !important;
+}
+
+/* For the Delete/Cancel action specifically */
+.btn-delete:hover {
+    color: #dc3545 !important;
+    background-color: #ede2e2 !important;
+    border-color: #f5c2c7 !important;
+}
+
+.job-color-est { }
+.job-color-analysis { }
+.job-color-gnt { }
+.job-color-cgfp { }
+.job-color-taxonomy { }
+.job-color-colorssn { color: chocolate; }
+.job-color-default { }

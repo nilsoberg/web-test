@@ -1,0 +1,56 @@
+
+{% set page_subtitle = 'EST Dataset Completed' %}
+
+{% extends "efi-est/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Dataset Completed</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+<p>
+A minimum sequence similarity threshold that specifies the sequence pairs
+connected by edges is needed to generate the SSN. This threshold also
+determines the segregation of proteins into clusters. The threshold is applied
+to the edges in the SSN using the alignment score, an edge node attribute that
+is a measure of the similarity between sequence pairs.  </p>
+
+{% include '_partials/app_flashes.html.twig' %}
+
+
+{# Set up and display tabs #}
+
+{% set datasetSummaryContent %}
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+{% endset %}
+
+{% set sunburstContent %}
+    {% include '_partials/taxonomy_sunburst.html.twig' with { job_type: page.jobType } %}
+    <twig:sunburst params="{{ page.sunburstParams }}" id="{{ page.id }}" key="{{ page.key }}" />
+{% endset %}
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'Dataset Summary', content: datasetSummaryContent },
+    { id: 'sunburst', label: 'Taxonomy Sunburst', content: sunburstContent },
+    { id: 'DatasetAnalysis', label: 'Dataset Analysis', template: 'efi-est/results/dataset_analysis.html.twig' },
+] %}
+
+{% if is_granted('JOB_SUBMISSION') %}
+    {% set resultsTabs = resultsTabs|merge([
+        { id: 'SsnFinalization', label: 'SSN Finalization', template: 'efi-est/results/ssn_finalization.html.twig' }
+    ]) %}
+{% endif %}
+
+{% if page.createdSsns is not empty %}
+    {% set resultsTabs = resultsTabs|merge([
+        { id: 'CreatedSsns', label: 'Created SSNs', template: 'efi-est/results/created_ssns.html.twig', context: { ssns: page.createdSsns } }
+    ]) %}
+{% endif %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

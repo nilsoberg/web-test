@@ -1,0 +1,42 @@
+
+{% if is_granted('ROLE_ORG_ADMIN') %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const jobDetailsModal = document.getElementById('jobDetailsModal');
+            if (jobDetailsModal) {
+                const modalTitle = jobDetailsModal.querySelector('.modal-title');
+                const modalBody = jobDetailsModal.querySelector('.modal-body');
+                const loadingSpinner = `<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>`;
+
+                jobDetailsModal.addEventListener('show.bs.modal', async function (event) {
+                    // Button that triggered the modal
+                    const button = event.relatedTarget;
+                    // Extract info from data-bs-* attributes
+                    const jobId = button.getAttribute('data-job-id');
+                    const jobUrl = button.getAttribute('data-job-details-url');
+                    
+                    // Set initial loading state
+                    modalTitle.textContent = 'Loading Job #' + jobId + '...';
+                    modalBody.innerHTML = loadingSpinner;
+
+                    try {
+                        // Update the modal's content.
+                        const response = await fetch(jobUrl);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const data = await response.json();
+
+                        modalTitle.innerHTML = `Details for <span class="badge bg-info">${data.className}</span> Job #${data.jobId}`;
+                        modalBody.innerHTML = data.html;
+                    } catch (error) {
+                        console.error('Error fetching job details:', error);
+                        modalTitle.textContent = 'Error';
+                        modalBody.innerHTML = '<p class="text-danger">Could not load job details. Please try again.</p>';
+                    }
+                });
+            }
+        });
+    </script>
+{% endif %}
+

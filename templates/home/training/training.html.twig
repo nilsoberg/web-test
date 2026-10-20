@@ -1,0 +1,86 @@
+{% extends "core/core.html.twig" %}
+{% block theme %}
+    <style>
+
+        h1 {
+            color: #7A0026FF;
+        }
+
+        h1.ruled {
+            border-bottom-color: #7A0026FF;
+        }
+
+        a {
+            color: #7A0026FF;
+        }
+
+    </style>
+
+{% endblock %}
+{# Left Logo on the Header #}
+{% block logoleft %}
+    <a href="/">
+        <img src="images/efi_logo.png" height="75" alt="Enzyme Function Initiative Logo">
+    </a>
+{% endblock %}
+{# Right Logo on the Header #}
+{% block logoright %}
+    <a href="https://www.igb.illinois.edu">
+        <img src="images/illinois_igb_full.png" height="75" alt="Institute for Genomic Biology at University of Illinois at Urbana-Champaign logo">
+    </a>
+{% endblock %}
+
+{% block content %}
+{# Content Division #}
+    <div class="content">
+        {% include 'core/header.html.twig' %}
+        {% include 'core/citation.html.twig' %}
+        {% include 'core/update.html.twig' %}
+        {% include 'home/training/training-tabs.html.twig' %}
+        
+        {# Scripts applied to the Training Tabs #}
+        <script>
+            $(function() {
+                $("#tabs").tabs({
+                    activate: function(event, ui) {
+                        var activeTab = ui.newPanel.attr('id');
+
+                        if (activeTab === "TRAININGoptionD") {
+                            $("#TRAININGoptionD-subtab-1-section-1,#TRAININGoptionD-subtab-1-section-2,#TRAININGoptionD-subtab-1-section-3,#TRAININGoptionD-subtab-1-section-4,#TRAININGoptionD-subtab-1-section-5,#TRAININGoptionD-subtab-1-section-6,#TRAININGoptionD-subtab-1-section-7,#TRAININGoptionD-subtab-1-section-8").accordion({
+                                collapsible: true,
+                                active: false
+                            });
+                        }
+                    }
+                });
+
+                $("#TRAININGoptionD-subtabs").tabs({
+                    activate: function(event, ui) {
+                        var activeTab = ui.newPanel.attr('id');
+                        if (activeTab === "TRAININGoptionD-subtab-1") {
+                            $("#TRAININGoptionD-subtab-1-section-1").accordion({
+                                collapsible: true,
+                                active: false
+                            });
+                        }
+                        if (activeTab === "TRAININGoptionD-subtab-2") {
+                            $("#TRAININGoptionD-subtab-2-section-1,#TRAININGoptionD-subtab-2-section-2,#TRAININGoptionD-subtab-2-section-3,#TRAININGoptionD-subtab-2-section-4,#TRAININGoptionD-subtab-2-section-5").accordion({
+                                collapsible: true,
+                                active: false
+                            });
+                        }
+                    }
+                });
+
+                $("#TRAININGoptionD-subtabs").tabs({});
+
+
+            });
+        </script>
+
+        {# End of Scripts applied to the Training Tabs #}
+
+        {# End of Training UI Tabs #}
+        <p class="suggestions"><a href="/feedback">Click here to contact us for help, reporting issues, or suggestions.</a></p>
+    </div>
+{% endblock %}

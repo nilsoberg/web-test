@@ -1,0 +1,23 @@
+{% extends "efi-est/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Download Network Files</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+<div id="tabs" class="page-tabs" data-controller="tabs">
+    <ul>
+        <li><a href="#summary-table">SSN Overview</a></li>
+        <li><a href="#download">Data File Download</a></li>
+    </ul>
+    
+    <div id="summary-table">
+        <h4>Submission Summary</h4>
+        <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+    </div>
+    <div id="download">
+    </div>
+</div>
+
+{% endblock %}
+

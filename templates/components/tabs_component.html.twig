@@ -1,0 +1,43 @@
+
+{# 
+   Expected variables:
+   - tabs: Array of objects { id: string, label: string, content: string/html }
+   - activeIndex: Integer (default 0)
+   - nestedActiveIndex: Integer (default -1)
+   - nestedTarget: String (default '')
+   - content: String
+   - template: String (path to template file)
+   - context: Array of objects
+
+   Either content or template must be specified but not both.
+#}
+
+{% set activeTab = activeIndex|default(0) %}
+
+<div class="page-tabs ui-tabs ui-widget ui-widget-content" data-controller="tabs"
+    data-tabs-active-value="{{ activeTab }}"
+    data-tabs-nested-active-value="{{ nestedActiveIndex|default(-1) }}"
+    data-tabs-nested-target-value="{{ nestedTarget|default('') }}"
+>
+    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+        {% for tab in tabs %}
+            {% set isActive = (loop.index0 == activeTab) %}
+
+            <li class="ui-tabs-tab ui-tab ui-state-default ui-corner-top {{ isActive ? 'ui-tabs-active ui-state-active' : '' }}">
+                <a href="#{{ tab.id }}" class="ui-tabs-anchor">{{ tab.label }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% for tab in tabs %}
+        {% set isActive = (loop.index0 == activeTab) %}
+
+        <div id="{{ tab.id }}" class="ui-tabs-panel ui-widget-content ui-corner-bottom" {{ isActive ? '' : 'style="display: none;"' }}>
+            {% if tab.content is defined and tab.content %}
+                {{ tab.content|raw }}
+            {% elseif tab.template is defined and tab.template %}
+                {% include tab.template with tab.context|default({}) %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>

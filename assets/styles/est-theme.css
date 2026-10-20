@@ -1,0 +1,7 @@
+h1 {
+    color: #7A0026FF;
+}
+
+h1.ruled {
+    border-bottom-color: #7A0026FF;
+}

@@ -1,0 +1,37 @@
+
+{% set page_subtitle = 'Markers Computation Results' %}
+
+{% extends "efi-cgfp/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Markers Computation Results</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+{% include '_partials/app_flashes.html.twig' %}
+
+
+{# Set up and display tabs #}
+
+{% set datasetSummaryContent %}
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+{% endset %}
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'Dataset Summary', content: datasetSummaryContent },
+    { id: 'markers', label: 'Identified Markers', template: 'efi-cgfp/identify/markers.html.twig' },
+] %}
+
+{% if is_granted('JOB_SUBMISSION') %}
+    {% set resultsTabs = resultsTabs|merge([
+        { id: 'select-quantify', label: 'Select Metagenomes for Marker Quantification', template: 'efi-cgfp/identify/select_quantify.html.twig' },
+    ]) %}
+{% endif %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

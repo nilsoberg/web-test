@@ -1,0 +1,26 @@
+
+<div>
+
+    <p>Upload a saved diagram data file for visualization.</p>
+
+	{{ form_start(viewGndForm) }}
+
+    <div>
+        <div><span class="input-heading">Select a file to upload:</span> {% include('_partials/upload_file_size_tooltip.html.twig') %}</div>
+        <div class="input-description">
+            <div>{{ form_widget(viewGndForm.gndFile) }}</div>
+        </div>
+        <div class="submission-error">{{ form_errors(viewGndForm.gndFile) }}</div>
+        <div class="input-description">
+            The acceptable format is a SQLite file downloaded from the Genome Neighborhood Diagram viewer (optionally zip-compressed).
+        </div>
+    </div>
+
+    <div>
+        <twig:job_submit_input form="{{ viewGndForm }}" />
+    </div>
+
+	{{ form_end(viewGndForm) }}
+
+</div>
+

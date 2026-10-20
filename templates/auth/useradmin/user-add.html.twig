@@ -1,0 +1,53 @@
+
+{% extends "auth/core.html.twig" %}
+
+{% block auth_content %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+<div {{ stimulus_controller('admin-elevate-form-visibility') }}
+     data-admin-elevate-form-visibility-admin-role-id-value="{{ admin_role_id }}">
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <legend class="h5 mb-3 border-bottom pb-2">User Details</legend>
+        {{ form_row(form.fullName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.timezone) }}
+        {% if form.passwordFields is defined %}
+            {{ form_row(form.passwordFields) }}
+        {% else %}
+            <div class="alert alert-info" role="status">
+                A temporary password will be generated and emailed to the user. The user must change it at first login.
+            </div>
+        {% endif %}
+
+        {% if form.devFeaturesEnabled is defined %}
+            {{ form_row(form.devFeaturesEnabled) }}
+        {% endif %}
+
+        {{ form_row(form.globalRole, {
+                'attr': {
+                    'data-admin-elevate-form-visibility-target': 'globalRole',
+                    'data-action': 'change->admin-elevate-form-visibility#toggle'
+                }
+            } ) }}
+
+        <div data-admin-elevate-form-visibility-target="primaryOrganizationWrapper">
+            {% if editor_super_admin %}
+                {{ form_row(form.primaryOrganization) }}
+            {% endif %}
+        </div>
+    </fieldset>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

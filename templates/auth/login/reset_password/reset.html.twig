@@ -1,0 +1,26 @@
+{% extends 'auth/login/base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Reset your password</h1>
+
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    {{ form_start(resetForm) }}
+        {% set passwordField = resetForm.passwordFields.plainPassword %}
+        <div class="form-group">
+            <div>
+                {{ form_widget(passwordField) }}
+            </div>
+            <div class="submission-error">
+                {{ form_errors(passwordField) }}
+            </div>
+        </div> 
+        <button class="btn btn-primary login-button">Reset password</button>
+    {{ form_end(resetForm) }}
+</div>
+{% endblock %}

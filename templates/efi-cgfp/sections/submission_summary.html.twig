@@ -1,0 +1,25 @@
+<div id="{{ prefix }}-{{ suffix }}">
+
+    <table class="pretty no-stretch" style="border-top: 1px solid #aaa;">
+        <tbody>
+            <tr><td>Input filename</td><td>{{ inputFilename }}</td></tr>
+            <tr><td>Minimum sequence length</td><td>{{ identifyMinSeqLen }}</td></tr>
+            <tr><td>Identify search type</td><td>{{ identifySearchType }}</td></tr>
+            <tr><td>Reference database</td><td>{{ identifyRefDb }}</td></tr>
+            <tr><td>CD-HIT identity for ShortBRED family definition</td><td>{{ cdhitSid }}</td></tr>
+            <tr><td>Quantify search type</td><td>{{ quantifySearchType }}</td></tr>
+            
+            <tr class="stats-row"><td>Number of SSN clusters</td><td>{{ numSsnClusters }}</td></tr>
+            <tr class="stats-row"><td>Number of SSN singletons</td><td>{{ numSsnSingletons }}</td></tr>
+            <tr class="stats-row"><td>SSN sequence source</td><td>{{ ssnSource }}</td></tr>
+            <tr class="stats-row"><td>Number of SSN (meta)nodes</td><td>{{ numSsnMetaNodes }}</td></tr>
+            <tr class="stats-row"><td>Number of accession IDs in SSN</td><td>{{ numAccessionIds }}</td></tr>
+            <tr class="stats-row"><td>Number of sequences after length filter</td><td>{{ numSeqAfterFilter }}</td></tr>
+            <tr class="stats-row"><td>Number of unique sequences in SSN after length filter</td><td>{{ numUniqueSeqAfterFilter }}</td></tr>
+            <tr class="stats-row"><td>Number of CD-HIT ShortBRED families</td><td>{{ numCdHitFamilies }}</td></tr>
+            <tr class="stats-row"><td>Number of markers</td><td>{{ numMarkers }}</td></tr>
+            <tr class="stats-row"><td>Number of consensus sequences with hits</td><td>{{ numConsensusHits }}</td></tr>
+        </tbody>
+    </table>
+
+</div>

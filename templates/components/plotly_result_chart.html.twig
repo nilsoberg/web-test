@@ -1,0 +1,15 @@
+{% if is_granted('FEATURE_ACTIVE', 'dynamic_plots') and plot_url is defined and plot_url %}
+    <twig:plotly_chart
+        plot_url="{{ plot_url }}"
+        fallback_image_url="{{ image_url }}"
+        fallback_alt="{{ alt }}"
+        height="{{ height|default('500px') }}"
+        chart_key="{{ chart_key|default('chart') }}"
+        job_number="{{ job_number|default(null) }}"
+    />
+{% else %}
+    <img src="{{ image_url }}" alt="{{ alt }}" width="800">
+    <div>
+        <a class="btn btn-primary" href="{{ image_url }}?download=1">Download high resolution</a>
+    </div>
+{% endif %}

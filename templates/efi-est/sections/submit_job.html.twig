@@ -1,0 +1,22 @@
+<div>
+
+    <table>
+        <tbody>
+            {% if job_name_field %}<tr>
+                <td><div class="input-heading">Job name:</div></td>
+                <td><div><input type="text" class="input-field-wide" id="{{ prefix }}-jobName" name="jobName" size="50%"></div></td>
+            </tr>{% endif %}
+
+            <tr>
+                <td><div class="input-heading">E-mail:</div>
+                <td><div><input type="text" class="input-field-wide" id="{{ prefix }}-email" name="email" size="50%" value="{{ user_email|e }}"></div></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p>You will be notified by e-mail when your submission has been processed.</p>
+    <div id="{{ prefix }}-submit-errors"></div>
+    <div>
+        <button type="button">Submit Analysis</button>
+    </div>
+</div>

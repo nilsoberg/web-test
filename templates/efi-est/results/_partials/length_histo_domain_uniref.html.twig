@@ -1,0 +1,18 @@
+
+<twig:plotly_result_chart
+    image_url="{{ result_image }}"
+    plot_url="{{ plot_url|default('') }}"
+    alt="Number of Sequences at Each Domain Length ({{ uniref_version|default('UniRef') }} Cluster IDs)"
+    chart_key="length_histogram"
+    job_number="{{ job_number|default(null) }}"
+/>
+
+<p>This histogram describes the domain length distribution of the UniRef 
+cluster IDs in the input dataset; the sequences in this histogram are used to 
+calculate the edges. </p>
+<p>The domains of the cluster IDs displayed do not accurately reflect the 
+distribution of domains in the input dataset (diverse sequences and lengths are 
+over-represented).  Therefore, this histogram is not used to determine the 
+lengths of full-length domains in the input dataset; these are determined from 
+the "Sequences as a Function of Domain Length Histogram for UniProt IDs" (first 
+histogram).</p>

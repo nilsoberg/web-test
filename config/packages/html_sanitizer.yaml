@@ -1,0 +1,16 @@
+
+framework:
+    html_sanitizer:
+        sanitizers:
+            notice_sanitizer:
+                allow_elements:
+                    - 'p'
+                    - 'b'
+                    - 'i'
+                    - 'br'
+                    - 'span'
+                    - 'a'
+                    - 'center'
+                allow_attributes:
+                    a: ['href', 'target', 'class']
+                    span: ['style', 'class'] # For inline font size/color overrides

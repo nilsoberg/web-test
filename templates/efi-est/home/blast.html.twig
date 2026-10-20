@@ -1,0 +1,103 @@
+
+<div class="job-form-container" data-job-type-config="ESTBlast-form">
+
+    <p class="tab-p-heading">Generate a SSN for a single protein and its closest homologues in the UniProt, UniRef90, or UniRef50 database.</p>
+
+    <p>
+    The input sequence is used as the query for a search of the UniProt, UniRef90, or UniRef50 database using BLAST. For
+    the UniRef90 and UniRef50 databases, the sequence of the cluster ID (representative sequence) is used for the BLAST.
+    </p>
+
+    <p>
+    The database is selected using the BLAST Retrieval Options.
+    </p>
+
+    <p>
+    An all-by-all BLAST <span data-toggle="tooltip" title="A BLAST with all retrieved sequences BLAST-ed against the same set of retrieved sequences.">{% include('_partials/question_mark.html.twig') %}</span>
+    is performed to obtain the similarities between sequence pairs to calculate edge values to generate the SSN. 
+    </p>
+
+    {{ form_start(estBlastForm) }}
+
+    <div class="input-description">
+        <span class="input-heading">Query Sequence:</span>
+        <div>
+            {{ form_row(estBlastForm.blastSequence, {'attr': {'class': 'blast-query'}}) }}
+        </div>
+        <div>
+            Input a single <b>protein sequence</b> only. The default maximum number of retrieved sequences is 1,000. A FASTA
+            header line is permitted at the top of the input.
+        </div>
+    </div>
+
+    <div id="ESTBlast-form-blast-retreival" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>BLAST Retrieval Options</h3>
+        <div class="accordion-content">
+            <twig:blast_parameters form="{{ estBlastForm }}" />
+            <div class="input-heading">Sequence database:</div>
+            <div class="input-description">
+                <twig:uniref_version form="{{ estBlastForm }}" useGlobalScope="true" familyFormId="ESTBlast-form" />
+            </div>
+            <div class="submission-error">{{ form_errors(estBlastForm.unirefVersion) }}</div>
+        </div>
+    </div>
+
+    <div id="ESTBlast-form-exclude-fragments" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Fragment Option</h3>
+        <div class="accordion-content">
+            <twig:exclude_fragments form="{{ estBlastForm.excludeFragments }}" />
+        </div>
+    </div>
+
+    <div id="ESTBlast-form-tax-search" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Filter by Taxonomy</h3>
+        <div class="accordion-content">
+            {% include('_partials/taxonomy_filtering_text.html.twig') %}
+
+            <twig:taxonomy_filtering filterForm="{{ estBlastForm.taxSearch }}" />
+
+            {# Ensure that Symfony doesn't render this field later #}
+            {% do estBlastForm.taxSearch.setRendered() %}
+        </div>
+    </div>
+
+    <div id="ESTBlast-form-ssn-edge-calc" data-controller="accordion">
+        <h3>SSN Edge Calculation Option</h3>
+        <div class="accordion-content">
+            <twig:ssn_edge_calc form="{{ estBlastForm.allByAllBlastEValue }}" />
+        </div>
+    </div>
+
+    <div id="ESTBlast-form-family-input" data-controller="accordion">
+        <h3>Protein Family Addition Options</h3>
+        <div class="accordion-content">
+            <twig:family_input form="{{ estBlastForm.familyInput }}" formId="ESTBlast-form" defaultDatabaseId="{{ defaultDatabaseId }}" />
+            <div>
+                <p>
+                UniRef90 clusters contain UniProt IDs that share &ge;90% sequence identity and have 80% overlap
+                with the longest sequence in the cluster ("seed sequence"); as a result, the UniProt IDs in
+                the cluster usually are functionally homogeneous, i.e., orthologues. UniRef50 clusters contain
+                UniProt IDs that share &ge;50% sequence identity and have 80% overlap with the seed sequence;
+                as a result, the UniProt IDs in the cluster often are functionally heterogeneous, e.g.,
+                paralogues.
+                </p>
+                <p>
+                The sequences from the UniRef90 and UniRef90 databases are the UniRef90 and UniRef50 clusters
+                for which the cluster ID ("representative sequence") matches the specified families. The
+                UniProt members in these UniRef90 and Uni/Ref50 clusters that do not match the specified
+                families are removed from the cluster. 
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <twig:est_dev_features form="{{ estBlastForm }}" form_elementid="ESTBlast-form" />
+
+    <div>
+        <twig:job_submit_input form="{{ estBlastForm }}" mainFormId="ESTBlast-form" />
+    </div>
+
+	{{ form_end(estBlastForm) }}
+
+</div>
+

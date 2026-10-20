@@ -1,0 +1,7 @@
+
+efi_gnd_viewer:
+    single_gnd:
+        enabled: true
+        driver: mysql
+        pdo: App\Service\GndMySQL
+

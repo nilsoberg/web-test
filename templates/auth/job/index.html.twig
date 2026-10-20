@@ -1,0 +1,43 @@
+{% extends "auth/core.html.twig" %}
+
+{% block auth_content %}
+<style>
+    .container { max-width: 960px; }
+    .table { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+</style>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Job List</h1>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Job Type</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.id }}</td>
+                        <td><span class="badge bg-secondary">{{ job.shortClassName }}</span></td>
+                        <td>{{ job.formattedStatus }}</td>
+                        <td>{{ job.timeCreated|date_skeleton('MMMdjm') }}</td>
+                        <td>
+                            <a href="{{ path('admin_job_details', {'id': job.id}) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No jobs found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

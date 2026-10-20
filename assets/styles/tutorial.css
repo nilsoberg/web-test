@@ -1,0 +1,32 @@
+/* Tutorial Styles */
+
+.tutorial-nav {
+    margin: 4px 6px 0 0;
+    float: left;
+    width: 25%;
+    text-transform: uppercase;
+}
+
+.tutorial-content {
+    margin-top: 4px;
+    float: left;
+    width: 74%;
+    padding-bottom: 10px;
+}
+
+.tutorial-nav li {
+    text-transform: uppercase;
+    list-style: none;
+    line-height: 120%;
+    margin-left: 0;
+    padding: 2px 0;
+    border-bottom: dotted #666 2px;
+}
+
+.tutorial-nav ul {
+    padding-left: 0;
+}
+
+.tutorial-nav ul ul {
+    padding-left: 20px;
+}

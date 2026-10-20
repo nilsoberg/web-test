@@ -1,0 +1,197 @@
+{% extends "core/core.html.twig" %}
+
+{% block theme %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon_efi.ico') }}" />
+    <title>EFI - Super Admin - Users</title>
+    <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/admintools.css') }}">
+
+{% endblock %}
+
+{% block logoleft %}
+    <a href="/">
+        <img src="{{ asset('images/efi_logo.png') }}" height="75" alt="Enzyme Function Initiative Logo">
+    </a>
+{% endblock %}
+{% block logoright %}
+    <a href="https://www.igb.illinois.edu">
+        <img src="{{ asset('images/illinois_igb_full.png') }}" height="75" alt="Institute for Genomic Biology at University of Illinois at Urbana-Champaign logo">
+    </a>
+{% endblock %}
+
+{% block auth_content %}
+    <div class="content" style="box-sizing: unset;">
+        {% include 'core/header.html.twig' %}
+        {% include 'auth/orgadmin/users-table.html.twig' %}
+        {% include 'auth/orgadmin/user-add.html.twig' %}
+
+        <p class="suggestions"><a href="/feedback">Click here to contact us for help, reporting issues, or suggestions.</a></p>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    {# Scripts #}
+
+    <script>
+        const organization = {{ organization|json_encode|raw }};
+        const editUserUrlTemplate = '{{ path("orgadmin_edit_user", {"id": "USER_ID_PLACEHOLDER"}) }}';
+        const manageUsersCsrfToken = '{{ csrf_token('manage_users') }}';
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTables
+            const userTable = $('#user-table').DataTable({
+                ajax: '{{ path("orgadmin_api_users") }}',
+                columns: [
+                    { data: 'user_id' },
+                    { data: 'first_name' },
+                    { data: 'last_name' },
+                    { data: 'email' },
+                    { 
+                        data: 'role_organizations',
+                        render: function(data, type, row) {
+                            if (!data || data.length === 0) {
+                                return 'N/A';
+                            }
+                            // Extract only the roles since organization will be the same for everything
+                            return data.map(pair => pair.role).join('<br>');
+                        }
+                    },
+                    { data: 'actions', orderable: false }
+                ]
+            });
+
+            // Show Add User Modal
+            $('#add-user').on('click', function () {
+                $('#addUserForm')[0].reset();
+                $('#rolesContainer').html(`
+                    <h5>Role</h5>
+                    <select class="form-control mb-3" name="selected_roles" required>
+                        <option value="">Select a role</option>
+                        <option value="ROLE_USER">User</option>
+                        <option value="ROLE_ORG_ADMIN">Organization Admin</option>
+                        <option value="ROLE_DATA_ADMIN">Data Admin</option>
+                    </select>
+                `);
+                $('#addUserModalLabel').text('Add User');
+                $('#userId').val('');
+                $('#addUserModal').modal('show');
+            });
+
+            $('#addUserForm').on('submit', function (e) {
+                e.preventDefault();
+                const userId = $('#userId').val();
+                let url = '{{ path("orgadmin_add_user") }}';
+                if (userId) {
+                    url = editUserUrlTemplate.replace('USER_ID_PLACEHOLDER', userId);
+                }
+
+                const formData = new FormData(this);
+
+                const data = new URLSearchParams(formData).toString();
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: data,
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    success: function () {
+                        $('#addUserModal').modal('hide');
+                        alert('User saved successfully!');
+                        userTable.ajax.reload();
+                    },
+                    error: function (xhr) {
+                        const errorMessage = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : 'Failed to save user.';
+                        alert(errorMessage);
+                    }
+                });
+            });
+
+            // Handle Delete User
+            $(document).on('click', '.delete-user', function () {
+                const userId = $(this).data('id');
+                if (confirm('Are you sure you want to delete this user?')) {
+                    $.ajax({
+                        url: '/orgadmin/api/users/delete/' + userId,
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-Token': manageUsersCsrfToken
+                        },
+                        success: function () {
+                            alert('User deleted successfully!');
+                            userTable.ajax.reload();
+                        },
+                        error: function () {
+                            alert('Failed to delete user.');
+                        }
+                    });
+                }
+            });
+
+            // Handle Recover User
+            $(document).on('click', '.recover-user', function () {
+                const userId = $(this).data('id');
+                $.ajax({
+                    url: '/orgadmin/api/users/recover/' + userId,
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-Token': manageUsersCsrfToken
+                    },
+                    success: function () {
+                        alert('User recovered successfully!');
+                        userTable.ajax.reload();
+                    },
+                    error: function () {
+                        alert('Failed to recover user.');
+                    }
+                });
+            });
+
+            // Handle Edit User
+            $(document).on('click', '.edit-user', function () {
+                const userId = $(this).data('id');
+
+                // Fetch the user data from DataTable
+                userTable.ajax.reload(function () {
+                    const rowData = userTable.row(function (idx, data, node) {
+                        return data.user_id == userId;
+                    }).data();
+
+                    if (!rowData) {
+                        alert('User not found.');
+                        return;
+                    }
+
+                    $('#addUserForm')[0].reset();
+                    $('#rolesContainer').html(`
+                        <h5>Role</h5>
+                        <select class="form-control mb-3" name="selected_roles" required>
+                            <option value="">Select a role</option>
+                            <option value="ROLE_USER" ${rowData.role_organizations[0].role === 'ROLE_USER' ? 'selected' : ''}>User</option>
+                            <option value="ROLE_ORG_ADMIN" ${rowData.role_organizations[0].role === 'ROLE_ORG_ADMIN' ? 'selected' : ''}>Organization Admin</option>
+                            <option value="ROLE_DATA_ADMIN" ${rowData.role_organizations[0].role === 'ROLE_DATA_ADMIN' ? 'selected' : ''}>Data Admin</option>
+                        </select>
+                    `);
+
+                    $('#addUserModalLabel').text('Edit User');
+                    $('#userId').val(rowData.user_id);
+                    $('#userFirstName').val(rowData.first_name);
+                    $('#userLastName').val(rowData.last_name);
+                    $('#userEmail').val(rowData.email);
+
+                    $('#addUserModal').modal('show');
+                }, false);
+            });
+        });
+    </script>
+
+{% endblock %}

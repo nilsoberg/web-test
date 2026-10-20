@@ -1,0 +1,32 @@
+
+<div>
+    <h4>Mapping Tables, FASTA Files, ID Lists, and Supplementary Files</h4>
+
+    <table class="pretty tbl-center">
+        <tbody>
+            {% if page.otherFiles.mappingTables is not empty %}
+                <tr><td colspan="3" style="border-width: 1px; font-size: 1.1em"><b>Mapping Tables</b></td></tr>
+                {% for file in page.otherFiles.mappingTables %}
+                    <tr>
+                        <td><a class="btn btn-primary btn-sm" href="{{ file.route }}">Download All (ZIP)</a></td>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.size }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            {% if page.otherFiles.miscDownloads is not empty %}
+                <tr><td colspan="3" style="border-width: 1px; font-size: 1.1em"><b>Miscellaneous Files</b></td></tr>
+                {% for file in page.otherFiles.miscDownloads %}
+                    <tr>
+                        <td><a class="btn btn-primary btn-sm" href="{{ file.route }}">Download</a></td>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.size }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+</div>
+

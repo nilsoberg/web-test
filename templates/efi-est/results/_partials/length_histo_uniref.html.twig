@@ -1,0 +1,13 @@
+
+<twig:plotly_result_chart
+    image_url="{{ result_image }}"
+    plot_url="{{ plot_url|default('') }}"
+    alt="Number of Sequences at Each Full Length ({{ uniref_version|default('UniRef') }} Cluster IDs)"
+    chart_key="length_histogram"
+    job_number="{{ job_number|default(null) }}"
+/>
+
+<p>This histogram describes the distribution of the full-length UniRef cluster 
+IDs in the input dataset. The sequences of the cluster IDs displayed do not 
+accurately reflect the distribution of fragments, single domain proteins, and 
+multidomain full-length proteins in the input dataset. </p>

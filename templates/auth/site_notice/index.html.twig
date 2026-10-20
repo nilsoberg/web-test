@@ -1,0 +1,88 @@
+
+{% set page_subtitle = 'Admin Banners' %}
+
+{% extends "auth/core.html.twig" %}
+
+{% block auth_content %}
+
+    {% include '_partials/app_flashes.html.twig' %}
+
+    <div class="container-fluid mt-4">
+        <h2>Site Banners</h2>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-dark text-white">Create New Notice</div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                            {{ form_row(form.message) }}
+                            <div class="my-3 form-check">
+                                {{ form_widget(form.isActive) }}
+                                {{ form_label(form.isActive) }}
+                            </div>
+                            <button class="btn btn-primary w-100">Publish / Save Entry</button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-secondary text-white">Notice Change History Log</div>
+                    <div class="table-responsive">
+                        <table class="table table-striped align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Created</th>
+                                    <th>Message Snippet</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in history %}
+                                <tr>
+                                    <td class="text-nowrap">{{ item.createdAt|date('Y-m-d H:i') }}</td>
+                                    <td class="text-truncate" style="max-width: 250px;">
+                                        <code>{{ item.message|e }}</code>
+                                    </td>
+                                    <td>
+                                        {% if item.isActive %}
+                                            <span class="badge bg-success">LIVE ON SITE</span>
+                                        {% else %}
+                                            <span class="badge bg-light text-dark">Archived</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <form action="{{ path('app_admin_notice_toggle', {id: item.id}) }}" method="POST" style="display:inline;">
+                                            <button type="submit" class="btn btn-sm {% if item.isActive %}btn-outline-danger{% else %}btn-outline-success{% endif %}">
+                                                {% if item.isActive %}Deactivate{% else %}Activate Live{% endif %}
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        {% if item.type == 'alert' %}
+                                            <span class="badge notice-style-alert">Alert</span>
+                                        {% else %}
+                                            <span class="badge notice-style-notice">Notice</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No historical records found.</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

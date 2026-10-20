@@ -1,0 +1,23 @@
+
+{% if form.vars.show_dev_features %}
+    <div id="{{ form_elementid }}-dev-feat" data-controller="accordion">
+        <h3>Advanced Features</h3>
+        <div class="accordion-content">
+            {% if form.axaSearchType is defined %}
+                <div class="mt-3">
+                    <span class="input-heading">All-by-All Search Type:</span>
+                    {{ form_widget(form.axaSearchType) }}
+                </div>
+                <div class="submission-error">{{ form_errors(form.axaSearchType) }}</div>
+            {% endif %}
+            {% if form.axaSearchSens is defined %}
+                <div class="mt-3">
+                    <span class="input-heading">All-by-All Search Sensitivity:</span>
+                    {{ form_widget(form.axaSearchSens) }}
+                </div>
+                <div class="submission-error">{{ form_errors(form.axaSearchSens) }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+

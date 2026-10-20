@@ -1,0 +1,55 @@
+{% extends 'auth/core.html.twig' %}
+
+{% block auth_content %}
+
+{% include 'auth/user_navbar.html.twig' %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role/Organization</th>
+                <th scope="col" class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in page.users %}
+            <tr{% if user.is_deleted %} class="text-secondary"{% endif %}>
+                <td>{{ user.full_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <b>{{ user.primary_org }}</b><br>
+                    <i>{{ user.role }}</i>
+                </td>
+                <td class="actions text-end">
+                    {% if user.is_deleted %}
+                        {{ form_start(user.restore_form) }}
+                            <button class="btn btn-success btn-sm">Restore</button>
+                        {{ form_end(user.restore_form) }}
+                    {% else %}
+                        <div style="display: inline-block">
+                            <form method="post" action="{{ path('useradmin_edit_user', {'id': user.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ user.id) }}">
+                                <button class="btn btn-primary btn-sm">Edit</button>
+                            </form>
+                        </div>
+                        {% if user.id != app.user.id %}
+                            <div style="display: inline-block">
+                                {{ form_start(user.delete_form) }}
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                {{ form_end(user.delete_form) }}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

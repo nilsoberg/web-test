@@ -1,0 +1,7 @@
+
+{% if notice %}
+<div class="site-notice-banner my-3 p-3 notice-style-{{ notice.type }}">
+        {# Allow only certain tags through; see the sanitizer for what is allowed #}
+        {{ notice.message|sanitize_html('notice_sanitizer')|raw }}
+    </div>
+{% endif %}

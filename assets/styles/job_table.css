@@ -1,0 +1,70 @@
+/* Standard Table Styles */
+table.pretty-nested {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #AAAAAAFF;
+    border-right: 1px solid #AAAAAAFF;
+}
+
+table.pretty-nested td, table.pretty-nested th {
+    border-left: 1px solid #AAAAAAFF;
+    padding: 7px;
+}
+
+table.pretty-nested th {
+    background-color: #BBBBBBFF;
+}
+
+/*
+table.pretty-nested tr:nth-of-type(even) td {
+    background-color: #EEEEEEFF;
+}
+*/
+
+/* Fixed Width for ID, Type, and Date Columns */
+table.pretty-nested th.id-col {
+    width: 60px;
+}
+
+table.pretty-nested th.type-col {
+    width: 200px;
+}
+
+table.pretty-nested th.date-col {
+    min-width: 150px;
+}
+
+
+
+
+table.job-table tr:nth-child(even) {
+    background-color: #DDDDDD;
+}
+
+table.job-table tr:nth-child(odd) {
+    background-color: #FFFFFF;
+}
+
+table.job-table tr td {
+}
+
+/* Job Metadata Formatting */
+.job-metadata {
+    font-weight: normal;
+}
+
+.job-name {
+    font-weight: bold;
+}
+
+
+table.pretty-nested tr td:first-child {
+    width: 1%;
+    white-space: nowrap;
+}
+
+td.child-job {
+    padding-left: 35px;
+}
+

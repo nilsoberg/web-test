@@ -1,0 +1,17 @@
+{% extends "core/core.html.twig" %}
+
+{% block tool_title %}
+EFI - Genome Neighborhood Tool
+{% endblock %}
+
+{% block logoleft %}
+    {% if is_granted('FEATURE_ACTIVE', 'header_logo_links') %}<a href="{{ path('gnt_home') }}">{% endif %}
+        <img src="{{ asset('images/efi_gnt_logo_75.png') }}" height="75" alt="Genome Neighborhood Tool logo" />
+    {% if is_granted('FEATURE_ACTIVE', 'header_logo_links') %}</a>{% endif %}
+{% endblock %}
+
+{% block theme %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/gnt-theme.css') }}" data-turbo-track="reload">
+{% endblock %}
+

@@ -1,0 +1,33 @@
+{% if properties is not empty %}
+    <table class="table table-striped table-bordered property-table">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 30%;">Property</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for name, value in properties %}
+                <tr>
+                    <td><strong>{{ name }}</strong></td>
+                    <td style="max-width: 1000px; word-break: break-all;">
+                        {% if value is same as(true) %}
+                            <span class="badge bg-success">Yes</span>
+                        {% elseif value is same as(false) %}
+                            <span class="badge bg-danger">No</span>
+                        {% elseif value is null %}
+                            <em class="text-muted">Not Set</em>
+                        {% elseif value is iterable %}
+                            {{ value|json_encode }}
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="text-muted">No specific properties found for this job type.</p>
+{% endif %}
+

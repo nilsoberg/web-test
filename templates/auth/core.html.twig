@@ -1,0 +1,17 @@
+{% set page_title = 'EFI Admin Tools' %}
+{% extends "core/core.html.twig" %}
+
+{% block pre_content %}
+<h1 class="ruled">{% if admin_title is defined %}{{ admin_title }}{% else %}Admin{% endif %}</h1>
+{% endblock %}
+
+{% block content_footer %}
+{% endblock %}
+
+{% block content %}
+<div data-turbo="false">
+    {% block auth_content %}
+    {% endblock %}
+</div>
+{% endblock %}
+

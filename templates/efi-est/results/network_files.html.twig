@@ -1,0 +1,96 @@
+<div id="ESTResults-network">
+
+    {% if show_citation %}
+        {% include 'core/citation.html.twig' %}
+    {% endif %}
+
+    <p>The panels below provide files for full and representative node SSNs for download with the indicated numbers of nodes and edges. As an approximate guide, SSNs with ~2M edges can be opened with 16 GB RAM, ~5M edges can be opened with 32 GB RAM, ~10M edges can be opened with 64 GB RAM, ~20M edges can be opened with 128 GB RAM, ~40M edges can be opened with 256 GB RAM, and ~120M edges can be opened with 768 GB RAM.</p>
+
+    <p>Files may be transferred to the Genome Neighborhood Tool (GNT), the Color SSN utility, the Cluster Analysis utility, or the Neighborhood Connectivity utility.</p>
+
+    {% if page.fullNetwork %}
+    <h4>Full Network <a href="/tutorials" data-controller="tooltip" data-bs-toggle="tooltip" title="Tutorial">{% include('_partials/question_mark.html.twig') %}</a></h4>
+
+    <p>Each node in the network represents a single protein sequence.</p>
+
+    <table class="pretty tbl-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nodes</th>
+                <th>Edges</th>
+                <th>Size</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="{{ page.fullNetwork.route }}">Download ZIP</a>
+                    {% if page.fullNetwork.ncScaleRoute %}
+                        <a class="btn btn-sm btn-primary" href="{{ page.fullNetwork.ncScaleRoute }}">Download NC scale</a>
+                        <span data-controller="tooltip" data-bs-toggle="tooltip" title="Neighborhood connectivity scale bar">{% include('_partials/question_mark.html.twig') %}</span>
+                    {% endif %}
+                </td>
+                <td>{{ page.fullNetwork.nodes|number_format }}</td>
+                <td>{{ page.fullNetwork.edges|number_format }}</td>
+                <td>{{ page.fullNetwork.size }}</td>
+                <td>{% include 'efi-est/_partials/transfer_menu.html.twig' with { parent_id: page.id, parent_key: page.key, subtype: page.fullNetwork.transferId } %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% endif %}
+
+    {# REPNODE #}
+
+    {% if page.repnodeNetworks|length > 0 %}
+    <h4>Representative Node Networks <a href="/tutorials" data-controller="tooltip" data-bs-toggle="tooltip" title="Tutorial">{% include('_partials/question_mark.html.twig') %}</a></h4>
+
+    <p>
+    In representative node (RepNode) networks, each node in the network
+    represents a collection of proteins grouped according to percent identity.
+    For example, for a 75% identity RepNode network, all connected sequences
+    that share 75% or more identity are grouped into a single node (meta node).
+    Sequences are collapsed together to reduce the overall number of nodes,
+    making for less complicated networks easier to load in Cytoscape.
+    </p>
+
+    <p>
+    The cluster organization is not changed, and the clustering of sequences
+    remains identical to the full network.
+    </p>
+
+    <table class="pretty tbl-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th>% ID</th>
+                <th>Nodes</th>
+                <th>Edges</th>
+                <th>Size</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in page.repnodeNetworks %}
+                <tr>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="{{ file.route }}">Download ZIP</a>
+                        {% if file.ncScaleRoute %}
+                            <a class="btn btn-primary btn-sm" href="{{ file.ncScaleRoute }}">Download NC scale</a>
+                            <span data-controller="tooltip" data-bs-toggle="tooltip" title="Neighborhood connectivity scale bar">{% include('_partials/question_mark.html.twig') %}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ file.percentId }}</td>
+                    <td>{{ file.nodes|number_format }}</td>
+                    <td>{{ file.edges|number_format }}</td>
+                    <td>{{ file.size }}</td>
+                    <td>{% include 'efi-est/_partials/transfer_menu.html.twig' with { parent_id: page.id, parent_key: page.key, subtype: file.transferId } %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+

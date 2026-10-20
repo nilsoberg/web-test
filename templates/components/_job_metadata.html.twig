@@ -1,0 +1,8 @@
+{% for item in metadata|default([]) -%}
+    {%- if not loop.first %}; {% endif -%}
+    {%- if item is iterable and item.type is defined and item.type == 'sequence_preview' -%}
+        {{ item.label }}: <span data-controller="tooltip" data-bs-toggle="tooltip" data-bs-custom-class="sequence-tooltip" title="{{ item.tooltip }}">{{ item.preview }}</span>
+    {%- else -%}
+        {{ item }}
+    {%- endif -%}
+{%- endfor %}

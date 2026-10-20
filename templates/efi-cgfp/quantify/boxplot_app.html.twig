@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Boxplots for {{ config.jobName }}</title>
+        {{ importmap('cgfp_heatmap_ui') }}
+    </head>
+    <body style="background-color: white" class="p-3">
+        <div data-controller="cgfp-boxplot"
+             data-cgfp-boxplot-id-value="{{ identify_id }}"
+             data-cgfp-boxplot-quantify-id-value="{{ quantify_id }}"
+             data-cgfp-boxplot-key-value="{{ key }}"
+             data-cgfp-boxplot-static-example-value="false"
+             data-cgfp-boxplot-res-type-value="{{ app.request.get('res', 'm') }}"
+             data-cgfp-boxplot-job-name-value="{{ config.jobName }}"
+             data-cgfp-boxplot-data-route-value="{{ data_query_route }}"
+         >
+
+            <form data-cgfp-boxplot-target="searchForm" data-action="submit->cgfp-boxplot#addCluster">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control w-50" placeholder="Enter cluster number" data-cgfp-boxplot-target="input" required>
+                    <button class="btn btn-primary btn-sm" type="submit">Add Cluster</button>
+                </div>
+            </form>
+
+            <hr>
+
+            <div id="plot" data-cgfp-boxplot-target="plot"></div>
+
+        </div>
+    </body>
+</html>
+

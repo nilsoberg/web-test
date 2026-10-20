@@ -1,0 +1,24 @@
+parameters:
+    instance.use_jotform_contact_form: false
+    instance.jotform_id: 0
+    default_uri_fallback: 'https://example.com'
+    app.inactive_session_timeout: 86400
+    app.timezone: 'America/Chicago'
+    # Optional override for per-user default timezone selection.
+    #app.user_default_timezone: 'America/Chicago'
+    app.default_locale: 'en-US' # Could be en-SG or other locales, but that requires the intl extension
+    app.blast_bin_dir: '%kernel.project_dir%/blast/bin'
+    app.send_email_on_submit: false
+    app.use_html_email: false
+    app.retention_days: 30
+    # To disable specific features during development:
+    #app.disabled_features:
+    #    taxonomy: true
+    #    cgfp: true
+    #    view_gnd: true
+    #    gnd_blast: true
+    #    gnd_fasta: true
+    #    cluster_analysis: true
+    #    conv_ratio: true
+    #    nb_conn: true
+    #    header_logo_links: true

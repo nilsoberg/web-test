@@ -1,0 +1,54 @@
+{% extends 'auth/core.html.twig' %}
+
+{% block auth_content %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+<div style="margin: 20px 0px">
+    <a class="btn btn-primary" href="{{ path('superadmin_add_org') }}">Add Organization</a>
+    <a class="btn btn-primary" href="{{ path('useradmin_add_user') }}">Add User</a>
+</div>
+
+
+<div class="container mt-4">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Organization Name</th>
+                <th scope="col">Administrator</th>
+                <th scope="col" class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for org in page.organizations %}
+            <tr{% if org.isDeleted or org.isProtected %} class="text-secondary"{% endif %}>
+                <td>{{ org.name }}</td>
+                <td>
+                {% for admin in org.admins %}
+                    <div>{{ admin.name }}
+                    ({{ admin.email }})</div>
+                {% endfor %}
+                </td>
+                <td class="actions text-end">
+                    {% if org.isDeleted %}
+                        {{ form_start(org.restoreForm) }}
+                            <button class="btn btn-success btn-sm">Restore</button>
+                        {{ form_end(org.restoreForm) }}
+                    {% elseif not org.isProtected %}
+                        <div style="display: inline-block">
+                            <a href="{{ path('superadmin_edit_org', {'id': org.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                        </div>
+                        <div style="display: inline-block">
+                            {{ form_start(org.deleteForm) }}
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            {{ form_end(org.deleteForm) }}
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

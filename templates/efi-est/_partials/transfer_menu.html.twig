@@ -1,0 +1,57 @@
+
+<div class="btn-group">
+    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Transfer To
+    </button>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="dropdown-item" href="{{ path('est_home', {
+                'f': 'estColorSsnForm',
+                'parent_id': parent_id,
+                'parent_key': parent_key,
+                'parent_subtype': subtype,
+            }) }}">Color SSN Utility</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('est_home', {
+                'f': 'estCAForm',
+                'parent_id': parent_id,
+                'parent_key': parent_key,
+                'parent_subtype': subtype,
+            }) }}">Cluster Analysis Utility</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('est_home', {
+                'f': 'estConvRatioForm',
+                'parent_id': parent_id,
+                'parent_key': parent_key,
+                'parent_subtype': subtype,
+            }) }}">Convergence Ratio Utility</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('est_home', {
+                'f': 'estNbConnForm',
+                'parent_id': parent_id,
+                'parent_key': parent_key,
+                'parent_subtype': subtype,
+            }) }}">Neighborhood Connectivity Utility</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('gnt_home', {
+                'f': 'gnnForm',
+                'parent_id': parent_id,
+                'parent_key': parent_key,
+                'parent_subtype': subtype,
+            }) }}">GNN</a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('cgfp_home', {
+                'f': 'identifyForm',
+                'parent_id': parent_id,
+                'parent_key': parent_key,
+                'parent_subtype': subtype,
+            }) }}">CGFP</a>
+        </li>
+    </ul>
+</div>
+

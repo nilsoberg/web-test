@@ -1,0 +1,29 @@
+{% extends "core/core.html.twig" %}
+
+{# Left Logo on the Header #}
+{% block logoleft %}
+    <a href="/">
+        <img src="{{ asset('images/efi_logo.png') }}" height="75" alt="Enzyme Function Initiative Logo">
+    </a>
+{% endblock %}
+{# Right Logo on the Header #}
+{% block logoright %}
+    <a href="https://www.igb.illinois.edu">
+        <img src="{{ asset('images/illinois_igb_full.png') }}" height="75" alt="Institute for Genomic Biology at University of Illinois at Urbana-Champaign logo">
+    </a>
+{% endblock %}
+
+{% block content %}
+{# Content Division #}
+    <div class="content">
+        {% include 'core/header.html.twig' %}
+
+        <h1><u>Job Submitted Sucessifully</u></h1>
+
+        <p>An e-mail will be sent when your dataset generation is complete.</p>
+
+        <p>For large datasets (more than 50,000 sequences), it may take more than 24 hours.</p>
+
+        <p class="suggestions"><a href="/feedback">Click here to contact us for help, reporting issues, or suggestions.</a></p>
+    </div>
+{% endblock %}

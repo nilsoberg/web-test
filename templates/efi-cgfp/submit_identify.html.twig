@@ -1,0 +1,65 @@
+
+{% embed '_partials/conditional_parent_or_file_form_wrapper.html.twig' with {
+    'form': identifyForm,
+    'form_name': 'identifyForm',
+    'job_type_config': 'CGFP-Identify-form'
+} %}
+
+    {% block description %}
+        <p>
+        Upload the SSN for which you want to run CGFP/ShortBRED.
+        The initial identify step will be performed: unique markers in the input SSN will be identified.
+        </p>
+    {% endblock %}
+
+    {% block additional_fields %}
+        <div data-controller="accordion" data-accordion-initially-open-value="true" id="Identify-seq-len">
+            <h3>Sequence Length Restriction Options</h3>
+            <div class="accordion-content">
+                <div>
+                    <p>
+                     If the submitted SSN was generated using the UniRef90 or 50 option,
+                     then it is recommended to specify a minimum sequence length, in order
+                     to eliminate fragments that may be included in UniRef clusters.
+                     A maximum length can also be specified.
+                    </p>
+                </div>
+                <div>
+                    {{ form_row(identifyForm.minLength) }}
+                    {{ form_row(identifyForm.maxLength) }}
+                </div>
+            </div>
+        </div>
+
+        <div data-controller="accordion" id="Identify-opts">
+            <h3>Marker Identification Options</h3>
+            <div class="accordion-content">
+                <div>
+                    <p>
+                    Several parameters are available for the identify step.
+                    </p>
+                </div>
+                <div class="mt-2">
+                    <span class="input-heading">Reference database:</span>
+                    <span>{{ form_widget(identifyForm.unirefVersion) }}</span>
+                </div>
+                <div class="input-description">
+                    ShortBRED uses the UniProt, UniRef90 or UniRef50 databases to evaluate markers in
+                    order to eliminate those that could give false positives during the quantify step.
+                    The default database used in this process is UniRef90.
+                </div>
+                <div class="submission-error">{{ form_errors(identifyForm.unirefVersion) }}</div>
+                <div class="mt-2">
+                    <span class="input-heading">CD-HIT sequence identity (default 85%):</span>
+                    <span>{{ form_widget(identifyForm.cdhitSequenceIdentity) }}</span>
+                </div>
+                <div class="input-description">
+                    This is the sequence identity parameter that will be used for determining the ShortBRED consensus sequence families.
+                </div>
+                <div class="submission-error">{{ form_errors(identifyForm.cdhitSequenceIdentity) }}</div>
+            </div>
+        </div>
+    {% endblock %}
+
+{% endembed %}
+

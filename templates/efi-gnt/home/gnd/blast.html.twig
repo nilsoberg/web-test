@@ -1,0 +1,63 @@
+
+<div class="job-form-container" data-job-type-config="gnd-blast-form">
+
+    <p>
+    The provided sequence is used as the query for a BLAST search of the
+    UniProt database. The retrieved sequences are used to generate genomic
+    neighborhood diagrams.
+    </p>
+
+    <p><b>
+    If the Sequence Database is set to UniRef90, the resulting GNDs will also
+    include GNDs for UniRef90 cluster IDs that group together UniProt sequences
+    by 90% sequence identiy. For UniRef50, the GNDs will also include UniProt
+    sequences that are grouped by 50% sequence identity. Any of the "Exclude
+    Fragments" options will exclude UniProt-defined sequence fragments.</b>
+    </p>
+
+    {{ form_start(blastForm) }}
+
+    <div>
+        <div><span class="input-heading">Query Sequence:</span></div>
+        <div class="input-description">
+            {{ form_row(blastForm.blastSequence, {'attr': {'class': 'blast-query'}}) }}
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <twig:blast_parameters form="{{ blastForm }}" hide_description />
+            <div class="input-heading">Sequence database:</div>
+            <div class="input-description">
+                <twig:uniref_version form="{{ blastForm }}" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div><span class="input-heading">Exclude Fragments:</span></div>
+        <div class="input-description">
+            {{ form_row(blastForm.excludeFragments) }}
+        </div>
+        <div class="submission-error">{{ form_errors(blastForm.excludeFragments) }}</div>
+    </div>
+
+    <div>
+        <div><span class="input-heading">Neighborhood Size:</span></div>
+        <div class="input-description">
+            {{ form_widget(blastForm.neighborhoodSize) }}
+        </div>
+        <div class="submission-error">{{ form_errors(blastForm.neighborhoodSize) }}</div>
+        <div class="input-description">
+            <p>Number of neighbors to retrieve on either side of the query sequence for each BLAST result (default: 10)</p>
+        </div>
+    </div>
+
+    <div>
+        <twig:job_submit_input form="{{ blastForm }}" />
+    </div>
+
+    {{ form_end(blastForm) }}
+
+</div>
+

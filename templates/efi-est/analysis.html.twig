@@ -1,0 +1,37 @@
+
+{% set page_subtitle = 'EST SSN Analysis' %}
+
+{% extends "efi-est/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Download Network Files</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+
+{% set datasetSummaryContent %}
+    <h4>Analysis Summary</h4>
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+
+    <h4 style="margin-top: 30px">Dataset Summary</h4>
+    <twig:dataset_summary summary_table="{{ page.parentSummaryData }}" download_url="{{ page.parentSummaryDownloadUrl }}" />
+{% endset %}
+
+{% set sunburstContent %}
+    {% include '_partials/taxonomy_sunburst.html.twig' with { job_type: page.parentJobType } %}
+    <twig:sunburst params="{{ page.sunburstParams }}" id="{{ page.id }}" key="{{ page.key }}" />
+{% endset %}
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'SSN Overview', content: datasetSummaryContent },
+    { id: 'sunburst', label: 'Taxonomy Sunburst', content: sunburstContent },
+    { id: 'ssn', label: 'Network Files', template: 'efi-est/results/network_files.html.twig' }
+] %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

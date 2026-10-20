@@ -1,0 +1,82 @@
+
+<div class="job-form-container" data-job-type-config="gnd-id-form" data-controller="upload-progress">
+
+    <p>
+    The genomic neighborhoods are retreived for the UniProt, NCBI, EMBL-EBI
+    ENA, and PDB identifiers that are provided in the input box below. Not all
+    identifiers may exist in the EFI-GNT database so the results will only
+    include diagrams for sequences that were identified.
+    </p>
+
+    <p>
+    <b>If the Sequence Database is set to UniRef90, the resulting GNDs will also
+    include GNDs for UniRef90 cluster IDs that group together UniProt sequences
+    by 90% sequence identiy. For UniRef50, the GNDs will also include UniProt
+    sequences that are grouped by 50% sequence identity. Any of the "Exclude
+    Fragments" options will exclude UniProt-defined sequence fragments.</b>
+    </p>
+
+    {{ form_start(sequenceIdForm, {
+        'attr': {
+            'data-upload-progress-target': 'form',
+            'data-action': 'submit->upload-progress#upload'
+        }
+    }) }}
+
+    <div>
+        <div>{{ form_widget(sequenceIdForm.textUniprot) }}</div>
+        <div class="submission-error">{{ form_errors(sequenceIdForm.textUniprot) }}</div>
+    </div>
+
+    <div>
+        <div>
+            <twig:blast_parameters form="{{ sequenceIdForm }}" hide_description hide_sequence_input />
+            <div class="input-heading">Sequence database:</div>
+            <div class="input-description">
+                <twig:uniref_version form="{{ sequenceIdForm }}" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div><span class="input-heading">Alternatively, a file containing a list of sequence IDs can be uploaded:</span> {% include('_partials/upload_file_size_tooltip.html.twig') %}</div>
+        <div class="input-description">
+            <div>{{ form_widget(sequenceIdForm.fileUniprot) }}</div>
+        </div>
+        <div class="submission-error">{{ form_errors(sequenceIdForm.fileUniprot) }}</div>
+    </div>
+
+    <div>
+        <div><span class="input-heading">Exclude Fragments:</span></div>
+        <div class="input-description">
+            {{ form_row(sequenceIdForm.excludeFragments) }}
+        </div>
+        <div class="submission-error">{{ form_errors(sequenceIdForm.excludeFragments) }}</div>
+    </div>
+
+    <div>
+        <div><span class="input-heading">Neighborhood Size:</span></div>
+        <div class="input-description">
+            <div>
+                {{ form_widget(sequenceIdForm.neighborhoodSize) }}
+            </div>
+            <div class="submission-error">{{ form_errors(sequenceIdForm.neighborhoodSize) }}</div>
+            <div>
+                <p>
+                The Pfam families for N neighboring genes upstream and
+                downstream will be collected and analyzed. The default value is
+                10 and the minimum and maximum are 3 and 20, respectively.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <twig:job_submit_input form="{{ sequenceIdForm }}" />
+    </div>
+    {% include('_partials/file_upload_progress.html.twig') %}
+
+    {{ form_end(sequenceIdForm) }}
+
+</div>
+

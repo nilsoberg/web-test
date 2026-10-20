@@ -1,0 +1,94 @@
+
+{# Used to display taxonomy sunburst for EFI-EST and Taxonomy jobs #}
+
+
+{% if job_type == 'Accession' or job_type == 'Taxonomy Accession' %}
+
+    <p>
+    The taxonomy distribution for the UniProt IDs in the input dataset is displayed.
+    For UniRef90 and UniRef50 cluster datasets, these are retrieved from the lookup
+    table provided by UniProt/UniRef.
+    </p>
+
+    <p>
+    The UniRef90 and UniRef50 clusters containing the UniProt IDs then are 
+    identified using the lookup table provided by UniProt/UniRef. These UniRef90 
+    and UniRef50 clusters may contain UniProt IDs from other families; in addition, 
+    the UniRef90 and UniRef50 clusters in the selected taxonomy category may 
+    contain UniProt IDs from other categories. This results from conflation of 
+    UniProt IDs in UniRef90 and UniRef50 clusters that share &ge;90% and &ge;50% sequence 
+    identity, respectively. 
+    </p>
+
+    <p>
+    The numbers of UniProt IDs, UniRef90 cluster IDs, and UniRef50 cluster IDs for 
+    the selected category are displayed. 
+    </p>
+
+    <p>
+    The sunburst is interactive, providing the ability to zoom to a selected 
+    taxonomy category by clicking on that category; clicking on the center circle 
+    will zoom the display to the next highest rank. 
+    </p>
+
+{% elseif job_type == 'BLAST' %}
+
+    <p>
+    The taxonomy distribution for the UniProt, UniRef90 cluster, or UniRef50 
+    cluster IDs identified in the BLAST is displayed.   
+    </p>
+
+    <p>
+    The sunburst is interactive, providing the ability to zoom to a selected 
+    taxonomy category by clicking on that category; clicking on the center circle 
+    will zoom the display to the next highest rank.
+    </p>
+
+{% elseif job_type == 'Families' or job_type == 'Taxonomy Families' %}
+
+    <p>
+    The taxonomy distribution for the UniProt IDs in the input dataset is 
+    displayed.   For UniRef90 and UniRef50 cluster datasets, these are retrieved 
+    from the lookup table provided by UniProt/UniRef.
+    </p>
+
+    <p>
+    The UniRef90 and UniRef50 clusters containing the UniProt IDs then are 
+    identified using the lookup table provided by UniProt/UniRef. These UniRef90 
+    and UniRef50 clusters may contain UniProt IDs from other families; in addition, 
+    the UniRef90 and UniRef50 clusters in the selected taxonomy category may 
+    contain UniProt IDs from other categories. This results from conflation of 
+    UniProt IDs in UniRef90 and UniRef50 clusters that share &ge;90% and &ge;50% sequence 
+    identity, respectively. 
+    </p>
+
+    <p>
+    The numbers of UniProt IDs, UniRef90 cluster IDs, and UniRef50 cluster IDs for 
+    the selected category are displayed. 
+    </p>
+
+    <p>
+    The sunburst is interactive, providing the ability to zoom to a selected 
+    taxonomy category by clicking on that category; clicking on the center circle 
+    will zoom the display to the next highest rank. 
+    </p>
+
+{% elseif job_type == 'FASTA' or job_type == 'Taxonomy FASTA' %}
+
+    <p>
+    The taxonomy distribution for the UniProt IDs in the input dataset is 
+    displayed.   
+    </p>
+
+    <p>
+    The numbers of UniProt IDs for the selected category are displayed. 
+    </p>
+
+    <p>
+    The sunburst is interactive, providing the ability to zoom to a selected 
+    taxonomy category by clicking on that category; clicking on the center circle 
+    will zoom the display to the next highest rank. 
+    </p>
+
+{% endif %}
+

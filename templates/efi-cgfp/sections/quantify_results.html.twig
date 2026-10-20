@@ -1,0 +1,28 @@
+<div id="{{ prefix }}-{{ suffix }}">
+
+    <p>The markers that uniquely define clusters in the submitted SSN have been quantified in the metagenomes selected for analysis.</p>
+    <p>Files are provided that contain details about the markers that have been identified present in metagenomes and their abundances.</p>
+
+    <div id="{{ prefix }}-subtabs-subtabs">
+
+        <ul>
+            <li><a href="#CGFPoptionC-tab2-tab1">SSN and CD-HIT files</a></li>
+            <li><a href="#CGFPoptionC-tab2-tab2">CGFP Output (Using Median Method)</a></li>
+            <li><a href="#CGFPoptionC-tab2-tab3">CGFP Output (Using Mean Method)</a></li>
+        </ul>
+
+        {% include 'efi-cgfp/sections/ssn_and_cdhit.html.twig' with {
+            ending: "tab1"
+        } %}
+
+        {% include 'efi-cgfp/sections/cgfp_output_median.html.twig' with {
+            ending: "tab2"
+        } %}
+
+        {% include 'efi-cgfp/sections/cgfp_output_mean.html.twig' with {
+            ending: "tab3"
+        } %}
+
+    </div>
+
+</div>

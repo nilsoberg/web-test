@@ -1,0 +1,142 @@
+{% extends 'core/core.html.twig' %}
+
+{% block theme %}
+
+<link rel="stylesheet" href="{{ asset('css/webadmin.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+{% endblock %}
+
+{# Left Logo on the Header #}
+{% block logoleft %}
+    <a href="/">
+        <img src="{{ asset('images/efi_logo.png') }}" height="75" alt="Enzyme Function Initiative Logo">
+    </a>
+{% endblock %}
+{# Right Logo on the Header #}
+{% block logoright %}
+    <a href="https://www.igb.illinois.edu">
+        <img src="{{ asset('images/illinois_igb_full.png') }}" height="75" alt="Institute for Genomic Biology at University of Illinois at Urbana-Champaign logo">
+    </a>
+{% endblock %}
+
+{% block auth_content %}
+<div class="content">
+
+    {% include 'core/header.html.twig' %}
+
+    {% include '_partials/app_flashes.html.twig' %}
+
+    <div class="container py-4">
+
+        <form method="POST" enctype="multipart/form-data" class="border rounded p-4 bg-light">
+            <input type="hidden" name="_token" value="{{ csrf_token('dbadmin_upload') }}">
+            <div class="mb-3">
+                <label for="upload_name" class="form-label">Database Name</label>
+                <input type="text" name="upload_name" id="upload_name" required class="form-control" placeholder="e.g., UniProt">
+            </div>
+
+            <div class="mb-3">
+                <label for="upload_version" class="form-label">Version</label>
+                <input type="text" name="upload_version" id="upload_version" class="form-control" placeholder="e.g., 2025.04">
+            </div>
+
+            <div class="mb-3">
+                <label for="upload_shared" class="form-label">Shared</label>
+                <select class="form-select" name="upload_shared" id="upload_shared">
+                    <option value="1">Yes</option>
+                    <option value="0" selected>No</option>
+                </select>
+            </div>
+
+            <div class="mb-3 position-relative">
+                <label for="upload_shared_with" class="form-label">Share with Organizations</label>
+                <input type="text"
+                    name="upload_shared_with"
+                    id="upload_shared_with"
+                    class="form-control orgid-autocomplete"
+                    placeholder="e.g., EFI"
+                    data-orgids='{{ orgIds|json_encode()|e('html_attr') }}'>
+                <div class="autocomplete-suggestions position-absolute bg-white border rounded shadow-sm mt-1 d-none"
+                    style="z-index: 9999;"
+                    id="suggestions-upload_shared_with"></div>
+                <small class="form-text text-muted">Comma-separated Organization IDs. Invalid values will be ignored.</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="upload_file" class="form-label">Select file to upload</label>
+                <input type="file" name="upload_file" id="upload_file" required class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-cloud-upload-fill"></i> Upload
+            </button>
+            <a href="{{ path('dbadmin_dashboard') }}" class="btn btn-outline-secondary ms-2">Back to Dashboard</a>
+        </form>
+
+        <p class="mt-4 small text-muted">
+            Uploaded files are stored under your organization directory.<br>
+            For larger files, consider using the <a href="{{ path('dbadmin_rsync_info') }}">Rsync Upload</a>.
+        </p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('upload_shared_with');
+        const suggestionsBox = document.getElementById('suggestions-upload_shared_with');
+
+        if (!input || !suggestionsBox) return;
+
+        const orgIds = JSON.parse(input.dataset.orgids);
+
+        input.addEventListener('input', function () {
+            const current = this.value;
+            const parts = current.split(',');
+            const last = parts[parts.length - 1].trim().toLowerCase();
+
+            suggestionsBox.innerHTML = '';
+            if (!last) return suggestionsBox.classList.add('d-none');
+
+            const matches = orgIds.filter(org => org.toLowerCase().startsWith(last));
+            if (matches.length === 0) return suggestionsBox.classList.add('d-none');
+
+            matches.forEach(match => {
+                const div = document.createElement('div');
+                div.textContent = match;
+                div.className = 'px-2 py-1 hover-bg-light';
+                div.style.cursor = 'pointer';
+                div.addEventListener('click', () => {
+                    parts[parts.length - 1] = match;
+                    input.value = parts.map(p => p.trim()).join(', ');
+                    suggestionsBox.classList.add('d-none');
+                    input.dispatchEvent(new Event('change'));
+                });
+                suggestionsBox.appendChild(div);
+            });
+
+            suggestionsBox.style.width = input.offsetWidth + 'px';
+            suggestionsBox.classList.remove('d-none');
+        });
+
+        document.addEventListener('click', e => {
+            if (!suggestionsBox.contains(e.target) && e.target !== input) {
+                suggestionsBox.classList.add('d-none');
+            }
+        });
+
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const entered = input.value.split(',').map(v => v.trim()).filter(Boolean);
+            const invalid = entered.filter(v => !orgIds.includes(v));
+
+            if (invalid.length > 0) {
+                e.preventDefault();
+                alert("Invalid organization ID: " + invalid.join(', ') + "\n\nPlease correct it before submitting.");
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+    });
+</script>
+{% endblock %}

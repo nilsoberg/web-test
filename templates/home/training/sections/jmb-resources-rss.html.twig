@@ -1,0 +1,102 @@
+<div id="{{ prefix }}-{{ index }}">
+
+    <h4>RSS</h4>
+
+    <div><img src="images/rss_sb.png" width="90%"></div>
+    {# Section 1 #}
+    <div id="{{prefix}}-{{index}}-section-1">
+
+        <h3>RSS: Taxonomy Tool</h3>
+        <div class="accordion-content">
+
+            {{
+                render(controller('App\\Home\\Controller\\JobTableController::renderJobTable', { 
+                    'tables': 'generate', 
+                    'jobs': '29535',
+                    'visibility':'public',
+                    'job_header':false,
+                }))
+            }}
+
+
+        </div>
+
+    </div>
+    {# Section 2 #}
+    <div id="{{prefix}}-{{index}}-section-2">
+
+        <h3>RSS: UniRef50 SSN</h3>
+        <div class="accordion-content">
+
+            {{
+                render(controller('App\\Home\\Controller\\JobTableController::renderJobTable', { 
+                    'tables': 'generate', 
+                    'jobs': '29535',
+                    'visibility':'public',
+                    'job_header':false,
+                }))
+            }}
+
+
+        </div>
+
+    </div>
+    {# Section 3 #}
+    <div id="{{prefix}}-{{index}}-section-3">
+
+        <h3>RSS: Families option of the Taxonomy Tool with transfer of UniRef90 cluster IDs to the Accession IDs option</h3>
+        <div class="accordion-content">
+
+            {{
+                render(controller('App\\Home\\Controller\\JobTableController::renderJobTable', { 
+                    'tables': 'generate', 
+                    'jobs': '29535',
+                    'visibility':'public',
+                    'job_header':false,
+                }))
+            }}
+
+
+        </div>
+
+    </div>
+    {# Section 4 #}
+    <div id="{{prefix}}-{{index}}-section-4">
+
+        <h3>RSS: Families option, Filter by Taxonomy in the Analysis Step</h3>
+        <div class="accordion-content">
+
+            {{
+                render(controller('App\\Home\\Controller\\JobTableController::renderJobTable', { 
+                    'tables': 'generate', 
+                    'jobs': '29535',
+                    'visibility':'public',
+                    'job_header':false,
+                }))
+            }}
+
+
+        </div>
+
+    </div>
+    {# Section 5 #}
+    <div id="{{prefix}}-{{index}}-section-5">
+
+        <h3>RSS: Families option, Filter by Taxonomy in the Generate Step</h3>
+        <div class="accordion-content">
+
+            {{
+                render(controller('App\\Home\\Controller\\JobTableController::renderJobTable', { 
+                    'tables': 'generate', 
+                    'jobs': '29535',
+                    'visibility':'public',
+                    'job_header':false,
+                }))
+            }}
+
+
+        </div>
+
+    </div>
+
+</div>

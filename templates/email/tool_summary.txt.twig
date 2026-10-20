@@ -1,0 +1,9 @@
+
+Submission Details:
+-------------------
+{% for item in summary %}
+{% if item.label %}
+- {{ item.label }}: {{ item.value|striptags }}
+{% endif %}
+{% endfor %}
+

@@ -1,0 +1,22 @@
+<div id="{{ prefix }}-section-{{ index }}">
+
+    <h3>Consensus Residues</h3>
+
+    <div class="accordion-content">
+
+        <div>
+            The positions and selected percent identities of the selected residues in the MSA are determined.  
+        </div>
+        <span class="input-name">Compute Consensus Residues:</span>
+        <span class="input-field">
+            <input type="checkbox" id="make-cr-cluster" name="make-cr-cluster" value="1" checked="">
+            <label for="make-cr-cluster">Compute consensus residues [default: on]</label><br>
+            <input type="text" id="hmm-aa-list-cluster" name="hmm-aa-list-cluster" value="C" size="10">
+            <label for="hmm-aa-list-cluster">Residues to compute for (comma-separated list of amino acid codes)</label><br>
+            <input type="text" id="aa-threshold-cluster" name="aa-threshold-cluster" value="0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1" size="20">
+            <label for="aa-threshold-cluster">Percent identity threshold(s) for determining conservation (multiple comma-separated values allowed) [default: 0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1]</label>
+        </span>
+                   
+    </div>
+
+</div>

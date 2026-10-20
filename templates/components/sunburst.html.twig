@@ -1,0 +1,66 @@
+
+<div id="sunburst-container"
+    data-controller="sunburst"
+    data-sunburst-api-id-value="{{ id }}"
+    data-sunburst-api-key-value="{{ key }}"
+    data-sunburst-uniref-version-value="{{ params.uniref_version }}"
+    data-sunburst-primary-id-type-value="{{ params.primary_id_type }}"
+    data-sunburst-data-url-value="{{ params.data_url }}"
+    data-sunburst-fasta-url-value="{{ params.fasta_url }}"
+    data-sunburst-est-transfer-url-value="{{ params.est_transfer_url }}"
+    data-sunburst-gnt-transfer-url-value="{{ params.gnt_transfer_url }}"
+    data-sunburst-base-filename-value="{{ params.base_filename|default('') }}"
+>
+    <div id="taxonomy" style="position: relative">
+        <div class="modal-body text-center modal-sunburst" id="sunburst-chart-container" style="display: flex">
+            <div id="sunburst-chart" style="display: inline-block">
+            </div>
+            <div style="display: inline-block; align-self: flex-end" id="sunburst-chart-levels">
+            </div>
+            <div id="sunburst-progress-loader" class="progress-loader progress-loader-sm" style="display: none">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+        </div>
+        <div>
+            <div id="sunburst-rank" class="cluster-size cluster-size-sm">
+            </div>
+            <div id="sunburst-id-nums" class="cluster-size cluster-size-sm">
+            </div>
+            <div style="clear: both">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="mr-auto">
+                <div id="sunburst-download-text-container">
+                    <hr class="light">
+                    <div id="sunburst-download-text">{{ params.description_text|raw }}</div>
+                </div>
+                <hr class="light">
+                <div class="p-2 d-flex gap-3" id="sunburst-type-download-container">
+                    <div class="fw-bold me-3">ID type:</div>
+                    <div class="form-check form-check-inline me-4">
+                        <input class="form-check-input" type="radio" name="sunburstIdType" id="sunburst-id-type-uniprot" value="uniprot" checked>
+                        <label class="form-check-label" for="sunburst-id-type-uniprot">UniProt</label>
+                    </div>
+                    <div class="form-check form-check-inline me-4" id="sunburst-id-type-uniref90-container">
+                        <input class="form-check-input" type="radio" name="sunburstIdType" id="sunburst-id-type-uniref90" value="uniref90">
+                        <label class="form-check-label" for="sunburst-id-type-uniref90">UniRef90</label>
+                    </div>
+                    <div class="form-check form-check-inline me-4" id="sunburst-id-type-uniref50-container">
+                        <input class="form-check-input" type="radio" name="sunburstIdType" id="sunburst-id-type-uniref50" value="uniref50">
+                        <label class="form-check-label" for="sunburst-id-type-uniref50">UniRef50</label>
+                    </div>
+                </div>
+                <div id="sunburst-id-action-container">
+                    <button type="button" class="normal btn btn-default btn-secondary" data-controller="tooltip" data-bs-toggle="tooltip" title="Download the UniProt IDs that are visible in the sunburst diagram" id="sunburst-download-ids">Prepare ID Download</button>
+                    <button type="button" class="normal btn btn-default btn-secondary mr-auto" data-controller="tooltip" data-bs-toggle="tooltip" title="Download the FASTA sequences that are visible in the sunburst diagram" id="sunburst-download-fasta">Prepare FASTA Download</button>
+                    <button type="button" class="normal btn btn-default btn-secondary mr-auto" data-controller="tooltip" data-bs-toggle="tooltip" title="Download a SVG file of the sunburst diagram" id="sunburst-download-svg">Download SVG</button>
+                    <button type="button" class="normal btn btn-default btn-secondary mr-auto" data-controller="tooltip" data-bs-toggle="tooltip" title="Download a PNG file of the sunburst diagram" id="sunburst-download-png">Download PNG</button>
+                    <button type="button" class="normal btn btn-default btn-secondary mr-auto" data-controller="tooltip" data-bs-toggle="tooltip" title="Transfer the selection of IDs that are visible in the sunburst diagram to the EST Accession IDs tool for SSN creation" id="sunburst-transfer-est">Transfer to EST</button>
+                    <button type="button" class="normal btn btn-default btn-secondary mr-auto" data-controller="tooltip" data-bs-toggle="tooltip" title="Transfer the selection of IDs that are visible in the sunburst diagram to the GNT GND Sequence IDs tool for GND creation" id="sunburst-transfer-gnd">Transfer to GND</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,25 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    # Note that the session will be started ONLY if you read or write from it.
+    session:
+        enabled: true
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+        # The amount of time before the session cookie will expire, in seconds
+        cookie_lifetime: '%app.inactive_session_timeout%'
+        gc_maxlifetime: '%app.inactive_session_timeout%'
+
+    #esi: true
+    #fragments: true
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
+        profiler:
+            enabled: '%kernel.debug%'
+            collect_serializer_data: true

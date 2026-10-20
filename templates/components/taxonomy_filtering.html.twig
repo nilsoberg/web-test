@@ -1,0 +1,77 @@
+
+{% props filterForm %}
+
+{# Explicitly build the HTML for the Stimulus Prototype #}
+{% set prototypeHtml %}
+    <div class="taxonomy-row d-flex gap-2 mb-2 align-items-center">
+        <div class="flex-grow-0">
+            {{ form_widget(filterForm.conditions.vars.prototype.field) }}
+        </div>
+        <div class="flex-grow-0">
+            {{ form_widget(filterForm.conditions.vars.prototype.operator) }}
+        </div>
+        <div class="flex-grow-1">
+            {{ form_widget(filterForm.conditions.vars.prototype.value) }}
+        </div>
+        <div class="flex-grow-0">
+            <button type="button" class="btn-close" data-action="taxonomy-filter#remove"></button>
+        </div>
+    </div>
+{% endset %}
+
+{# Render the main component wrapper #}
+<div data-controller="taxonomy-filter"
+     data-taxonomy-filter-prototype-value="{{ prototypeHtml|e('html_attr') }}"
+     data-taxonomy-filter-autocomplete-url-value="{{ filterForm.vars.autocomplete_url }}"
+     data-taxonomy-filter-predefined-data-value="{{ filterForm.vars.predefined_data_json|e('html_attr') }}"
+     class="taxonomy-filter-wrapper mb-4 border p-3 rounded">
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            {{ form_label(filterForm.predefined) }}
+            {{ form_widget(filterForm.predefined, {
+                'attr': {'data-taxonomy-filter-target': 'predefinedSelect'}
+            }) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_label(filterForm.operator) }}
+            {{ form_widget(filterForm.operator, {
+                'attr': {
+                    'data-taxonomy-filter-target': 'operatorSelect',
+                    'data-action': 'change->taxonomy-filter#clearPredefined'
+                }
+            }) }}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="taxonomy-collection-container"
+        data-taxonomy-filter-target="collection"
+        data-action="change->taxonomy-filter#clearPredefined input->taxonomy-filter#clearPredefined"
+    >
+
+        {% for row in filterForm.conditions %}
+            <div class="taxonomy-row d-flex gap-2 mb-2 align-items-center">
+                <div class="flex-grow-0">
+                    {{ form_widget(row.field) }}
+                </div>
+                <div class="flex-grow-0">
+                    {{ form_widget(row.operator) }}
+                </div>
+                <div class="flex-grow-1">
+                    {{ form_widget(row.value) }}
+                </div>
+                <div class="flex-grow-0">
+                    <button type="button" class="btn-close" data-action="taxonomy-filter#remove"></button>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <button type="button" class="btn btn-sm btn-secondary mt-2" data-action="taxonomy-filter#add">
+        + Add Taxonomy Rule
+    </button>
+</div>
+

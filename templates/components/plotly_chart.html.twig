@@ -1,0 +1,23 @@
+<div
+    data-controller="plotly-chart"
+    data-plotly-chart-url-value="{{ plot_url }}"
+    data-plotly-chart-chart-key-value="{{ chart_key|default('chart') }}"
+    data-plotly-chart-fallback-alt-value="{{ fallback_alt|default('Chart fallback image') }}"
+    {% if job_number is defined and job_number is not empty %}
+        data-plotly-chart-job-number-value="{{ job_number }}"
+    {% endif %}
+    {% if fallback_image_url is defined and fallback_image_url %}
+        data-plotly-chart-fallback-image-url-value="{{ fallback_image_url }}"
+    {% endif %}
+>
+    <div
+        style="width: 100%; height: {{ height|default('500px') }};"
+        data-plotly-chart-target="plot"
+    >
+        Loading chart...
+    </div>
+    <div class="d-flex justify-content-center gap-2 mt-2" data-plotly-chart-target="actions" hidden>
+        <button type="button" class="btn btn-primary" data-action="plotly-chart#downloadPng">Download PNG</button>
+        <button type="button" class="btn btn-secondary" data-action="plotly-chart#downloadPdf">Download PDF</button>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+Home:
+    resource:
+        path: ../src/Home/Controller/
+        namespace: App\Home\Controller
+    type: attribute
+    prefix: /%app.route_prefix%
+
+Auth:
+    resource:
+        path: ../src/Auth/Controller/
+        namespace: App\Auth\Controller
+    type: attribute
+    prefix: /%app.route_prefix%
+
+EST:
+    resource:
+        path: ../src/EST/Controller/
+        namespace: App\EST\Controller
+    type: attribute
+    prefix: /%app.route_prefix%
+
+GNT:
+    resource:
+        path: ../src/GNT/Controller/
+        namespace: App\GNT\Controller
+    type: attribute
+    prefix: /%app.route_prefix%
+
+CGFP:
+    resource:
+        path: ../src/CGFP/Controller/
+        namespace: App\CGFP\Controller
+    type: attribute
+    prefix: /%app.route_prefix%
+
+Taxonomy:
+    resource:
+        path: ../src/Taxonomy/Controller/
+        namespace: App\Taxonomy\Controller
+    type: attribute
+    prefix: /%app.route_prefix%

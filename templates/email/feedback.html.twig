@@ -1,0 +1,12 @@
+
+<h2>New Feedback Submission</h2>
+
+<p><strong>From:</strong> {{ sender_name }} (&lt;{{ sender_email }}&gt;)</p>
+<p><strong>Organization:</strong> {{ organization }}</p>
+<p><strong>Submitted:</strong> {{ submitted_at|date('Y-m-d H:i:s') }}</p>
+
+<hr>
+
+<h3>Message:</h3>
+<p style="white-space: pre-wrap;">{{ message_body }}</p>
+

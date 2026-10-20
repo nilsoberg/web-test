@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Heatmap ({{ identify_id }} / {{ quantify_id }})</title>
+        {{ importmap('cgfp_heatmap_ui') }}
+    </head>
+    <body style="background-color: white">
+        <div data-controller="cgfp-heatmap"
+             data-cgfp-heatmap-id-value="{{ identify_id }}"
+             data-cgfp-heatmap-quantify-id-value="{{ quantify_id }}"
+             data-cgfp-heatmap-key-value="{{ key }}"
+             data-cgfp-heatmap-static-example-value="false"
+             data-cgfp-heatmap-res-type-value="{{ app.request.get('res', 'm') }}"
+             data-cgfp-heatmap-job-name-value="{{ config.jobName }}"
+             data-cgfp-heatmap-width-value="800"
+             data-cgfp-heatmap-data-route-value="{{ data_query_route }}"
+             data-cgfp-heatmap-height-value="630">
+
+            <div id="progress-loader" data-cgfp-heatmap-target="loader" class="hidden">
+                <p>Loading heatmap data, please wait...</p>
+            </div>
+
+            <div id="plot" data-cgfp-heatmap-target="plot"></div>
+
+            <hr>
+
+            <form data-cgfp-heatmap-target="filterForm" data-action="submit->cgfp-heatmap#applyFilter">
+                <div class="filter-controls mx-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="cluster-filter">Clusters (e.g., 1, 2, 5-10):</label>
+                            <input type="text" id="cluster-filter" class="form-control" data-cgfp-heatmap-target="clusterFilter">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="min">Lower Threshold:</label>
+                            <input type="number" step="any" id="min" class="form-control" data-cgfp-heatmap-target="minThresh">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="max">Upper Threshold:</label>
+                            <input type="number" step="any" id="max" class="form-control" data-cgfp-heatmap-target="maxThresh">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="mean-cb" class="form-check-input" data-cgfp-heatmap-target="meanCb"> 
+                            Use Mean
+                        </label>
+                        <label>
+                            <input type="checkbox" id="hits-only-cb" class="form-check-input" data-cgfp-heatmap-target="hitsOnlyCb"> 
+                            Hits Only
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <b>Metagenome types:</b>
+                        <div id="body-sites-container" data-cgfp-heatmap-target="bodySitesContainer"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-sm">Apply Filter</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-action="cgfp-heatmap#resetFilter">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
+

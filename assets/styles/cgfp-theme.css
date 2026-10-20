@@ -1,0 +1,7 @@
+h1 {
+    color: #317873;
+}
+
+h1.ruled {
+    border-bottom-color: #317873;
+}

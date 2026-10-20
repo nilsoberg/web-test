@@ -1,0 +1,37 @@
+
+<div id="flash-messages">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div
+                data-controller="alert"
+                data-alert-type-value="{{ label }}"
+                class="alert alert-{{ label }} d-flex align-items-start"
+                role="alert"
+            >
+                <div class="w-100">
+                    <div class="w-100">
+                        {% if message is iterable %}
+                            <strong>{{ message.title }}</strong>
+                            <ul class="mb-0">
+                                {% for error in message.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            {{ message }}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    data-action="click->alert#close"
+                    class="btn-close ms-auto"
+                    aria-label="Close"
+                >
+                </button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+

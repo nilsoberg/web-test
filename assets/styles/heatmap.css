@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/*
+form {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+*/
+
+.hidden {
+    visibility: hidden;
+}
+
+.form-input {
+}
+
+.form-cb {
+}
+
+#filter-box {
+    margin: 0;
+    width: calc(100% - 20px);
+    padding-left: 9px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    //border-top: 1px solid black;
+}
+
+#filter-hide {
+}
+
+#filter-box div {
+    margin-top: 5px;
+}
+#filter-bs-group div {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+input.min-max {
+    width: 50px;
+}
+
+input.min-max-default {
+    color: #999;
+    font-style: italic;
+}
+

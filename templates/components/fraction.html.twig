@@ -1,0 +1,43 @@
+
+{% if useGlobalScope|default(false) %}
+    {% set fieldAttr = {
+                    'class': 'form-control form-control-sm fraction-field',
+                    'data-action': 'input->external-family-field#broadcast'|raw,
+                    'data-controller': 'external-family-field',
+                    'data-external-family-field-form-id-value': familyFormId,
+                    'data-external-family-field-field-name-value': 'fraction',
+    } %}
+{% else %}
+    {% set fieldAttr = {
+                    'class': 'form-control form-control-sm fraction-field',
+                    'data-family-input-target': 'fraction'|raw,
+                    'data-action': 'input->family-input#processChange',
+    } %}
+{% endif %}
+
+    
+
+<div class="family-fraction-input">
+    <div class="form-group">
+        <div>
+            <span class="input-heading">Fraction:</span>
+            <span>
+                {{ form_widget(form, { 'attr': fieldAttr }) }}
+            </span>
+            <label for="{{ form.vars.id }}" class="form-label">
+                <span data-controller="tooltip" data-bs-toggle="tooltip" title="A BLAST with all retrieved sequences BLAST-ed against the same set of retrieved sequences.">{% include('_partials/question_mark.html.twig') %}</span>
+                Reduce the number of sequences used to a fraction of the full family size (&ge; 1; default: 1)
+            </label>
+        </div>
+        
+        <div class="input-description">
+            <p>Selects every Nth sequence in the family; the sequences are assumed to be added randomly to UniProtKB, so
+            the selected sequences are assumed to be a representative sampling of the family. This allows reduction of
+            the size of the SSN. Sequences in the family with SwissProt annotations will always be included; this may result
+            in the size of the resulting data set being slightly larger than the fraction specified.</p>
+        </div>
+
+        {{ form_errors(form) }}
+    </div>
+</div>
+

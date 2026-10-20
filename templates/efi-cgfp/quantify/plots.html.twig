@@ -1,0 +1,90 @@
+
+<div>
+    <p>
+    Heatmaps representing the quantification of sequences from SSN clusters per metagenome are available.
+    </p>
+
+    <p>
+    The y-axis lists the SSN cluster numbers for which metagenome hits were
+    identified; the x-axis lists the metagenome datasets selected on the
+    Identify Results page. A color scale is located on the right that displays
+    the AGS normalized abundance of the number of gene copies for the "hit" per
+    microbial genome in the metagenome sample.
+    </p>
+
+    <p>
+    The metagenomes are grouped according to body site so that trends/consensus
+    across the six body sites can be easily discerned. The default heat map is
+    calculated using the median method to report abundances. 
+    </p>
+
+    <div class="page-tabs ui-tabs ui-widget ui-widget-content" data-controller="tabs">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li class="ui-tabs-tab ui-tab ui-state-default ui-corner-top ui-tabs-active ui-state-active">
+                <a href="#cluster-plots" class="ui-tabs-anchor">Cluster Heatmap and Boxplots</a>
+            </li>
+            <li class="ui-tabs-tab ui-tab ui-state-default ui-corner-top">
+                <a href="#singleton-plots" class="ui-tabs-anchor">Singleton Heatmap and Boxplots</a>
+            </li>
+            <li class="ui-tabs-tab ui-tab ui-state-default ui-corner-top">
+                <a href="#combined-plots" class="ui-tabs-anchor">Combined Heatmap and Boxplots</a>
+            </li>
+        </ul>
+    
+        <div id="cluster-plots" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>This heatmap presents information for SSN cluster/metagenome hit pairs.</span>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="openHeatmapWindow('{{ page.clusterBoxplotUrl }}')">View boxplots showing per-site abundance</button>
+            </div>
+            <iframe src="{{ page.clusterHeatmapUrl }}" width="100%" height="870" style="border: none"></iframe>
+        </div>
+
+        <div id="singleton-plots" class="ui-tabs-panel ui-widget-content ui-corner-bottom" style="display: none">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>This heatmap presents information for SSN singleton/metagenome hit
+                pairs instead of SSN cluster/metagenome hit pairs.</span>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="openHeatmapWindow('{{ page.singletonBoxplotUrl }}')">View boxplots showing per-site abundance</button>
+            </div>
+            <iframe src="{{ page.singletonHeatmapUrl }}" width="100%" height="870" style="border: none"></iframe>
+        </div>
+
+        <div id="combined-plots" class="ui-tabs-panel ui-widget-content ui-corner-bottom" style="display: none">
+            <div class="d-flex justify-content-between align-items-center">
+                <span>This heatmap combines the information obtained for SSN cluster and
+                singleton/metagenome hit pairs.</span>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="openHeatmapWindow('{{ page.mergedBoxplotUrl }}')">View boxplots showing per-site abundance</button>
+            </div>
+            <iframe src="{{ page.mergedHeatmapUrl }}" width="100%" height="870" style="border: none"></iframe>
+        </div>
+    </div>
+
+    <div class="my-2">
+        <p>
+        Tools for downloading and manipulating the heat map can be accessed by
+        hovering and clicking above and to the right of the plot.
+        </p>
+ 
+        <p>
+        Several filters are available for manipulating the heatmap.
+        </p>
+
+        <ul>
+            <li><b>Show specific clusters</b>: input individual cluster numbers separated by commas and/or a range of cluster numbers. Only these input clusters are displayed in the heatmap.</li>
+            <li><b>Abundance to display</b>: hide any data values that are outside of the minimum and/or maximum. These hidden values appear as a zero value cell (i.e. the lowest color range).</li>
+            <li><b>Use mean</b>: display the heatmap using the mean method for reporting abundances instead of the defaut median method.</li>
+            <li><b>Display hits only</b>: show a black and white heatmap showing presence/absence of "hits" (which makes it easier to see low abundance hits).</li>
+            <li><b>Body Sites</b>: checkboxes are provided for each body site in the heatmap; selecting one or more of these checkboxes will show data for those body sites only.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function openHeatmapWindow(url) {
+        window.open(
+            url, 
+            'HeatmapWindow', 
+            'width=400,height=800,resizable=yes,scrollbars=yes'
+        );
+    }
+</script>
+

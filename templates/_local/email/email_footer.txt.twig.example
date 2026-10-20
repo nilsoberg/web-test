@@ -1,0 +1,17 @@
+
+{# Copy this template to templates/_local/email/email_footer.txt.twig and edit to enable a footer #}
+
+Cite us:
+
+Please cite your use of the EFI tools:
+
+Rémi Zallot, Nils Oberg, and John A. Gerlt, The EFI Web Resource for Genomic Enzymology Tools: Leveraging Protein, Genome, and Metagenome Databases to Discover Novel Enzymes and Metabolic Pathways. Biochemistry 2019 58 (41), 4169-4182. https://doi.org/10.1021/acs.biochem.9b00735
+
+Nils Oberg, Rémi Zallot, and John A. Gerlt, EFI-EST, EFI-GNT, and EFI-CGFP: Enzyme Function Initiative (EFI) Web Resource for Genomic Enzymology Tools. J Mol Biol
+
+
+Enzyme Function Initiative
+1206 W. Gregory Drive
+Urbana, IL 61801
+efi@enzymefunction.org
+

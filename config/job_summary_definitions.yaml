@@ -1,0 +1,846 @@
+parameters:
+    app.job_type_to_context_map:
+        'CGFP Identify':
+            'default_live': 'cgfp_identify_live_summary'
+            'default_example': 'cgfp_identify_example_summary'
+            'email_submitted': 'cgfp_identify_email_submitted_summary'
+            'email_started': 'cgfp_identify_email_started_summary'
+            'email_finished': 'cgfp_identify_email_finished_summary'
+            'email_failed': 'cgfp_identify_email_failed_summary'
+
+        'CGFP Quantify':
+            'default_live': 'cgfp_quantify_live_summary'
+            'default_example': 'cgfp_quantify_example_summary'
+            'email_submitted': 'cgfp_quantify_email_submitted_summary'
+            'email_started': 'cgfp_quantify_email_started_summary'
+            'email_finished': 'cgfp_quantify_email_finished_summary'
+            'email_failed': 'cgfp_quantify_email_failed_summary'
+
+        'Cluster Analysis':
+            'default_live': 'cluster_analysis_live_summary'
+            'default_example': 'cluster_analysis_example_summary'
+            'email_submitted': 'cluster_analysis_email_submitted_summary'
+            'email_started': 'cluster_analysis_email_started_summary'
+            'email_finished': 'cluster_analysis_email_finished_summary'
+            'email_failed': 'cluster_analysis_email_failed_summary'
+
+        'Color SSN':
+            'default_live': 'color_ssn_live_summary'
+            'default_example': 'color_ssn_example_summary'
+            'email_submitted': 'color_ssn_email_submitted_summary'
+            'email_started': 'color_ssn_email_started_summary'
+            'email_finished': 'color_ssn_email_finished_summary'
+            'email_failed': 'color_ssn_email_failed_summary'
+
+        'Convergence Ratio':
+            'default_live': 'convergence_ratio_live_summary'
+            'default_example': 'convergence_ratio_example_summary'
+            'email_submitted': 'convergence_ratio_email_submitted_summary'
+            'email_started': 'convergence_ratio_email_started_summary'
+            'email_finished': 'convergence_ratio_email_finished_summary'
+            'email_failed': 'convergence_ratio_email_failed_summary'
+
+        'Accession':
+            'default_live': 'est_accession_live_summary'
+            'default_example': 'est_accession_example_summary'
+            'email_submitted': 'est_accession_email_submitted_summary'
+            'email_started': 'est_accession_email_started_summary'
+            'email_finished': 'est_accession_email_finished_summary'
+            'email_failed': 'est_accession_email_failed_summary'
+
+        'BLAST':
+            'default_live': 'est_blast_live_summary'
+            'default_example': 'est_blast_example_summary'
+            'email_submitted': 'est_blast_email_submitted_summary'
+            'email_started': 'est_blast_email_started_summary'
+            'email_finished': 'est_blast_email_finished_summary'
+            'email_failed': 'est_blast_email_failed_summary'
+
+        'Families':
+            'default_live': 'est_families_live_summary'
+            'default_example': 'est_families_example_summary'
+            'email_submitted': 'est_families_email_submitted_summary'
+            'email_started': 'est_families_email_started_summary'
+            'email_finished': 'est_families_email_finished_summary'
+            'email_failed': 'est_families_email_failed_summary'
+
+        'FASTA':
+            'default_live': 'est_fasta_live_summary'
+            'default_example': 'est_fasta_example_summary'
+            'email_submitted': 'est_fasta_email_submitted_summary'
+            'email_started': 'est_fasta_email_started_summary'
+            'email_finished': 'est_fasta_email_finished_summary'
+            'email_failed': 'est_fasta_email_failed_summary'
+
+        'Neighborhood Connectivity':
+            'default_live': 'neighborhood_connectivity_live_summary'
+            'default_example': 'neighborhood_connectivity_example_summary'
+            'email_submitted': 'neighborhood_connectivity_email_submitted_summary'
+            'email_started': 'neighborhood_connectivity_email_started_summary'
+            'email_finished': 'neighborhood_connectivity_email_finished_summary'
+            'email_failed': 'neighborhood_connectivity_email_failed_summary'
+
+        'SSN Finalization':
+            'default_live': 'est_ssn_finalization_live_summary'
+            'default_example': 'est_ssn_finalization_example_summary'
+            'email_submitted': 'est_ssn_finalization_email_submitted_summary'
+            'email_started': 'est_ssn_finalization_email_started_summary'
+            'email_finished': 'est_ssn_finalization_email_finished_summary'
+            'email_failed': 'est_ssn_finalization_email_failed_summary'
+
+        'GND BLAST':
+            'default_live': 'gnd_blast_live_summary'
+            'default_example': 'gnd_blast_example_summary'
+            'email_submitted': 'gnd_blast_email_submitted_summary'
+            'email_started': 'gnd_blast_email_started_summary'
+            'email_finished': 'gnd_blast_email_finished_summary'
+            'email_failed': 'gnd_blast_email_failed_summary'
+
+        'GND FASTA':
+            'default_live': 'gnd_fasta_live_summary'
+            'default_example': 'gnd_fasta_example_summary'
+            'email_submitted': 'gnd_fasta_email_submitted_summary'
+            'email_started': 'gnd_fasta_email_started_summary'
+            'email_finished': 'gnd_fasta_email_finished_summary'
+            'email_failed': 'gnd_fasta_email_failed_summary'
+
+        'GND Accession':
+            'default_live': 'gnd_accession_live_summary'
+            'default_example': 'gnd_accession_example_summary'
+            'email_submitted': 'gnd_accession_email_submitted_summary'
+            'email_started': 'gnd_accession_email_started_summary'
+            'email_finished': 'gnd_accession_email_finished_summary'
+            'email_failed': 'gnd_accession_email_failed_summary'
+
+        'GNT':
+            'default_live': 'gnt_live_summary'
+            'default_example': 'gnt_example_summary'
+            'email_submitted': 'gnt_email_submitted_summary'
+            'email_started': 'gnt_email_started_summary'
+            'email_finished': 'gnt_email_finished_summary'
+            'email_failed': 'gnt_email_failed_summary'
+
+        'GND Viewer':
+            'default_live': 'gnd_viewer_live_summary'
+            'default_example': 'gnd_viewer_example_summary'
+            'email_submitted': 'gnd_viewer_email_submitted_summary'
+            'email_started': 'gnd_viewer_email_started_summary'
+            'email_finished': 'gnd_viewer_email_finished_summary'
+            'email_failed': 'gnd_viewer_email_failed_summary'
+
+        'Taxonomy Accession':
+            'default_live': 'taxonomy_accession_live_summary'
+            'default_example': 'taxonomy_accession_example_summary'
+            'email_submitted': 'taxonomy_accession_email_submitted_summary'
+            'email_started': 'taxonomy_accession_email_started_summary'
+            'email_finished': 'taxonomy_accession_email_finished_summary'
+            'email_failed': 'taxonomy_accession_email_failed_summary'
+
+        'Taxonomy Families':
+            'default_live': 'taxonomy_families_live_summary'
+            'default_example': 'taxonomy_families_example_summary'
+            'email_submitted': 'taxonomy_families_email_submitted_summary'
+            'email_started': 'taxonomy_families_email_started_summary'
+            'email_finished': 'taxonomy_families_email_finished_summary'
+            'email_failed': 'taxonomy_families_email_failed_summary'
+
+        'Taxonomy FASTA':
+            'default_live': 'taxonomy_fasta_live_summary'
+            'default_example': 'taxonomy_fasta_example_summary'
+            'email_submitted': 'taxonomy_fasta_email_submitted_summary'
+            'email_started': 'taxonomy_fasta_email_started_summary'
+            'email_finished': 'taxonomy_fasta_email_finished_summary'
+            'email_failed': 'taxonomy_fasta_email_failed_summary'
+
+        'generic_fallback_job':
+            'default_live': 'generic_fallback_job_live_summary'
+            'default_example': 'generic_fallback_job_example_summary'
+            'email_submitted': 'generic_fallback_job_email_submitted_summary'
+            'email_started': 'generic_fallback_job_email_started_summary'
+            'email_finished': 'generic_fallback_job_email_finished_summary'
+            'email_failed': 'generic_fallback_job_email_failed_summary'
+
+    app.job_summary_definitions:
+        _job_core_properties:
+            - { property: 'id', label: 'Job Number',                                                                    order: 1 }
+            - { property: 'jobName', label: 'Job Name',                                                                 order: 5,                                                           display_mode: 'download' }
+            - { property: 'formattedType', label: 'Input Option',                                                       order: 6 }
+            - { property: 'dbMetadata', label: 'Database Version',                                                      order: 7,   formatter: 'db_metadata',                   condition_is_not_empty: }
+
+        _job_live_only_properties:
+            - { property: 'formattedTimePeriod', label: 'Computation Duration',                                         order: 2 }
+            #- { property: 'timeCreated', label: 'Time Created',                                                         order: 3,   formatter: 'datetime', skeleton: 'yMMMdjm', default: 'N/A' }
+            - { property: 'timeStarted', label: 'Time Started',                                                         order: 3,   formatter: 'datetime', skeleton: 'yMMMdjm', default: 'N/A' }
+            - { property: 'timeFinished', label: 'Time Finished',                                                       order: 4,   formatter: 'datetime', skeleton: 'yMMMdjm', condition_is_not_empty: }
+
+        _email_job_submitted_properties:
+            - { property: 'timeCreated', label: 'Time Created',                                                         order: 3,   formatter: 'datetime', skeleton: 'yMMMdjm', default: 'N/A' }
+        _email_job_started_properties:
+            - { property: 'timeStarted', label: 'Time Started',                                                         order: 3,   formatter: 'datetime', skeleton: 'yMMMdjm', default: 'N/A' }
+            - { property: 'timeFinished', label: 'Time Finished',                                                       order: 4,   formatter: 'datetime', skeleton: 'yMMMdjm', condition_is_not_empty: }
+        _email_job_finished_properties:
+            - { property: 'formattedTimePeriod', label: 'Computation Duration',                                         order: 2 }
+            - { property: 'timeStarted', label: 'Time Started',                                                         order: 3,   formatter: 'datetime', skeleton: 'yMMMdjm', default: 'N/A' }
+            - { property: 'timeFinished', label: 'Time Finished',                                                       order: 4,   formatter: 'datetime', skeleton: 'yMMMdjm', condition_is_not_empty: }
+        _email_job_failed_properties:
+            - { property: 'timeStarted', label: 'Time Started',                                                         order: 3,   formatter: 'datetime', skeleton: 'yMMMdjm', default: 'N/A' }
+            - { property: 'timeFinished', label: 'Time Finished',                                                       order: 4,   formatter: 'datetime', skeleton: 'yMMMdjm', condition_is_not_empty: }
+
+        # Shared with BLAST, Family, FASTA, Accession
+
+        # Shared with BLAST, Family, FASTA, Accession
+        _est_generate_properties:
+            - { property: 'allByAllEvalue', label: 'E-Value for SSN Edge Calculation',                                  order: 8,                           condition_is_not_empty: }
+            - { property: 'numImportedIds', label: 'Total Number of Sequences in Dataset',                              order: 75,  formatter: 'integer' }
+            - { property: 'numComputedIds', label: 'Number of Unique Sequences',                                        order: 76,  formatter: 'integer' }
+            - { property: 'numBlastEdges', label: 'Total Number of Edges',                                              order: 77,  formatter: 'integer' }
+            - { property: 'outputConvergenceRatio', label: 'Convergence Ratio',                                         order: 90,  formatter: 'number', is_html: true, help: '<a class="question" data-controller="tooltip" data-bs-toggle="tooltip" data-bs-custom-class="sequence-tooltip" title="The convergence ratio is a measure of the similarity of the sequences used in the BLAST.  It is the ratio of the total number of edges retained from the BLAST (e-values less than the specified threshold; default 5) to the total number of sequence pairs.  The value decreases from 1.0 for sequences that are very similar (identical) to 0.0 for sequences that are very different (unrelated).">?</a>', condition_is_not_empty: }
+
+        _exclude_fragments_properties:
+            - { property: 'excludeFragments', label: 'Exclude Fragments',                                               order: 50,  formatter: 'boolean_on_off',    condition_is_true: }
+            - { property: 'numFragmentFiltered', label: 'Num Fragments Filtered',                                       order: 51,  formatter: 'integer',   condition_all: [ { property: 'excludeFragments', is_true: true } ] }
+
+        _taxonomy_filter_properties:
+            - { property: 'formattedTaxSearch', label: 'Taxononomy Categories',                                         order: 51,                          condition_is_not_empty: }
+
+        _est_blast_properties:
+            - { property: 'numBlastRetrievedIds', label: 'Actual Number of Retrieved Sequences',                        order: 14,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'numBlastUnmatchedIds', label: 'Number of Mismatched IDs',                                    order: 61,  formatter: 'integer',   condition_is_not_empty: }
+
+        # Shared with BLAST, Family, FASTA, Accession
+        _est_families_properties:
+            #TODO: Change to "Added" for Accession, BLAST, FASTA
+            - { property: 'fraction', label: 'Fraction Option',                                                         order: 52,  formatter: 'integer',   condition_all: [ { property: 'fraction', is_not_null: true }, { property: 'fraction', is_greater_than: 1 }, { property: 'useUniref', is_false: true } ] }
+            - { property: 'formattedFamilies', label: 'Pfam / InterPro Family',                                         order: 20,                          condition_is_not_empty: }
+            - { property: 'numFamilyIds', label: 'Number of IDs in Pfam / InterPro Family',                             order: 82,  formatter: 'integer',   condition_all: [ { property: 'useUniref', is_false: true } ] }
+            # This is a virtual property that is aliased to numFamilyIds (we need it here to define the properties; if we duplicate numFamilyIds it overwrites the previous line)
+            - { property: 'numFamilyIdsUniref', label: 'Number of UniRef Clusters in Pfam / InterPro Family',           order: 82,  formatter: 'integer',   condition_all: [ { property: 'useUniref', is_true: true }, { property: 'formattedFamilies', is_not_empty: true } ] }
+            - { property: 'numFullFamilyIds', label: 'Number of IDs in Full Pfam / InterPro Family',                    order: 83,  formatter: 'integer',   condition_all: [ { property: 'useUniref', is_true: true }, { property: 'formattedFamilies', is_not_empty: true } ] }
+            - { property: 'numFamilyOverlapIds', label: 'Number of Input Sequences Matched in Family',                  order: 83,  formatter: 'integer',   condition_all: [ { property: 'useUniref', is_true: true }, { property: 'formattedFamilies', is_not_empty: true } ] }
+            - { property: 'numFractionFiltered', label: 'Number of IDs Removed by Fraction',                            order: 90,  formatter: 'integer',   condition_all: [ { property: 'fraction', is_not_null: true }, { property: 'fraction', is_greater_than: 1 } ] }
+        _email_est_families_properties:
+            - { property: 'formattedFamilies', label: 'Pfam / InterPro Family',                                         order: 20,                          condition_is_not_empty: }
+
+        # Shared with BLAST, Family
+        _est_family_domain_properties:
+            - { property: 'formattedDomain', label: 'Domain Option',                                                    order: 15,                          condition_all: [ { property: 'domain', is_true: true } ] }
+
+        # Shared with Accession and FASTA
+        _est_user_sequences_properties:
+            - { property: 'numMatchedIds', label: 'Number of IDs in Uploaded File with UniProt Mapping:',               order: 85,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'numUnmatchedIds', label: 'Number of IDs in Uploaded File without UniProt Mapping:',          order: 86,  formatter: 'integer',   condition_is_not_empty: }
+
+        _uploaded_file_properties:
+            - { property: 'formattedUploadedFilename', label: 'Uploaded File',                                          order: 10,                          condition_is_not_empty: }
+
+        _est_fasta_properties:
+            - { property: 'numFastaHeaders', label: 'Number of FASTA Headers in Uploaded File:',                        order: 87,  formatter: 'integer',   condition_is_not_empty: }
+
+        _est_accession_properties:
+            - { property: 'numForeignIds', label: 'Number of non-UniProt IDs in Uploaded File with UniProt Mapping:',   order: 87,  formatter: 'integer',   condition_is_not_empty: }
+
+        _color_ssn_properties:
+            - { property: 'numSsnClusters', label: 'Number of SSN Clusters',                                            order: 75,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'numSsnSingletons', label: 'Number of SSN Singletons',                                        order: 76,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'numSsnMetanodes', label: 'Number of SSN (Meta)nodes',                                        order: 77,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'numSsnAccessionIds', label: 'Number of IDs in SSN',                                          order: 78,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'colorSsnSequenceSource', label: 'SSN Sequence Source',                                       order: 79,                          condition_is_not_empty: }
+
+        _cgfp_results_properties:
+            - { property: 'numCdhitClusters', label: 'Number of CD-HIT ShortBRED families',                             order: 85,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'numMarkers', label: 'Number of markers',                                                     order: 86,  formatter: 'integer',   condition_is_not_empty: }
+            - { property: 'numUniqueSeq', label: 'Number of unique sequences in SSN',                                   order: 87,  formatter: 'integer',   condition_is_not_empty: }
+
+
+        est_blast_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_est_generate_properties'
+                - '_est_families_properties'
+                - '_est_blast_properties'
+                - '_taxonomy_filter_properties'
+                - '_exclude_fragments_properties'
+            fields:
+                - { property: 'blastEvalue', label: 'E-Value for UniProt BLAST Retrieval',                              order: 10,                          condition_is_not_empty: }
+                - { property: 'blastMaxSequences', label: 'Maximum Number of Retrieved Sequences',                      order: 13,                          condition_is_not_empty: }
+                - { property: 'formattedUnirefVersion', label: 'UniRef Version',                                        order: 25,                          condition_all: [ { property: 'useUniref', is_true: true }, { property: 'useFamilies', is_true: true } ] }
+                - { property: 'blastQueryLink', label: 'Sequence Submitted for BLAST',                                  order: 11,  formatter: 'blast_query_link', formatter_options: { route_name: 'efi_est_blast_sequence' }, is_html: true }
+                - { property: 'blastDatabase', label: 'BLAST Database',                                                 order: 12,                          condition_is_not_empty: }
+        est_blast_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_email_est_families_properties'
+            fields:
+                - { property: 'blastQuery', label: 'Sequence Submitted for BLAST',                                      order: 11,  formatter: 'blast_query' }
+                - { property: 'blastDatabase', label: 'BLAST Database',                                                 order: 12,                          condition_is_not_empty: }
+        est_blast_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_email_est_families_properties'
+        est_blast_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_email_est_families_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_dataset_results' }, is_html: true }
+                - { property: 'blastQuery', label: 'Sequence Submitted for BLAST',                                      order: 11,  formatter: 'blast_query' }
+                - { property: 'blastDatabase', label: 'BLAST Database',                                                 order: 12,                          condition_is_not_empty: }
+        est_blast_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_email_est_families_properties'
+
+
+        est_accession_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_est_generate_properties'
+                - '_est_families_properties'
+                - '_est_user_sequences_properties'
+                - '_est_accession_properties'
+                - '_taxonomy_filter_properties'
+                - '_exclude_fragments_properties'
+            fields:
+                - { property: 'formattedDomainFamily', label: 'Domain Option',                                          order: 54,                          condition_all: [ { property: 'useFamilies', is_false: true } ] }
+                - { property: 'formattedUnirefVersion', label: 'UniRef Version',                                        order: 25,                          condition_all: [ { property: 'useUniref', is_true: true }, { property: 'useFamilies', is_true: true } ] }
+                - { property: 'formattedUnirefVersionWithFamilies', label: 'Input Sequence Source',                     order: 26,                          condition_all: [ { property: 'useUniref', is_true: true }, { property: 'useFamilies', is_false: true } ] }
+        est_accession_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+        est_accession_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+        est_accession_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_dataset_results' }, is_html: true }
+        est_accession_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+
+
+        _est_families_live_summary_properties:
+            - { property: 'formattedUnirefVersion', label: 'UniRef Version',                                            order: 15,                          condition_all: [ { property: 'useUniref', is_true: true } ] }
+        est_families_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_est_generate_properties'
+                - '_est_families_properties'
+                - '_est_family_domain_properties'
+                - '_taxonomy_filter_properties'
+                - '_exclude_fragments_properties'
+                - '_est_families_live_summary_properties'
+        est_families_example_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_est_generate_properties'
+                - '_est_families_properties'
+                - '_est_family_domain_properties'
+                - '_exclude_fragments_properties'
+                - '_est_families_live_summary_properties'
+        est_families_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_email_est_families_properties'
+                - '_est_families_live_summary_properties'
+        est_families_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_email_est_families_properties'
+                - '_est_families_live_summary_properties'
+        est_families_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_email_est_families_properties'
+                - '_est_families_live_summary_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_dataset_results' }, is_html: true }
+        est_families_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_email_est_families_properties'
+                - '_est_families_live_summary_properties'
+
+
+        est_fasta_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_est_generate_properties'
+                - '_est_families_properties'
+                - '_est_user_sequences_properties'
+                - '_est_fasta_properties'
+            fields:
+                - { property: 'numFastaHeaders', label: 'Number of FASTA Headers',                                      order: 84,                          condition_is_not_empty: }
+                - { property: 'formattedUnirefVersion', label: 'UniRef Version',                                        order: 15,                          condition_all: [ { property: 'useUniref', is_true: true }, { property: 'useFamilies', is_true: true } ] }
+                - { property: 'formattedUnirefVersionWithFamilies', label: 'Input Sequence Source',                     order: 16,                          condition_all: [ { property: 'useUniref', is_true: true }, { property: 'useFamilies', is_false: true } ] }
+        est_fasta_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+        est_fasta_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+        est_fasta_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_dataset_results' }, is_html: true }
+        est_fasta_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_email_est_families_properties'
+                - '_uploaded_file_properties'
+
+
+        _est_ssn_finalization_live_summary_properties:
+            - { property: 'parentJob', label: 'Original Dataset',                                                   order: 6,   formatter: 'parent_job_id', formatter_options: { route_name: 'efi_est_dataset_results' }, is_html: true }
+            - { property: 'jobName', label: 'Network Name',                                                         order: 3,                                                           display_mode: 'download' }
+            - { property: 'alignmentScore', label: 'Alignment Score',                                               order: 10,                          condition_is_not_empty: }
+        est_ssn_finalization_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_taxonomy_filter_properties'
+                - '_exclude_fragments_properties'
+                - '_est_ssn_finalization_live_summary_properties'
+            fields:
+                - { property: 'formattedTaxSearch', label: 'Taxononomy Categories',                                     order: 51,                          condition_is_not_empty: }
+                - { property: 'minimumLength', label: 'Minimum Length',                                                 order: 11,                          condition_is_not_empty: }
+                - { property: 'maximumLength', label: 'Maximum Length',                                                 order: 12,                          condition_is_not_empty: }
+        est_ssn_finalization_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_est_ssn_finalization_live_summary_properties'
+        est_ssn_finalization_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_est_ssn_finalization_live_summary_properties'
+        est_ssn_finalization_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_est_ssn_finalization_live_summary_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_analysis_results' }, is_html: true }
+        est_ssn_finalization_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_est_ssn_finalization_live_summary_properties'
+
+
+        color_ssn_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_color_ssn_properties'
+                - '_uploaded_file_properties'
+        color_ssn_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+        color_ssn_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+        color_ssn_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_ssn_util_results' }, is_html: true }
+        color_ssn_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+
+        cluster_analysis_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_color_ssn_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'maxNumSequences', label: 'Maximum Number of Sequences',                                  order: 10,                          condition_is_not_empty: }
+                - { property: 'minNumSequences', label: 'Minimum Number of Sequences',                                  order: 11,                          condition_is_not_empty: }
+                - { property: 'makeWeblogo', label: 'Create Weblogos',                                                  order: 12,  formatter: 'boolean_yes_no',        condition_is_not_empty: }
+                - { property: 'computeConsensusResidues', label: 'Compute Consensus Residues',                          order: 13,  formatter: 'boolean_yes_no',        condition_is_not_empty: }
+                - { property: 'consensusResidues', label: 'Consensus Residues',                                         order: 14,                          condition_is_not_empty: }
+                - { property: 'pidThresholds', label: 'Percent Identity Thresholds',                                    order: 15,  formatter: 'pid_threshold_list',    condition_is_not_empty: }
+                - { property: 'makeHmms', label: 'Create HMMs',                                                         order: 16,  formatter: 'boolean_yes_no',        condition_is_not_empty: }
+                - { property: 'makeLengthHistograms', label: 'Create Length Histograms',                                order: 17,  formatter: 'boolean_yes_no',        condition_is_not_empty: }
+        cluster_analysis_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+        cluster_analysis_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+        cluster_analysis_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_ca_util_results' }, is_html: true }
+        cluster_analysis_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+
+        _convergence_ratio_live_summary_properties:
+            - { property: 'blastEValue', label: 'Alignment Score',                                                      order: 11,                          condition_is_not_empty: }
+        convergence_ratio_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_uploaded_file_properties'
+                - '_convergence_ratio_live_summary_properties'
+        convergence_ratio_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+                - '_convergence_ratio_live_summary_properties'
+        convergence_ratio_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+                - '_convergence_ratio_live_summary_properties'
+        convergence_ratio_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+                - '_convergence_ratio_live_summary_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_ssn_util_results' }, is_html: true }
+        convergence_ratio_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+                - '_convergence_ratio_live_summary_properties'
+
+
+        neighborhood_connectivity_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_uploaded_file_properties'
+        neighborhood_connectivity_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+        neighborhood_connectivity_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+        neighborhood_connectivity_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_ssn_util_results' }, is_html: true }
+        neighborhood_connectivity_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+
+
+        taxonomy_accession_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_taxonomy_filter_properties'
+                - '_exclude_fragments_properties'
+                - '_uploaded_file_properties'
+        taxonomy_accession_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+        taxonomy_accession_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+        taxonomy_accession_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'taxonomy_results' }, is_html: true }
+        taxonomy_accession_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+
+
+        taxonomy_families_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_taxonomy_filter_properties'
+                - '_exclude_fragments_properties'
+            fields:
+                - { property: 'formattedFamilies', label: 'Pfam / InterPro Family',                                     order: 10,                          condition_is_not_empty: }
+                - { property: 'numIdsInFamily', label: 'Number of IDs in Pfam / InterPro Family',                       order: 75,  formatter: 'integer',   condition_is_not_empty: }
+        taxonomy_families_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_email_est_families_properties'
+        taxonomy_families_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_email_est_families_properties'
+        taxonomy_families_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_email_est_families_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'taxonomy_results' }, is_html: true }
+        taxonomy_families_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_email_est_families_properties'
+
+
+        taxonomy_fasta_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_uploaded_file_properties'
+        taxonomy_fasta_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+        taxonomy_fasta_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+        taxonomy_fasta_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'taxonomy_results' }, is_html: true }
+        taxonomy_fasta_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+
+
+        _gnt_live_summary_properties:
+            - { property: 'neighborhoodSize', label: 'Neighborhood Size',                                               order: 11,                          condition_is_not_empty: }
+            - { property: 'cooccurrence', label: 'Input % Co-Occurrence',                                               order: 12,                          condition_is_not_empty: }
+        gnt_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_uploaded_file_properties'
+                - '_gnt_live_summary_properties'
+        gnt_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+                - '_gnt_live_summary_properties'
+        gnt_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+                - '_gnt_live_summary_properties'
+        gnt_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+                - '_gnt_live_summary_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'gnn_results' }, is_html: true }
+        gnt_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+                - '_gnt_live_summary_properties'
+
+
+        gnd_viewer_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_gnt_live_summary_properties'
+        gnd_viewer_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_gnt_live_summary_properties'
+        gnd_viewer_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_gnt_live_summary_properties'
+        gnd_viewer_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_gnt_live_summary_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'gnd_viewer' }, is_html: true }
+        gnd_viewer_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_gnt_live_summary_properties'
+
+
+        cgfp_identify_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_color_ssn_properties'
+                - '_cgfp_results_properties'
+                - '_uploaded_file_properties'
+        cgfp_identify_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+        cgfp_identify_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+        cgfp_identify_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_ca_util_results' }, is_html: true }
+        cgfp_identify_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+
+
+        cgfp_quantify_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+                - '_color_ssn_properties'
+                - '_cgfp_results_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'numConsensusSeqWithHits', label: 'Number of consensus sequences with hits',              order: 90,  formatter: 'integer',                          condition_is_not_empty: }
+        cgfp_quantify_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+                - '_uploaded_file_properties'
+        cgfp_quantify_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+                - '_uploaded_file_properties'
+        cgfp_quantify_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+                - '_uploaded_file_properties'
+            fields:
+                - { property: 'resultsLink', label: 'resultsLink',                                                      order: 5,   formatter: 'job_results_link', formatter_options: { route_name: 'efi_est_ca_util_results' }, is_html: true }
+        cgfp_quantify_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+                - '_uploaded_file_properties'
+
+
+        generic_fallback_job_live_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_job_live_only_properties'
+        generic_fallback_job_example_summary:
+            _extends:
+                - '_job_core_properties'
+        generic_fallback_job_email_submitted_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_submitted_properties'
+        generic_fallback_job_email_started_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_started_properties'
+        generic_fallback_job_email_finished_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_finished_properties'
+        generic_fallback_job_email_failed_summary:
+            _extends:
+                - '_job_core_properties'
+                - '_email_job_failed_properties'
+

@@ -1,0 +1,27 @@
+
+{% embed '_partials/conditional_parent_or_file_form_wrapper.html.twig' with {
+    'form': estNbConnForm,
+    'form_name': 'estNbConnForm',
+    'job_type_config': 'NbConn-form',
+    'file_heading': 'SSN File:'
+} %}
+
+    {% block description %}
+        <p>
+        <b>Nodes in the submitted SSN are colored according to neighborhood
+            connectivity (number of edges to other nodes).</b>
+        </p>
+
+        <p>
+        The nodes for unresolved families can be difficult to identify in SSNs
+        generated with low alignment scores. Coloring the nodes according to the
+        number of edges to other nodes (<b>Neighborhood Connectivity</b>, NC) helps identify
+        families with highly connected nodes
+        (https://doi.org/10.1016/j.heliyon.2020.e05867). Using <b>Neighborhood
+            Connectivity Coloring</b> as a guide, the alignment score threshold can be chosen
+        in Cytoscape to separate the SSN into families.
+        </p>
+    {% endblock %}
+
+{% endembed %}
+

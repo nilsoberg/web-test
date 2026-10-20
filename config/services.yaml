@@ -1,0 +1,143 @@
+imports:
+    - { resource: 'app.yaml' }
+    - { resource: 'packages/defaults.yaml' }
+    - { resource: 'custom_file_types.yaml' }
+    - { resource: 'job_summary_definitions.yaml' }
+    - { resource: 'sunburst_descriptions.yaml' }
+    - { resource: 'instance.yaml' }
+    - { resource: 'colors.yaml' }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+    App\Auth\Command\CreateSuperAdmin:
+        arguments:
+            $defaultUserTimezone: '%app.user_default_timezone%'
+        tags: ['console.command']
+    App\Auth\Command\PermanentDeleteOrganizations:
+        tags: ['console.command']
+    App\Auth\Command\PermanentDeleteUsers:
+        tags: ['console.command']
+    App\Auth\Controller\OrgAdminController:
+        arguments:
+            $defaultUserTimezone: '%app.user_default_timezone%'
+    App\Auth\Controller\PublicUserAccountController:
+        arguments:
+            $defaultUserTimezone: '%app.user_default_timezone%'
+    App\Auth\Controller\ResetPasswordController:
+        bind:
+            $serverSenderEmail: '%env(MAIL_FROM_ADDRESS)%'
+            $serverSenderName: '%env(MAIL_FROM_NAME)%'
+    App\Auth\Controller\UserAccountController:
+        arguments:
+            $defaultUserTimezone: '%app.user_default_timezone%'
+    App\Auth\Controller\UserAdminController:
+        arguments:
+            $defaultUserTimezone: '%app.user_default_timezone%'
+    App\Auth\Security\AccountActivationChecker:
+        arguments:
+            $accessMode: '%app.access_mode%'
+    App\Auth\Service\AdminAccountCreatedEmailService:
+        bind:
+            $fromEmail: '%env(MAIL_FROM_ADDRESS)%'
+            $fromName: '%env(MAIL_FROM_NAME)%'
+    App\Auth\Service\PublicAccountActivationService:
+        bind:
+            $fromEmail: '%env(MAIL_FROM_ADDRESS)%'
+            $fromName: '%env(MAIL_FROM_NAME)%'
+    App\Auth\Service\PublicUserAccountService:
+        arguments:
+            $defaultUserTimezone: '%app.user_default_timezone%'
+    App\Auth\Service\RsyncKeyService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+    App\Auth\Voter\AccessModeVoter:
+        arguments:
+            $accessMode: '%app.access_mode%'
+        tags: ['security.voter']
+    App\Auth\Voter\FeatureVoter:
+        arguments:
+            $disabledFeatures: '%app.disabled_features%'
+    App\Auth\Voter\JobViewVoter:
+        arguments:
+            $accessMode: '%app.access_mode%'
+    App\Auth\Voter\SubmissionVoter:
+        arguments:
+            $accessMode: '%app.access_mode%'
+    App\Command\CreateExampleJobsCommand:
+        bind:
+            $exampleJobsPath: '%app.example_jobs_path%'
+            $resultsSubdirectoryName: '%app.results_subdirectory_name%'
+    App\EventListener\JobDatabaseVersionListener:
+        arguments:
+            $strictMode: true
+    App\EventListener\UserContextListener:
+        arguments:
+            $defaultTimezone: '%app.timezone%'
+            $defaultLocale: '%app.default_locale%'
+    App\Home\Controller\FeedbackController:
+        arguments:
+            $fromEmail: '%env(MAIL_FROM_ADDRESS)%'
+            $fromName: '%env(MAIL_FROM_NAME)%'
+            $feedbackEmail: '%env(MAIL_FEEDBACK_ADDRESS)%'
+    App\MessageHandler\SubmissionEmailMessageHandler:
+        bind:
+            $fromEmail: '%env(MAIL_FROM_ADDRESS)%'
+            $fromName: '%env(MAIL_FROM_NAME)%'
+            $submissionBcc: '%env(MAIL_BCC)%'
+            $useHtmlEmail: '%app.use_html_email%'
+    App\Service\ConfigurationManager:
+        arguments:
+            $defaultDbVersion: '%app.default_database_version%'
+            $uploadsDirectory: '%app.uploads_directory%'
+    App\Service\JobStatusSubmissionHandlerService:
+        arguments:
+            $sendOnSubmit: '%app.send_email_on_submit%'
+    App\Service\JobSummaryService:
+        arguments:
+            $propertyAccessor: '@Symfony\Component\PropertyAccess\PropertyAccessorInterface'
+            $jobSummaryDefinitions: '%app.job_summary_definitions%'
+            $jobTypeToContextMap: '%app.job_type_to_context_map%'
+    App\Service\UserManagementService:
+        arguments:
+            $defaultUserTimezone: '%app.user_default_timezone%'
+    App\Service\ResultFileService:
+        arguments:
+            $resultsDirectory: '%app.results_directory%'
+            $resultsSubdirectoryName: '%app.results_subdirectory_name%'
+            $fileTypeMappings: '%app.job_file_types%'
+    App\Service\JobRetentionService:
+        arguments:
+            $retentionDays: '%app.retention_days%'
+    App\Service\SunburstDataRetrievalService:
+        arguments:
+            $blastBinDir: '%app.blast_bin_dir%'
+    App\Service\SunburstDescriptionService:
+        arguments:
+            $sunburstDescriptions: '%app.sunburst_descriptions%'
+    App\Service\UserJobsSummaryService:
+        arguments:
+            $jobTypeColors: '%app.job_colors%'
+    App\Twig\AppExtension:
+        arguments:
+            $accessMode: '%app.access_mode%'
+    App\Vich\JobIdNamer:
+        public: true
+        tags: ['vich_uploader.namer']
+
+    App\Service\GndMySQL:
+        class: PDO
+        public: false
+        arguments:
+            - '%env(GND_DATABASE_DSN)%'
+            - '%env(GND_DATABASE_USER)%'
+            - '%env(GND_DATABASE_PASSWORD)%'
+        calls:
+            - [setAttribute, [!php/const PDO::ATTR_ERRMODE, !php/const PDO::ERRMODE_EXCEPTION]]

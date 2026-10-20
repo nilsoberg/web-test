@@ -1,0 +1,3 @@
+/Subscribing to onSchemaCreateTable events is deprecated/
+/Setting the "framework.profiler.collect_serializer_data" config option to "false" is deprecated/
+/Do the same in child class "Zenstruck\\Browser\\Session\\Driver\\BrowserKitDriver" now to avoid errors/

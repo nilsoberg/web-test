@@ -1,0 +1,9 @@
+parameters:
+    app.job_colors:
+        est: 'est'
+        analysis: 'est'
+        gnt: 'gnt'
+        cgfp: 'cgfp'
+        taxonomy: 'est'
+        colorssn: 'colorssn'
+        default: 'est'

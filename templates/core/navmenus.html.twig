@@ -1,0 +1,77 @@
+
+<div>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+        <div class="container navbar-container">
+            <div class="collapse navbar-collapse navbar-container" id="navbarNav">
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item pt-1 mt-0 px-2">
+				        <a class="nav-link text-white" href="{{ path('home') }}">About</a>
+					</li>
+                    <li class="nav-item pt-1 mt-0 px-2 border-left border-white est-base">
+                        <a class="nav-link active" href="{{ path('est_home') }}">EFI-EST</a>
+                    </li>
+                    <li class="nav-item pt-1 mt-0 px-2 border-left border-white gnt-base">
+                        <a class="nav-link align-middle" href="{{ path('gnt_home') }}">EFI-GNT</a>
+                    </li>
+                    <li class="nav-item pt-1 mt-0 px-2 taxonomy-base border-left border-white">
+                        <a class="nav-link" href="{{ path('taxonomy_home') }}">Taxonomy</a>
+                    </li>
+                    <li class="nav-item pt-1 mt-0 px-2 cgfp-base border-left border-white">
+                        <a class="nav-link" href="{{ path('cgfp_home') }}">EFI-CGFP</a>
+                    </li>
+                </ul>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <ul class="navbar-nav ms-auto">
+                    <li class="dropdown">
+                            <button href="#" id="userDropdown" class="initials-circle" data-bs-toggle="dropdown" aria-expanded="false"><span class="fw-semibold user-select-none">{{ app.user.initials }}</span></button>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark bg-dark text-white shadow-lg py-1 mt-2" aria-labelledby="userDropdown">
+                                {% if not is_app_public_mode %}
+                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <li><a class="dropdown-item" href="{{ path('superadmin_orgs') }}">Organizations</a></li>
+                                    {% endif %}
+
+                                    {% if is_granted('ROLE_ORG_ADMIN') and is_granted('IS_VALID_ORG') %}
+                                        <li><a class="dropdown-item" href="{{ path('useradmin_users') }}">Users</a></li>
+                                    {% endif %}
+
+                                    <li><a class="dropdown-item" href="{{ path('edit_user_profile') }}">My Account</a></li>
+
+                                    {% if is_granted('ROLE_ORG_ADMIN') and is_granted('IS_VALID_ORG') %}
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="{{ path('app_admin_job_list') }}">Job Admin View</a></li>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_DATA_ADMIN') %}
+                                        <li><a class="dropdown-item" href="{{ path('app_admin_db_index') }}">Database Admin</a></li>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <li><a class="dropdown-item" href="{{ path('app_admin_notice_index') }}">Site Banner</a></li>
+                                    {% endif %}
+                                {% else %}
+                                    <li><a class="dropdown-item" href="{{ path('public_edit_user_profile') }}">My Account</a></li>
+                                {% endif %}
+
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ path('auth_logout') }}">Logout</a></li>
+                            </ul>
+                    </li>
+                </ul>
+            {% else %}
+                {% if is_app_public_mode %}
+                    <div class="navbar-nav ms-auto text-center text-white py-1">
+                        <a class="nav-link text-white" href="{{ path('auth_login') }}"><b>Sign in</b></a>
+                        <span class="my-2">or</span>
+                        <a class="nav-link text-white" href="{{ path('new_public_account') }}"><b>Create a user account</b></a>
+                    </div>
+                {% else %}
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item pt-1 mt-0 px-2 border-left border-white">
+                            <a class="nav-link" href="{{ path('auth_login') }}">Sign in</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            {% endif %}
+            </div>
+        </div>
+    </nav>
+</div>

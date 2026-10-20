@@ -1,0 +1,150 @@
+
+<div class="job-form-container" data-job-type-config="ESTFasta-form" data-controller="upload-progress">
+
+    <p class="tab-p-heading">Generate a SSN from FASTA-formatted UniProt sequences.</p>
+
+    <div>
+        <p>
+        An all-by-all BLAST <span data-controller="tooltip" data-bs-toggle="tooltip" title="A BLAST with all retrieved sequences BLAST-ed against the same set of retrieved sequences.">{% include('_partials/question_mark.html.twig') %}</span>
+        is performed to obtain the similarities between sequence pairs to calculate edge values to generate the SSN. 
+        </p>
+
+        <p>
+        Input multiple sequences in FASTA format into the <b>Sequences</b> text input or upload a FASTA-formatted sequence file.
+        </p>
+        
+        <p>
+        The sequences in the FASTA file are used to calculate edge values.
+        </p>
+        
+        <p>
+        The ID in the header that immediately follows the "&gt;" is used to retrieve node attribute information. Acceptable IDs
+        include UniProt IDs, PDB IDs, and NCBI GenBank IDs that have equivalent entries in the UniProt database. ?
+        </p>
+        
+        <p>
+        If the header for a sequence does not contain an acceptable ID for retrieving node attribute information, the SSN
+        provides node attributes for only the sequence, sequence length, and the header as the Description.
+        </p>
+        
+        <p>
+        If the user identifies the input sequences as UniRef50 or UniRef90, the node attributes will include the UniRef Cluster
+        Size and UniRef Cluster IDs node attributes. The other node attributes will be lists of the values for UniRef cluster
+        IDs in the node. 
+        </p>
+    </div>
+
+    {{ form_start(estFastaForm, {
+        'attr': {
+            'data-upload-progress-target': 'form',
+            'data-action': 'submit->upload-progress#upload'
+        }
+    }) }}
+
+    <div>
+        <div
+            id="fasta-tabs"
+            class="page-tabs"
+            data-controller="tabs"
+            data-tabs-active-value="{{ fastaActiveInputTab }}"
+        >
+            <ul>
+                <li><a href="#FastaTab-uniprot">Use UniProt IDs</a></li>
+                <li><a href="#FastaTab-uniref">Use UniRef50 or UniRef90 Cluster IDs</a></li>
+            </ul>
+            <div id="FastaTab-uniprot">
+                <div>
+                    Input FASTA-formatted sequences with UniProt accession IDs in the header or upload a file.
+                </div>
+                <div class="input-description">
+                    <div>
+                        <div><span class="input-heading">Sequences:</span></div>
+                        <div>{{ form_widget(estFastaForm.textUniprot) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(estFastaForm.textUniprot) }}</div>
+                    <div>
+                        <div><span class="input-heading">FASTA File:</span> {% include('_partials/upload_file_size_tooltip.html.twig') %}</div>
+                        <div>{{ form_widget(estFastaForm.fileUniprot) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(estFastaForm.fileUniprot) }}</div>
+                </div>
+            </div>
+            <div id="FastaTab-uniref">
+                <div>
+                    Input FASTA-formatted sequences with UniRef50 or UniRef90 accession IDs in the header or upload a file.
+                </div>
+                <div class="input-description">
+                    <div>
+                        <div><span class="input-heading">Sequences:</span></div>
+                        <div>{{ form_widget(estFastaForm.textUniref) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(estFastaForm.textUniprot) }}</div>
+                    <div>
+                        <div><span class="input-heading">FASTA File:</span> {% include('_partials/upload_file_size_tooltip.html.twig') %}</div>
+                        <div>{{ form_widget(estFastaForm.fileUniref) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(estFastaForm.fileUniref) }}</div>
+                    <div>
+                        <span class="input-heading">Input accession IDs are:</span>
+                        <twig:uniref_version form="{{ estFastaForm }}" useGlobalScope="true" familyFormId="ESTFasta-form" tabTrigger="1" />
+                        <span data-controller="tooltip" data-bs-toggle="tooltip" title="The list of sequences that is put into the tool will be end up being the node IDs, and node attributes with the UniRef clusters will be included in the output SSN.">{% include('_partials/question_mark.html.twig') %}</span>
+                    </div>
+                    <div class="submission-error">{{ form_errors(estFastaForm.unirefVersion) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ESTFasta-form-tax-search" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Filter by Taxonomy</h3>
+        <div class="accordion-content">
+            {% include('_partials/taxonomy_filtering_text.html.twig') %}
+
+            <twig:taxonomy_filtering filterForm="{{ estFastaForm.taxSearch }}" />
+
+            {# Ensure that Symfony doesn't render this field later #}
+            {% do estFastaForm.taxSearch.setRendered() %}
+        </div>
+    </div>
+
+    <div id="ESTFasta-form-family-input" data-controller="accordion">
+        <h3>Protein Family Addition Options</h3>
+        <div class="accordion-content">
+            <twig:family_input form="{{ estFastaForm.familyInput }}" formId="ESTFasta-form" tabTrigger="FastaTab-uniref" defaultDatabaseId="{{ defaultDatabaseId }}" />
+            <div>
+                <p>
+                UniRef90 clusters contain UniProt IDs that share &ge;90% sequence identity and have 80% overlap
+                with the longest sequence in the cluster ("seed sequence"); as a result, the UniProt IDs in
+                the cluster usually are functionally homogeneous, i.e., orthologues. UniRef50 clusters contain
+                UniProt IDs that share &ge;50% sequence identity and have 80% overlap with the seed sequence;
+                as a result, the UniProt IDs in the cluster often are functionally heterogeneous, e.g.,
+                paralogues.
+                </p>
+                <p>
+                The sequences from the UniRef90 and UniRef90 databases are the UniRef90 and UniRef50 clusters
+                for which the cluster ID ("representative sequence") matches the specified families. The
+                UniProt members in these UniRef90 and Uni/Ref50 clusters that do not match the specified
+                families are removed from the cluster. 
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="ESTFasta-form-ssn-edge-calc" data-controller="accordion">
+        <h3>SSN Edge Calculation Option</h3>
+        <div class="accordion-content">
+            <twig:ssn_edge_calc form="{{ estFastaForm.allByAllBlastEValue }}" />
+        </div>
+    </div>
+
+    <twig:est_dev_features form="{{ estFastaForm }}" form_elementid="ESTFasta-form" />
+
+    <div>
+        <twig:job_submit_input form="{{ estFastaForm }}" mainFormId="ESTFasta-form" />
+    </div>
+    {% include('_partials/file_upload_progress.html.twig') %}
+
+	{{ form_end(estFastaForm) }}
+
+</div>
+

@@ -1,0 +1,40 @@
+
+{% if is_color_ssn_job %}
+    {% set page_subtitle = 'Cluster Analysis' %}
+{% elseif is_neighborhood_connectivity_job %}
+    {% set page_subtitle = 'Neighborhood Connectivity' %}
+{% elseif is_convergence_ratio_job %}
+    {% set page_subtitle = 'Convergence Ratio' %}
+{% endif %}
+
+{% extends "efi-est/core.html.twig" %}
+
+{% block content %}
+<h2 class="page-heading">Download {{ job_type }} Files</h2>
+
+<h4 style="font-weight: normal">Submission Name: <b>{{ page.jobName }}</b></h4>
+
+{% set datasetSummaryContent %}
+    <twig:dataset_summary summary_table="{{ page.summaryData }}" download_url="{{ page.summaryDownloadUrl }}" />
+{% endset %}
+
+{% if is_color_ssn_job %}
+    {% set downloadTemplate = 'efi-est/results/ssn_utility/color_ssn.html.twig' %}
+{% elseif is_neighborhood_connectivity_job %}
+    {% set downloadTemplate = 'efi-est/results/ssn_utility/neighborhood_connectivity.html.twig' %}
+{% elseif is_convergence_ratio_job %}
+    {% set downloadTemplate = 'efi-est/results/ssn_utility/convergence_ratio.html.twig' %}
+{% endif %}
+
+{% set resultsTabs = [
+    { id: 'summary-table', label: 'SSN Overview', content: datasetSummaryContent },
+    { id: 'download', label: 'Data File Download', template: downloadTemplate, context: { page } }
+] %}
+
+{# Render all the tabs #}
+{% include 'components/tabs_component.html.twig' with {
+    tabs: resultsTabs,
+} %}
+
+{% endblock %}
+

@@ -1,0 +1,48 @@
+
+{% props job, level, job_row_class %}
+
+{% if level > 0 %}
+    {% set child_class = 'child-job' %}
+{% else %}
+    {% set child_class = '' %}
+{% endif %}
+
+<tr class="{{ job_row_class }}">
+    <td>
+        <span class="status-pill status-{{ job.badgeStatus }} {{ child_class }}">{{ job.job.id }}
+        <i class="bi bi-{{ job.badgeIcon }}"></i>
+        </span>
+    </td>
+    <td style="padding-left: {{ 10 + level * 50 }}px;">
+        <div class="job-color-{{ job.color }}">
+            {% if job.route %}<a href="{{ job.route }}">{% endif %}
+            {% if job.jobName %}<span class="job-name job-color-{{ job.color }}">{{ job.jobName }}</span><br>{% endif %}
+            <span class="job-metadata job-color-{{ job.color }}">{% include 'components/_job_metadata.html.twig' with { metadata: job.metadata } only %}</span>
+            {% if job.route %}</a>{% endif %}
+        </div>
+        <div class="summary-date-row my-0">
+            {% if job.job.timeCreated is defined and job.job.timeCreated is not null %}
+                Created: {{ job.job.timeCreated | date_skeleton('MMMdjm') }}
+            {% endif %}
+
+            {% if job.job.timeStarted is defined and job.job.timeStarted is not null %}
+                &bull; Started: {{ job.job.timeStarted | date_skeleton('MMMdjm') }}
+            {% endif %}
+            
+            {% if job.job.timeCompleted is defined and job.job.timeCompleted is not null %}
+                &bull; Completed: {{ job.job.timeCompleted | date_skeleton('MMMdjm') }}
+            {% endif %}
+        </div>
+    </td>
+    <td class="min-width">
+        {% include('_partials/job_action_button.html.twig') with {'job': job} %}
+    </td>
+</tr>
+
+{# If the job has children, then add them, nested #}
+{% if job.children is not empty %}
+    {% for childJob in job.children %}
+        {# We pass the child object and increment the level for more indentation. #}
+        <twig:job_summary_row job="{{ childJob }}" level="{{ level + 1 }}" job_row_class="{{ job_row_class }}" />
+    {% endfor %}
+{% endif %}

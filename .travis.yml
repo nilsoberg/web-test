@@ -1,0 +1,23 @@
+language: php
+
+branches:
+    only:
+    - master
+
+services: 
+    - mysql
+php:
+    - 7.2
+    - 7.3
+    - 7.4
+
+before_install:
+    - mysql -e 'CREATE DATABASE efi_web CHARACTER SET utf8;'
+    - mysql -u root --password="" efi_web < sql/01_COMPLETE_ALL_TOOLS.sql
+
+install:
+    - composer install --no-interaction
+
+script:
+    - if find . -name "*.php" ! -path "./vendor/*" -exec php -l {} 2>&1 \; | grep "syntax error, unexpected"; then exit 1; fi
+

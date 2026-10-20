@@ -1,0 +1,186 @@
+
+<div id="SsnFinalization-form" class="job-form-container" data-job-type-config="SsnFinalization-form">
+
+    {{ form_start(ssnFinalizationForm) }}
+
+    <div>
+        <div data-controller="threshold-metric">
+            <div>
+                <span class="input-heading">Threshold Metric:</span>
+                {{ form_widget(ssnFinalizationForm.thresholdMetric, {
+                     'attr': {
+                         'class': 'form-select',
+                         'data-action': 'change->threshold-metric#update'
+                     }
+                   })
+                }}
+            </div>
+            <div class="input-description">
+                Select the metric that will be used to define clusters; i.e. for drawing the edges between proteins (nodes) in the SSN.
+            </div>
+            <div class="submission-error">{{ form_errors(ssnFinalizationForm.thresholdMetric) }}</div>
+
+            <div>
+                <div>
+                   <span class="input-heading d-none" data-threshold-metric-target="metricLabel" data-enum-value="{{ enum('App\\Enum\\ThresholdMetric').AlignmentScore.value }}">Alignment Score Threshold:</span>
+                   <span class="input-heading d-none" data-threshold-metric-target="metricLabel" data-enum-value="{{ enum('App\\Enum\\ThresholdMetric').PercentIdentity.value }}">Percent Identity Threshold:</span>
+                   <span class="input-heading d-none" data-threshold-metric-target="metricLabel" data-enum-value="{{ enum('App\\Enum\\ThresholdMetric').Bitscore.value }}">Bitscore Threshold:</span>
+                   {{ form_widget(ssnFinalizationForm.thresholdValue) }}
+                </div>
+                <div class="submission-error">{{ form_errors(ssnFinalizationForm.thresholdValue) }}</div>
+                <div class="input-description">
+                    <div data-threshold-metric-target="metricDescription" data-enum-value="{{ enum('App\\Enum\\ThresholdMetric').AlignmentScore.value }}" class="d-none">
+                        Select the minimum "Alignment Score Threshold" (that is a measure of the minimum sequence
+                        similarity threshold) for drawing the edges that connect the proteins (nodes) in the SSN.
+                        This value corresponds to the lower limit for which an edge will be present in the SSN.
+                        The alignment score is similar in magnitude to the negative base-10 logarithm of a BLAST e-value.
+                        Values must be &gt;= 0.
+                    </div>
+                    <div data-threshold-metric-target="metricDescription" data-enum-value="{{ enum('App\\Enum\\ThresholdMetric').PercentIdentity.value }}" class="d-none">
+                        Select a lower limit for the percent ID to use as a lower threshold for clustering in the SSN.
+                        This score is the similarity threshold which determine the connection of proteins with each
+                        other. All pairs of proteins with a percent ID below this number will not be connected. Sets
+                        of connected proteins will form clusters.
+                        Values must be between 0 and 100 (inclusively).
+                    </div>
+                    <div data-threshold-metric-target="metricDescription" data-enum-value="{{ enum('App\\Enum\\ThresholdMetric').Bitscore.value }}" class="d-none">
+                        Select a lower limit for the bit score to use as a lower threshold for clustering in the SSN.
+                        This score is the similarity threshold which determine the connection of proteins with each
+                        other. All pairs of proteins with a bit score below this number will not be connected. Sets
+                        of connected proteins will form clusters.
+                        Values must be &gt;= 0.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Sequence Length Restriction Options</h3>
+        <div class="accordion-content">
+
+            <p>Allows restriction of sequences in the generated SSN based on their length. <a href="tutorial_analysis.php" data-controller="tooltip" data-bs-toggle="tooltip" title="Analysis Tutorial">{% include('_partials/question_mark.html.twig') %}</a></p>
+
+            <div>
+                <span class="input-name">Minimum:</span>
+                <span class="input-field">{{ form_widget(ssnFinalizationForm.minLength) }}</span>
+                (default {{ app_constants.DEFAULT_MIN_LENGTH }})
+            </div>
+            <div class="submission-error">{{ form_errors(ssnFinalizationForm.minLength) }}</div>
+
+            <div>
+                <span class="input-name">Maximum:</span>
+                <span class="input-field">{{ form_widget(ssnFinalizationForm.maxLength) }}</span>
+                (default {{ app_constants.DEFAULT_MAX_LENGTH }})
+            </div>
+            <div class="submission-error">{{ form_errors(ssnFinalizationForm.maxLength) }}</div>
+
+        </div>
+    </div>
+
+    <div data-controller="accordion">
+        <h3>Filter by Taxonomy</h3>
+        <div class="accordion-content">
+            {% include('_partials/taxonomy_filtering_text.html.twig') %}
+
+            <twig:taxonomy_filtering filterForm="{{ ssnFinalizationForm.taxSearch }}" />
+
+            {# Ensure that Symfony doesn't render this field later #}
+            {% do ssnFinalizationForm.taxSearch.setRendered() %}
+        </div>
+    </div>
+
+    <div data-controller="accordion">
+        <h3>Neighborhood Connectivity</h3>
+        <div class="accordion-content">
+            <div>
+                <span class="input-name">Neighborhood Connectivity:</span>
+                <span class="input-field">
+                    {{ form_widget(ssnFinalizationForm.computeNeighborhoodConnectivity) }}
+                </span>
+            </div>
+            <div class="submission-error">{{ form_errors(ssnFinalizationForm.computeNeighborhoodConnectivity) }}</div>
+            <div class="input-description my-2">
+                <p>
+                The nodes for unresolved families can be difficult to identify in SSNs 
+                generated with low alignment scores.  Coloring the nodes according to the 
+                number of edges to other nodes (<b>Neighborhood Connectivity</b>, NC) helps identify 
+                families with highly connected nodes 
+                (<a href="https://doi.org/10.1016/j.heliyon.2020.e05867">https://doi.org/10.1016/j.heliyon.2020.e05867</a>).
+                Using <b>Neighborhood Connectivity Coloring</b> as a guide, the alignment score threshold 
+                can be chosen in Cytoscape to separate the SSN into families.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {% if ssnFinalizationForm.makeRepnodeNetworks is defined %}
+        <div data-controller="accordion">
+            <h3>Make RepNode Networks</h3>
+            <div class="accordion-content">
+                <div class="form-group">
+                    <span class="input-name">Make RepNode Networks:</span>
+                    <span class="input-field">
+                        {{ form_widget(ssnFinalizationForm.makeRepnodeNetworks) }}
+                    </span>
+                </div>
+                <div class="submission-error">{{ form_errors(ssnFinalizationForm.makeRepnodeNetworks) }}</div>
+                <div class="input-description my-2">
+                    <p>
+                    In representative node (RepNode) networks, each node in the network represents a collection
+                    of proteins grouped according to percent identity. For example, for a 75% identity RepNode
+                    network, all connected sequences that share 75% or more identity are grouped into a single
+                    node (meta node). Sequences are collapsed together to reduce the overall number of nodes,
+                    making for less complicated networks easier to load in Cytoscape.  This should be left
+                    enabled by default, unless it is certain that only the full network will be opened.
+                    Disabling this setting improves computation speed but doesn't provide the smaller
+                    RepNode networks.
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if ssnFinalizationForm.maxSsnEdges is defined %}
+        <div data-controller="accordion">
+            <h3>Maximum SSN Edges</h3>
+            <div class="accordion-content">
+                <div class="form-group">
+                    <span class="input-name">Maximum Number of Edges to Allow in SSN:</span>
+                    <span class="input-field">
+                        {{ form_widget(ssnFinalizationForm.maxSsnEdges) }}
+                    </span>
+                </div>
+                <div class="submission-error">{{ form_errors(ssnFinalizationForm.maxSsnEdges) }}</div>
+                <div class="input-description my-2">
+                    <p>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div data-controller="accordion">
+        <h3>Fragment Option</h3>
+        <div class="accordion-content">
+            <twig:exclude_fragments form="{{ ssnFinalizationForm.excludeFragments }}" />
+        </div>
+    </div>
+
+    <div class="my-3">
+        <div>
+            <span class="input-heading">Network name:</span>
+            {{ form_widget(ssnFinalizationForm.ssnName) }}
+        </div>
+        <div class="submission-error">{{ form_errors(ssnFinalizationForm.ssnName) }}</div>
+    </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit">Create SSN</button>
+    </div>
+
+    {{ form_widget(ssnFinalizationForm.parent_reference) }}
+
+    {{ form_end(ssnFinalizationForm) }}
+
+</div>

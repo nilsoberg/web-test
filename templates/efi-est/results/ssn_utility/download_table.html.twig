@@ -1,0 +1,19 @@
+
+<table class="pretty tbl-center">
+    <tbody>
+        {% for section in files %}
+            {% if section.title is defined %}
+            <tr>
+                <td colspan="2"><h4>{{ section.title }}</h4></td>
+            </tr>
+            {% endif %}
+            {% for file in section.files %}
+                <tr>
+                    <td><a class="btn btn-sm btn-primary" href="{{ file.route }}">Download</a></td>
+                    <td>{{ file.description }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+

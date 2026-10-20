@@ -1,0 +1,61 @@
+{% extends "core/core.html.twig" %}
+
+{% block tool_title %}
+Feedback Form
+{% endblock %}
+
+{% block content %}
+
+{% if use_jotform_contact_form %}
+    <iframe
+        id="JotFormIFrame-{{ jotform_id }}"
+        title="EFI Tools Feedback Form"
+        onload="window.parent.scrollTo(0,0)"
+        allowtransparency="true"
+        allow="geolocation; microphone; camera; fullscreen; payment"
+        src="https://form.jotform.com/efitools/feedback-form"
+        frameborder="0"
+        style="min-width:100%;max-width:100%;height:539px;border:none;" scrolling="no" >
+    </iframe>
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
+    <script>window.jotformEmbedHandler("iframe[id='JotFormIFrame-{{ jotform_id }}']", "https://form.jotform.com/")</script>
+{% else %}
+    <div class="feedback-container">
+        <h1>Submit Your Feedback</h1>
+        <p>We'd love to hear from you. Please fill out the form below.</p>
+    
+        {{ form_start(feedbackForm) }}
+            <div class="form-group">
+                {{ form_label(feedbackForm.name) }}
+                {{ form_widget(feedbackForm.name) }}
+                {{ form_errors(feedbackForm.name) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(feedbackForm.email) }}
+                {{ form_widget(feedbackForm.email) }}
+                {{ form_errors(feedbackForm.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(feedbackForm.organization) }}
+                {{ form_widget(feedbackForm.organization) }}
+                {{ form_errors(feedbackForm.organization) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(feedbackForm.message) }}
+                {{ form_widget(feedbackForm.message) }}
+                {{ form_errors(feedbackForm.message) }}
+            </div>
+            <div style="position: absolute; left: -9999px; top: -9999px; height: 0; width: 0; overflow: hidden;" aria-hidden="true">
+                {{ form_row(feedbackForm.website_url, {
+                    'attr': {
+                        'tabindex': '-1',
+                        'autocomplete': 'off'
+                    }
+                }) }}
+            </div>
+        {{ form_end(feedbackForm) }}
+    </div>
+{% endif %}
+
+{% endblock %}
+

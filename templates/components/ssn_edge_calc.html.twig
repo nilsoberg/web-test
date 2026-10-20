@@ -1,0 +1,22 @@
+
+<div class="ssn-edge-calc-input">
+    <div class="form-group">
+        <div>
+            <span class="input-heading">SSN Edge BLAST E-value:</span>
+            <span>
+                {{ form_widget(form) }}
+                <span>Negative log of e-value for all-by-all BLAST (&ge;1; default 5)</span>
+            </span>
+        </div>
+        <div class="submission-error">{{ form_errors(form) }}</div>
+        
+        <div class="input-description">
+            <p>Input an alternate e-value for BLAST to calculate similarities/edge alignment scores similarities. The
+            default parameter (5) is useful for most sequences. However, a larger e-value/smaller negative log should be
+            used for short sequences or when low pairwise identities may be useful for separating functionally distinct SSN
+            clusters.</p>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,199 @@
+
+<div>
+    <p>
+    The markers that uniquely define clusters in the submitted SSN have been
+    quantified in the metagenomes selected for analysis.
+    </p>
+
+    <p>
+    Files are provided that contain details about the markers that have been
+    identified present in metagenomes and their abundances. 
+    </p>
+
+    <div class="page-tabs ui-tabs ui-widget ui-widget-content" data-controller="tabs">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li class="ui-tabs-tab ui-tab ui-state-default ui-corner-top ui-tabs-active ui-state-active">
+                <a href="#files" class="ui-tabs-anchor">SSN and CD-HIT files</a>
+            </li>
+            <li class="ui-tabs-tab ui-tab ui-state-default ui-corner-top">
+                <a href="#output-median" class="ui-tabs-anchor">CGFP Output (using median method)</a>
+            </li>
+            <li class="ui-tabs-tab ui-tab ui-state-default ui-corner-top">
+                <a href="#output-mean" class="ui-tabs-anchor">CGFP Output (using mean method)</a>
+            </li>
+        </ul>
+    
+        <div id="files" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+            <h4>SSN With Quantify Results</h4>
+
+            <p>
+            The SSN submited has been edited so that the markers and their
+            abundances in the selected metagenomes are included as node
+            attributes.
+            </p>
+
+            <div>
+                <table class="pretty tbl-center">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>File</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a class="btn btn-primary btn-sm" href="{{ page.ssn.route }}">Download ZIP</a></td>
+                            <td>SSN with quantify results</td>
+                            <td>{{ page.ssn.size }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>CGFP Family and Marker Data</h4>
+
+            <p>
+            The <b>CD-HIT ShortBRED families by cluster</b> file contains mappings of
+            ShortBRED families to SSN cluster number as well as a color that is
+            assigned to each unique ShortBRED family. The <b>ShortBRED marker data</b>
+            file lists the markers that were identified. Finally, the
+            <b>Description of selected metagenomes</b> file provides available
+            metadata associated with the selected metagenomes. 
+            </p>
+
+            <div>
+                <table class="pretty tbl-center">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>File</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if page.cdhitDownload %}
+                            <tr>
+                                <td><a class="btn btn-primary btn-sm" href="{{ page.cdhitDownload.route }}">Download (tab)</a></td>
+                                <td>CD-HIT ShortBRED families by cluster</td>
+                                <td>{{ page.cdhitDownload.size }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if page.markerDownload %}
+                        <tr>
+                            <td><a class="btn btn-primary btn-sm" href="{{ page.markerDownload.route }}">Download (faa)</a></td>
+                            <td>ShortBRED marker data</td>
+                            <td>{{ page.markerDownload.size }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if page.metagenomeDesc %}
+                        <tr>
+                            <td><a class="btn btn-primary btn-sm" href="{{ page.metagenomeDesc.route }}">Download (txt)</a></td>
+                            <td>Description of selected metagenomes</td>
+                            <td>{{ page.metagenomeDesc.size }}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+        <div id="output-median" class="ui-tabs-panel ui-widget-content ui-corner-bottom" style="display: none">
+            <p>
+            The default is for ShortBRED to report the abundance of metagenome
+            hits for CD-HIT families using the "median method." The numbers of
+            metagenome hits identified by all of the markers for a CD-HIT
+            consensus sequence are arranged in increasing numerical order; the
+            value for the median marker is used as the abundance. This method
+            assumes that the distribution of hits across the markers for
+            CD-HIT consensus sequence is uniform (expected if the metagenome
+            sequencing is "deep," i.e., multiple coverage). For seed sequences
+            with an even number of markers, the average of the two "middle"
+            markers is used as the abundance.
+            </p>
+
+            <p>
+            Files detailing the abundance information are available for download.
+            </p>
+
+            <h4>Raw Abundance Data</h4>
+
+            <p>
+            Raw results for the individual proteins in the SSN (Protein
+            abundance data (median)) as well as summarized by SSN cluster
+            (Cluster abundance data (median)) are provided. Units are in reads
+            per kilobase of sequence per million sample reads (RPKM). 
+            </p>
+
+            {% include 'components/quantify_abundance_table.html.twig' with {
+                proteinData: page.abundanceFiles.proteinMedian,
+                clusterData: page.abundanceFiles.clusterMedian
+            } %}
+
+            <h4>Average Genome Size-Normalized Abundance Data</h4>
+
+            <p>
+            Data are provided using Average Genome Size (AGS) normalization for
+            individual proteins in the SSN as well as summarized by SSN
+            cluster. Units are have been converted from RPKM to counts per
+            microbial genome, using AGS estimated by MicrobeCensus. 
+            </p>
+
+            {% include 'components/quantify_abundance_table.html.twig' with {
+                proteinData: page.abundanceFiles.proteinNormMedian,
+                clusterData: page.abundanceFiles.clusterNormMedian
+            } %}
+        </div>
+
+
+
+
+        <div id="output-mean" class="ui-tabs-panel ui-widget-content ui-corner-bottom" style="display: none">
+            <p>
+            In the mean method for reporting abundances, the average value the
+            abundances identified by the markers for each CD-HIT consensus
+            sequence marker is used to report abundance. This method reports
+            the presence of "any" hit for a marker for a seed sequence. An
+            asymmetric distribution of hits a seed sequence with multiple
+            markers is expected for "false positives," so the mean method
+            should be used with caution.
+            </p>
+
+            <p>
+            Files detailing the abundance information are available for download.
+            </p>
+
+            <h4>Raw Abundance Data</h4>
+
+            <p>
+            Raw results for the individual proteins in the SSN (Protein
+            abundance data (mean)) as well as summarized by SSN cluster
+            (Cluster abundance data (mean)) are provided. Units are in reads
+            per kilobase of sequence per million sample reads (RPKM). 
+            </p>
+
+            {% include 'components/quantify_abundance_table.html.twig' with {
+                proteinData: page.abundanceFiles.proteinMean,
+                clusterData: page.abundanceFiles.clusterMean
+            } %}
+
+            <h4>Average Genome Size-Normalized Abundance Data</h4>
+
+            <p>
+            Data are provided using Average Genome Size (AGS) normalization for
+            individual proteins in the SSN as well as summarized by SSN
+            cluster. Units are have been converted from RPKM to counts per
+            microbial genome, using AGS estimated by MicrobeCensus. 
+            </p>
+
+            {% include 'components/quantify_abundance_table.html.twig' with {
+                proteinData: page.abundanceFiles.proteinNormMean,
+                clusterData: page.abundanceFiles.clusterNormMean
+            } %}
+        </div>
+    </div>
+</div>
+

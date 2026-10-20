@@ -1,0 +1,35 @@
+
+<div>
+
+    <p>Clicking on the headers below provides access to various ways of generating genomic neighborhood diagrams.</p>
+
+    <div id="gnd-tabs" class="page-tabs" data-controller="tabs">
+        <ul>
+{% if is_granted('FEATURE_ACTIVE', 'gnd_blast') %}
+            <li><a href="#gnd-blast-tab">Single Sequence BLAST</a></li>
+{% endif %}
+            <li><a href="#gnd-id-tab">Sequence ID Lookup</a></li>
+{% if is_granted('FEATURE_ACTIVE', 'gnd_fasta') %}
+            <li><a href="#gnd-fasta-tab">FASTA Sequence Lookup</a></li>
+{% endif %}
+        </ul>
+
+{% if is_granted('FEATURE_ACTIVE', 'gnd_blast') %}
+        <div id="gnd-blast-tab">
+            {% include 'efi-gnt/home/gnd/blast.html.twig' %}
+        </div>
+{% endif %}
+
+        <div id="gnd-id-tab">
+            {% include 'efi-gnt/home/gnd/id.html.twig' %}
+        </div>
+
+{% if is_granted('FEATURE_ACTIVE', 'gnd_fasta') %}
+        <div id="gnd-fasta-tab">
+            {% include 'efi-gnt/home/gnd/fasta.html.twig' %}
+        </div>
+{% endif %}
+
+    </div>
+</div>
+

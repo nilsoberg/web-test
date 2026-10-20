@@ -1,0 +1,28 @@
+
+<div>
+    <table class="pretty tbl-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th>File</th>
+                <th>Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if proteinData %}
+                <tr>
+                    <td><a class="btn btn-primary btn-sm" href="{{ proteinData.route }}">Download (txt)</a></td>
+                    <td>Protein abundance data (median)</td>
+                    <td>{{ proteinData.size }}</td>
+                </tr>
+            {% endif %}
+            {% if clusterData %}
+                <tr>
+                    <td><a class="btn btn-primary btn-sm" href="{{ clusterData.route }}">Download (txt)</a></td>
+                    <td>Cluster abundance data (median)</td>
+                    <td>{{ clusterData.size }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>

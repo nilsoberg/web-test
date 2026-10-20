@@ -1,0 +1,18 @@
+Dear User,
+The initial information needed for the generation of the dataset is being fetched and processed. The similarity between sequences is being calculated.
+
+You will receive an email once the job has been completed.
+Submission Summary:
+
+EFI-EST Job ID: {{ jobId }}
+Computation Type: {{ computationType }}
+Job Name: {{ jobName }}
+{% if isBlastJob %}
+BLAST Sequence:
+{{ blastSequence }}
+E-Value: {{ blastEValue }}
+Maximum BLAST Sequences: {{ maxBlastSequences }}
+{% endif %}
+
+{{ signature }}
+

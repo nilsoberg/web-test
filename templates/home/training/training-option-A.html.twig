@@ -1,0 +1,13 @@
+<div id="TRAININGoptionA">
+
+    <h2>{{ publicationsCount }} Journal Articles</h2>
+
+    <div class="training-publications">
+        {% for publication in publications %}
+            {{ publication.author }}, <i>{{ publication.title }}</i>. {{publication.publisher}}, {{ publication.year }}. {{publication.volume}}
+            <br>
+            <br>
+        {% endfor %}
+    </div>
+
+</div>

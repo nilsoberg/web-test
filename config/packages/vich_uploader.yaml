@@ -1,0 +1,11 @@
+vich_uploader:
+    db_driver: orm
+
+    metadata:
+        type: attribute
+
+    mappings:
+        job_files:
+            upload_destination: '%app.uploads_directory%'
+            namer: App\Vich\JobIdNamer
+

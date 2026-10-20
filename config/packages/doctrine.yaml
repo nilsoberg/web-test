@@ -1,0 +1,46 @@
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            # Primary app database
+            default:
+                url: '%env(resolve:DATABASE_URL)%'
+            
+            # Taxonomy database (can be the same)
+            taxonomy_reference:
+                url: '%env(resolve:TAX_REF_DATABASE_URL)%'
+
+    orm:
+        auto_generate_proxy_classes: true
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    App:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: 'App\Entity'
+                        alias: App
+                    Home:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Home/Entity'
+                        prefix: 'App\Home\Entity'
+                        alias: Home
+                    Auth:
+                        type: attribute
+                        is_bundle: false
+                        dir: '%kernel.project_dir%/src/Auth/Entity'
+                        prefix: 'App\Auth\Entity'
+                        alias: Auth
+
+when@test:
+    doctrine:
+        dbal:
+            connections:
+                default:
+                    use_savepoints: true
+                taxonomy_reference:
+                    use_savepoints: true

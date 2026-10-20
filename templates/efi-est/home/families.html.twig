@@ -1,0 +1,80 @@
+
+<div class="job-form-container" data-job-type-config="ESTFamilies-form">
+
+    <p class="tab-p-heading">Generate a SSN for a protein family.</p>
+    <p>The members of the input Pfam families, InterPro families, and/or Pfam clans are selected
+    from the UniProt, UniRef90, or UniRef50 database.</p>
+
+	{{ form_start(estFamiliesForm) }}
+
+    <div>
+        <twig:family_input form="{{ estFamiliesForm.familyInput }}" formId="ESTFamilies-form" defaultDatabaseId="{{ defaultDatabaseId }}" />
+        <div>
+            <p>
+            UniRef90 clusters contain UniProt IDs that share &ge;90% sequence identity and have 80% overlap
+            with the longest sequence in the cluster ("seed sequence"); as a result, the UniProt IDs in
+            the cluster usually are functionally homogeneous, i.e., orthologues. UniRef50 clusters contain
+            UniProt IDs that share &ge;50% sequence identity and have 80% overlap with the seed sequence;
+            as a result, the UniProt IDs in the cluster often are functionally heterogeneous, e.g.,
+            paralogues.
+            </p>
+            <p>
+            The sequences from the UniRef90 and UniRef90 databases are the UniRef90 and UniRef50 clusters
+            for which the cluster ID ("representative sequence") matches the specified families. The
+            UniProt members in these UniRef90 and Uni/Ref50 clusters that do not match the specified
+            families are removed from the cluster. 
+            </p>
+        </div>
+    </div>
+
+    <div id="ESTFamilies-form-exclude-fragments" data-controller="accordion" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Fragment Option</h3>
+        <div class="accordion-content">
+            <twig:exclude_fragments form="{{ estFamiliesForm.excludeFragments }}" />
+        </div>
+    </div>
+
+    <div id="ESTFamilies-form-tax-search" data-controller="accordion" data-controller="accordion">
+        <h3>Filter by Taxonomy</h3>
+        <div class="accordion-content">
+            {% include('_partials/taxonomy_filtering_text.html.twig') %}
+
+            <twig:taxonomy_filtering filterForm="{{ estFamiliesForm.taxSearch }}" />
+
+            {# Ensure that Symfony doesn't render this field later #}
+            {% do estFamiliesForm.taxSearch.setRendered() %}
+        </div>
+    </div>
+
+    <div id="ESTFamilies-form-fraction" data-controller="accordion" data-controller="accordion">
+        <h3>Protein Family Size Options</h3>
+        <div class="accordion-content">
+            <twig:fraction form="{{ estFamiliesForm.familyInput.fraction }}" useGlobalScope="true" familyFormId="ESTFamilies-form" />
+        </div>
+    </div>
+
+    <div id="ESTFamilies-form-domain" data-controller="accordion" data-controller="accordion">
+        <h3>Family Domain Boundary Option</h3>
+        <div class="accordion-content">
+            <twig:domain_input form="{{ estFamiliesForm.domainInput }}" />
+        </div>
+    </div>
+
+    <div id="ESTFamilies-form-ssn-edge-calc" data-controller="accordion" data-controller="accordion">
+        <h3>SSN Edge Calculation Option</h3>
+        <div class="accordion-content">
+            <twig:ssn_edge_calc form="{{ estFamiliesForm.allByAllBlastEValue }}" />
+        </div>
+    </div>
+
+    <twig:est_dev_features form="{{ estFamiliesForm }}" form_elementid="ESTFamilies-form" />
+
+    <div>
+        <twig:job_submit_input form="{{ estFamiliesForm }}" mainFormId="ESTFamilies-form" />
+    </div>
+
+
+	{{ form_end(estFamiliesForm) }}
+
+</div>
+

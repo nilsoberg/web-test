@@ -1,0 +1,53 @@
+
+html, body {
+    height: 95%;
+}
+
+.search-container {
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-container.fill {
+    height: 100%;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#master-plot-container div.plot-container {
+    float: left;
+    border: 1px gray dashed;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.search-help {
+    max-width: 500px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.search-help.bigger {
+    font-size: 120%;
+}
+
+.search-container div {
+    text-align: center;
+}
+
+.search-container .title {
+    margin-bottom: 10px;
+    font-size: 95%;
+}
+

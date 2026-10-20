@@ -1,0 +1,21 @@
+
+<twig:plotly_result_chart
+    image_url="{{ result_image }}"
+    plot_url="{{ plot_url|default('') }}"
+    alt="Edges Histogram"
+    chart_key="edges_histogram"
+    job_number="{{ job_number|default(null) }}"
+/>
+
+<p>This histogram describes the number of edges calculated at each alignment 
+score. This plot is not used to select the alignment score for the initial SSN; 
+however, it provides an overview of the functional diversity within the input 
+dataset. </p>
+<p>In the histogram, edges with low alignment scores typically are those 
+between isofunctional clusters; edges with large alignment scores typically are 
+those connecting nodes within isofunctional clusters. </p>
+<p>The histogram for a dataset with a single isofunctional SSN cluster is 
+single distribution centered at a "large" alignment score; the histogram for a 
+dataset with many isofunctional SSN clusters will be dominated by the edges 
+that connect the clusters, with the number of edges decreasing as the alignment 
+score increases. </p>

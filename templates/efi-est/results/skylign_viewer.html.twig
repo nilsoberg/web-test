@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Skylign Viewer</title>
+        {{ importmap('skylign_app') }}
+    </head>
+    <body>
+        <div class="container">
+            <div id="logo" class="logo"
+                data-controller="skylign"
+                data-logo="{{ logo_json }}"
+            >
+            </div>
+        </div>
+    </body>
+</html>

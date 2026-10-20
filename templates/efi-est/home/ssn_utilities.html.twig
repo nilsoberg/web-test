@@ -1,0 +1,35 @@
+
+<div id="ssn-utilities-tabs" class="page-tabs" data-controller="tabs">
+    <ul>
+        <li><a href="#ColorSSN-form">Color SSNs</a></li>
+{% if is_granted('FEATURE_ACTIVE', 'cluster_analysis') %}
+        <li><a href="#ClusterAnalysis-form">Cluster Analysis</a></li>
+{% endif %}
+{% if is_granted('FEATURE_ACTIVE', 'nb_conn') %}
+        <li><a href="#NbConn-form">Neighborhood Connectivity</a></li>
+{% endif %}
+{% if is_granted('FEATURE_ACTIVE', 'conv_ratio') %}
+        <li><a href="#ConvRatio-form">Convergence Ratio</a></li>
+{% endif %}
+    </ul>
+
+    <div id="ColorSSN-form">
+    {% include 'efi-est/home/ssn_utilities/color_ssns.html.twig' %}
+    </div>
+{% if is_granted('FEATURE_ACTIVE', 'cluster_analysis') %}
+    <div id="ClusterAnalysis-form">
+    {% include 'efi-est/home/ssn_utilities/cluster_analysis.html.twig' %}
+    </div>
+{% endif %}
+{% if is_granted('FEATURE_ACTIVE', 'nb_conn') %}
+    <div id="NbConn-form">
+    {% include 'efi-est/home/ssn_utilities/nb_conn.html.twig' %}
+    </div>
+{% endif %}
+{% if is_granted('FEATURE_ACTIVE', 'conv_ratio') %}
+    <div id="ConvRatio-form">
+    {% include 'efi-est/home/ssn_utilities/conv_ratio.html.twig' %}
+    </div>
+{% endif %}
+</div>
+

@@ -1,0 +1,71 @@
+
+<div>
+    <p>
+    Markers that uniquely define clusters in the submitted SSN have been identified.
+    </p>
+
+    <p>
+    Files detailing the identities of the markers and which sequences they represent
+    are available for download.
+    </p>
+
+    <h4>SSN With Marker Identification Results</h4>
+
+    <p>
+    The SSN submitted has been edited to include the marker ID and type and the number
+    of markers that were identified.
+    </p>
+
+    <div>
+        <table class="pretty tbl-center">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>File</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a class="btn btn-primary btn-sm" href="{{ page.ssn.route }}">Download ZIP</a></td>
+                    <td>SSN with identify results</td>
+                    <td>{{ page.ssn.size }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>CGFP Family and Marker Data</h4>
+
+    <p>
+    The <b>CD-HIT ShortBRED families by cluster</b> file contains mappings of ShortBRED
+    families to SSN cluster number as well as a color that is assigned to each unique
+    ShortBRED family. The <b>ShortBRED marker data</b> file lists the markers that were
+    identified.
+    </p>
+
+    <div>
+        <table class="pretty tbl-center">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>File</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a class="btn btn-primary btn-sm" href="{{ page.cdhitDownload.route }}">Download ZIP</a></td>
+                    <td>CD-HIT ShortBRED families by cluster</td>
+                    <td>{{ page.cdhitDownload.size }}</td>
+                </tr>
+                <tr>
+                    <td><a class="btn btn-primary btn-sm" href="{{ page.markerDownload.route }}">Download ZIP</a></td>
+                    <td>ShortBRED marker data</td>
+                    <td>{{ page.markerDownload.size }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

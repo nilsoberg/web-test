@@ -1,0 +1,21 @@
+{% extends "auth/core.html.twig" %}
+
+{% block auth_content %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+<fieldset class="mb-4">
+    <legend class="h5 mb-3">Organization Details</legend>
+    {{ form_row(form.name) }}
+</fieldset>
+
+<div class="submit-job-container">
+    <button type="submit" class="btn btn-primary">Save</button>
+</div>
+
+{{ form_end(form) }}
+
+{% endblock %}
+

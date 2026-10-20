@@ -1,0 +1,14 @@
+<div id="{{ prefix }}-{{ suffix }}-{{ ending }}">
+
+    <h4>SSN With Quantify Results</h4>
+    <p>The SSN submitted has been edited so that the markers and their abundances in the selected metagenomes are included as node attributes.</p>
+
+    {{ render(controller('App\\Home\\Controller\\DownloadController::renderDownloadTable', { 'keys': 'sb_qssn' })) }}
+
+    <h4>CGFP Family and Marker Data</h4>
+
+    <p>The <b>CD-HIT ShortBRED families by cluster</b> file contains mappings of ShortBRED families to SSN cluster number as well as a color that is assigned to each unique ShortBRED family.  The <b>ShortBRED marker data</b> file lists the markers that were identified.  Finally, the <b>Description of selected metagenomes</b> file provides available metadata associated with the selected metagenomes.</p>
+
+    {{ render(controller('App\\Home\\Controller\\DownloadController::renderDownloadTable', { 'keys': 'sb_sdhit,markers,sb_q_mg_info' })) }}
+    
+</div>

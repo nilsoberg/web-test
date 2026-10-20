@@ -1,0 +1,131 @@
+<div>
+    <p> This tab provides histograms and box plots with statistics about the
+    sequences in the input dataset as well as the BLAST all-by-all pairwise
+    comparisons that were computed. </p>
+
+    <p> The descriptions for the histograms and plots guide the choice of the
+    values for the "Alignment Score Threshold" and the Minimum and Maximum
+    "Sequence Length Restrictions" that are applied to the sequences and edges
+    to generate the SSN. These values are entered using the "SSN Finalization"
+    tab on this page. </p>
+
+    {% if page.resultImages.length_histogram_uniprot %}
+    <div data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Sequences as a Function of {% if page.isDomain %}Domain{% else %}Full{% endif %} Length Histogram (First Step for Alignment Score Threshold Selection)</h3>
+        <div class="accordion-content">
+            {% if page.isDomain %}
+                {% include 'efi-est/results/_partials/length_histo.html.twig' with {
+                    result_image: page.resultImages.length_histogram_uniprot_domain,
+                    plot_url: page.resultPlots.length_histogram_uniprot_domain|default(null),
+                    job_number: page.id
+                } %}
+            {% else %}
+                {% include 'efi-est/results/_partials/length_histo.html.twig' with {
+                    result_image: page.resultImages.length_histogram_uniprot,
+                    plot_url: page.resultPlots.length_histogram_uniprot|default(null),
+                    job_number: page.id
+                } %}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if page.resultImages.alignment_histogram %}
+    <div data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Alignment Length vs Alignment Score Box Plot (Second Step for Alignment Score Threshold Selection)</h3>
+        <div class="accordion-content">
+            {% include 'efi-est/results/_partials/alignment_histo.html.twig' with {
+                result_image: page.resultImages.alignment_histogram,
+                plot_url: page.resultPlots.alignment_histogram|default(null),
+                job_number: page.id,
+                is_domain: page.isDomain
+            } %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if page.resultImages.percent_identity %}
+    <div data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Percent Identity vs Alignment Score Box Plot (Third Step for Alignment Score Threshold Selection)</h3>
+        <div class="accordion-content">
+            {% include 'efi-est/results/_partials/percent_identity.html.twig' with {
+                result_image: page.resultImages.percent_identity,
+                plot_url: page.resultPlots.percent_identity|default(null),
+                job_number: page.id,
+                is_domain: page.isDomain
+            } %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if page.edgesTabUrl %}
+    <div data-controller="accordion">
+        <h3>Edge Count vs Alignment Score Plot (Preview of Full SSN Size)</h3>
+        <div class="accordion-content">
+            {% include 'efi-est/results/_partials/edge_count.html.twig' with {
+                edge_count_data_url: page.edgesTabUrl,
+                job_number: page.id
+            } %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if page.resultImages.number_of_edges %}
+    <div data-controller="accordion">
+        <h3>Edges as a Function of Alignment Score Histogram (Preview of SSN Diversity)</h3>
+        <div class="accordion-content">
+            {% include 'efi-est/results/_partials/number_of_edges.html.twig' with {
+                result_image: page.resultImages.number_of_edges,
+                plot_url: page.resultPlots.number_of_edges|default(null),
+                job_number: page.id
+            } %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if page.resultImages.length_histogram_uniprot_domain is defined %}
+    <div data-controller="accordion">
+        <h3>Sequences as a Function of Full Length Histogram (UniProt IDs)</h3>
+        <div class="accordion-content">
+            {# Include the UniProt length histogram because the domain histogram is the first one displayed above #}
+            {% include 'efi-est/results/_partials/length_histo.html.twig' with {
+                result_image: page.resultImages.length_histogram_uniprot,
+                plot_url: page.resultPlots.length_histogram_uniprot|default(null),
+                job_number: page.id
+            } %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if page.resultImages.length_histogram_uniref90 is defined or page.resultImages.length_histogram_uniref50 is defined %}
+        {% set resultImage = page.resultImages.length_histogram_uniref90 is defined ? page.resultImages.length_histogram_uniref90 : page.resultImages.length_histogram_uniref50 %}
+        {% set resultPlot = page.resultPlots.length_histogram_uniref90 is defined ? page.resultPlots.length_histogram_uniref90 : page.resultPlots.length_histogram_uniref50 %}
+        <div data-controller="accordion">
+            <h3>Sequences as a Function of Full Length Histogram ({{ page.unirefVersion }} Cluster IDs)</h3>
+            <div class="accordion-content">
+                {% include 'efi-est/results/_partials/length_histo_uniref.html.twig' with {
+                    result_image: resultImage,
+                    plot_url: resultPlot|default(null),
+                    job_number: page.id,
+                    uniref_version: page.unirefVersion,
+                } %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if page.resultImages.length_histogram_uniref90_domain is defined or page.resultImages.length_histogram_uniref50_domain is defined %}
+        {% set resultImage = page.resultImages.length_histogram_uniref90_domain is defined ? page.resultImages.length_histogram_uniref90_domain : page.resultImages.length_histogram_uniref50_domain %}
+        {% set resultPlot = page.resultPlots.length_histogram_uniref90_domain is defined ? page.resultPlots.length_histogram_uniref90_domain : page.resultPlots.length_histogram_uniref50_domain %}
+        <div data-controller="accordion">
+            <h3>Sequences as a Function of Domain Length Histogram ({{ page.unirefVersion }} Cluster IDs)</h3>
+            <div class="accordion-content">
+                {% include 'efi-est/results/_partials/length_histo_domain_uniref.html.twig' with {
+                    result_image: resultImage,
+                    plot_url: resultPlot|default(null),
+                    job_number: page.id,
+                    uniref_version: page.unirefVersion,
+                } %}
+            </div>
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,103 @@
+
+.radio-item-inline {
+    display: inline-block; 
+    margin-right: 20px; 
+}
+
+/* A little tweak to vertically align the text with the radio button */
+.radio-item-inline input[type="radio"] {
+    vertical-align: middle;
+}
+
+textarea.blast-query {
+    width: 100%;
+    height: 6em;
+}
+
+.accordion-content div {
+    margin: 5px auto;
+}
+
+/* Accordion Input Fields */
+
+.inline-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.input-heading {
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+div.input-description, span.input-description {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+}
+
+.input-field-wide {
+    flex: 1;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.input-field-narrow {
+    text-align: center;
+}
+
+/* Taxonomy Filter */
+
+.taxonomy-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-row-checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.form-row-checkbox-group > label {
+    flex-basis: 150px;
+    padding-top: 5px;
+}
+
+.form-row-checkbox-group > .checkbox-group-inputs {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.checkbox-group-inputs .form-check {
+    margin-bottom: 5px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #a0a0a0;
+    font-style: italic;
+    opacity: 1; /* Ensure full opacity for Firefox */
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield; /* Standard property for modern browsers */
+}
+

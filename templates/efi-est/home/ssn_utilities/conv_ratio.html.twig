@@ -1,0 +1,51 @@
+
+{% embed '_partials/conditional_parent_or_file_form_wrapper.html.twig' with {
+    'form': estConvRatioForm,
+    'form_name': 'estConvRatioForm',
+    'job_type_config': 'ConvRatio-form',
+    'file_heading': 'SSN File:'
+} %}
+
+    {% block description %}
+        <p>
+        Convergence ratio is calculated per cluster.
+        </p>
+    {% endblock %}
+
+    {% block additional_fields %}
+        <div>
+            <div>
+                <span class="input-heading">Original SSN Alignment Score:</span>
+                {{ form_widget(estConvRatioForm.blastEValue) }}
+                <div class="submission-error">{{ form_errors(estConvRatioForm.blastEValue) }}</div>
+            </div>
+            <div class="input-description">
+                The alignment score to calculate convergence ratio per cluster (should be the
+                same as the original SSN alignment score).
+            </div>
+        </div>
+        
+        <div>
+            <p>
+            The "convergence ratio" is the ratio of the actual number of edges in the
+            cluster to the maximum possible number of edges (each node connected to every
+            other node). For UniRef SSNs, two convergence ratios are calculated, one for
+            the edges connecting the UniRef nodes in the input SSN and the second for the
+            "hypothetical" edges that would connect the internal UniProt IDs in the cluster.
+            The user specifies the value of the alignment score to be used (usually the
+            same a alignment score used to generate the SSN).
+            </p>
+        
+            <p>
+            The value of the convergence ratio ranges from 1.0 for sequences that are very
+            similar ("identical") to 0.0 for sequences that are unrelated at the specified
+            alignment score. The convergence ratio can be used as a criterion to infer
+            whether an SSN cluster is isofunctional&emdash;the convergence ratio of a cluster
+            containing orthologous sequences is expected to be close to 1.0 even at large
+            alignment scores.
+            </p>
+        </div>
+    {% endblock %}
+
+{% endembed %}
+

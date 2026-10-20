@@ -1,0 +1,104 @@
+/* Content */
+
+.site-notice-banner {
+    margin: 20px;
+    padding: 7px;
+    border: 3px solid black;
+    color: black;
+    font-size: 1.15em;
+    text-align: center;
+}
+
+.notice-style-notice {
+    background-color: lightblue;
+}
+
+.notice-style-alert {
+    background-color: Khaki;
+}
+
+.content {
+    margin: auto;
+    width: 990px;
+    padding: 10px;
+    background: #FFFFFFFF;
+    min-height: 300px;
+}
+
+body a.btn {
+    color: white;
+}
+/*
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #0C4377FF;
+}
+
+a i {
+
+    color: #FFFFFF;
+}
+*/
+
+h1 { 
+    text-transform:uppercase;
+    font-size: 200%;
+    margin:0px 0 4px 0;
+    border-bottom: none;
+    line-height: 110%;
+    font-weight: normal;
+}
+
+h1.ruled {
+    margin: 0 0 4px 0;
+    border-bottom: 10px #000000FF solid;
+    line-height: 110%;
+    font-weight: lighter;
+}
+
+h2.page-heading {
+    font-weight: normal;
+    border-bottom: 1px solid #ccc;
+    font-size: 170%;
+    text-transform: uppercase;
+    padding: 2px;
+    margin: 10px 0px;
+    color: #222222;
+}
+
+h4 {
+    margin: 1rem 0rem 0.5rem 0rem;
+} 
+
+.citation-message {
+    border: 3px solid #000000FF;
+    background-color: #B0B0B0FF;
+    color: #000000FF;
+    font-size: 1.15em;
+    text-align: center;
+    margin: 10px;
+    padding: 7px;
+}
+
+.funding-source {
+    font-weight: bold;
+    font-size: 1.25em;
+    text-align: center;
+}
+
+.funding-citation {
+    text-transform: uppercase;
+}
+
+td {
+    overflow-wrap: break-word;
+    padding: 10px;
+}
+
+/* Custom Overrides */
+
+body .form-control {
+    border-color: #aaa;
+}
+

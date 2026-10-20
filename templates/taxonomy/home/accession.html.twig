@@ -1,0 +1,167 @@
+
+<div data-controller="upload-progress">
+
+    <p class="tab-p-heading">Retrieve taxonomy for accession IDs.</p>
+
+    <p>The input is a list of UniProt, UniRef90 cluster or UniRef50 cluster
+    IDs. For the UniRef90 and UniRef50 clusters, the UniProt IDs in the
+    clusters are retrieved using the lookup table provided by UniProt/UniRef.
+    </p>
+
+    <p>Filter by Family and/or Filter by Taxonomy can be used to remove UniProt
+    IDs that do not match a list of Pfam families, InterPro families, and/or
+    Pfam clans and/or specified taxonomy categories.  This may be
+    desirable/necessary if the input list is obtained from 1) the Color SSN or
+    Cluster Analysis utility for a Families option (Option B) EFI-EST SSN or,
+    2) the Families option of the Taxonomy Tool.</p>
+
+    <p>The remaining UniProt IDs are used to generate the sunburst.</p>
+
+    <p>UniRef90 and UniRef50 clusters that contain the UniProt IDs are
+    retrieved from the UniRef90 andUniRef50 databases using the lookup table
+    provided by UniProt/UniRef.  Clusters for which the cluster ID
+    (representative sequence) matches the list of families are retained.</p>
+
+    <p>The numbers of UniProt IDs and both UniRef90 cluster and UniRef50
+    cluster IDs are displayed on the sunburst; the UniProt IDs and both
+    UniRef90 cluster and UniRef50 cluster IDs are available for download and/or
+    transfer to the Accession IDs option (Option D) of EFI-EST to generate
+    SSNs.</p>
+
+    <p><b>If the lists of UniRef90 or UniRef50 cluster IDs are used to generate
+        SSNs with the Accession IDs option (Option D) of EFI-EST, the lists
+        should (must!) be filtered with the same list of families (Filter by
+        Family) and any specified taxonomy categories (Filter by Taxonomy) used
+        to generate the lists.</b></p>
+
+    <p>This filtering removes the UniRef90 and UniRef50 clusters with cluster
+    IDs ("representative sequences") or internal UniProt IDs that are not
+    members of the specified families or have the selected taxonomy
+    categories.</p>
+
+    {{ form_start(accessionForm, {
+        'attr': {
+            'data-upload-progress-target': 'form',
+            'data-action': 'submit->upload-progress#upload'
+        }
+    }) }}
+
+    <div>
+        <div id="accession-tabs" class="page-tabs" data-controller="tabs">
+            <ul>
+                <li><a href="#AccessionsTab-uniprot">Use UniProt IDs</a></li>
+                <li><a href="#AccessionsTab-uniref">Use UniRef50 or UniRef90 Cluster IDs</a></li>
+            </ul>
+            <div id="AccessionsTab-uniprot">
+                <div>
+                    Input a list of UniProt, NCBI, or Genbank (protein) accession IDs, or upload a text file.
+                </div>
+                <div class="input-description">
+                    <div>
+                        <div><span class="input-heading">Sequences:</span></div>
+                        <div>{{ form_widget(accessionForm.textUniprot) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(accessionForm.textUniprot) }}</div>
+                    <div>
+                        <div><span class="input-heading">Accession IDs File:</span> {% include('_partials/upload_file_size_tooltip.html.twig') %}</div>
+                        <div>{{ form_widget(accessionForm.fileUniprot) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(accessionForm.fileUniprot) }}</div>
+                </div>
+            </div>
+            <div id="AccessionsTab-uniref">
+                <div>
+                    Input a list of UniRef50 or UniRef90 cluster accession IDs, or upload a text file.
+                </div>
+                <div class="input-description">
+                    <div>
+                        <div><span class="input-heading">Sequences:</span></div>
+                        <div>{{ form_widget(accessionForm.textUniref) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(accessionForm.textUniref) }}</div>
+                    <div>
+                        <div><span class="input-heading">Accession IDs File:</span> {% include('_partials/upload_file_size_tooltip.html.twig') %}</div>
+                        <div>{{ form_widget(accessionForm.fileUniref) }}</div>
+                    </div>
+                    <div class="submission-error">{{ form_errors(accessionForm.fileUniref) }}</div>
+                    <div>
+                        <span class="input-heading">Input accession IDs are:</span>
+                        {{ form_widget(accessionForm.unirefVersion) }}
+                        <span data-controller="tooltip" data-bs-toggle="tooltip" title="The list of sequences that is put into the tool will be end up being the node IDs, and node attributes with the UniRef clusters will be included in the output SSN.">{% include('_partials/question_mark.html.twig') %}</span>
+                    </div>
+                    <div class="submission-error">{{ form_errors(accessionForm.unirefVersion) }}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="Accession-form-exclude-fragments" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Fragment Option</h3>
+        <div class="accordion-content">
+            <twig:exclude_fragments form="{{ accessionForm.excludeFragments }}" />
+        </div>
+    </div>
+
+    <div id="Accession-form-tax-search" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Filter by Taxonomy</h3>
+        <div class="accordion-content">
+            {% include('_partials/taxonomy_filtering_text.html.twig') %}
+
+            <twig:taxonomy_filtering filterForm="{{ accessionForm.taxSearch }}" />
+
+            {# Ensure that Symfony doesn't render this field later #}
+            {% do accessionForm.taxSearch.setRendered() %}
+        </div>
+    </div>
+
+    <div id="accession-form-filter-by-family" data-controller="accordion">
+        <h3>Filter by Family</h3>
+        <div class="accordion-content">
+            <div>
+                <p><b>The input list of UniRef90 or UniRef50 cluster IDs should (must!) be filtered with the same list
+                    of Pfam families, InterPro families, and/or Pfam clans used to generate the IDs, if:
+                </b></p>
+            </div>
+
+            <p>
+            The input list of UniRef90 or UniRef50 IDs is obtained from 1) the Color SSN or Cluster Analysis utility for
+            a Families option (Option B) EFI-EST SSN, 2) the Families option of the Taxonomy Tool, or 3) the Accession
+            IDs option of the Taxonomy Tool.
+            </p>
+
+            <p>
+            Input a list of Pfam families, InterPro families, and/or Pfam clans to restrict the UniProt and/or UniRef IDs in the SSN to these families.
+            </p>
+
+            <div>
+                <div>
+                    <span class="input-heading">Family(s):</span>
+                    {{ form_widget(accessionForm.familyFilter) }}
+                </div>
+                <div class="input-description">
+                    The input format is a single
+                    family or comma/space separated list of families. Families should be specified as PFxxxxx (five digits),
+                    IPRxxxxxx (six digits) or CLxxxx (four digits) for Pfam clans.
+                </div>
+            </div>
+
+            <p>
+            For input lists of UniRef90 and UniRef50 clusters, the cluster ID (representative sequence) is used to
+            identify those that match the list of families and are included in the SSN. The UniProt members in these
+            clusters that do not match the input families are removed from the cluster and are not included in the SSN
+            node attributes.
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <twig:job_submit_input form="{{ accessionForm }}" />
+    </div>
+
+    {% include('_partials/file_upload_progress.html.twig') %}
+
+    {{ form_end(accessionForm) }}
+
+</div>
+

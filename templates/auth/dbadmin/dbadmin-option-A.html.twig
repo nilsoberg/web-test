@@ -1,0 +1,116 @@
+<div id="WAoptionA">
+        <div class="container py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <a href="{{ path('dbadmin_upload') }}" class="btn btn-outline-primary me-2">Web Upload</a>
+                    <a href="{{ path('dbadmin_rsync_info') }}" class="btn btn-outline-secondary">Rsync Upload</a>
+                </div>
+            </div>
+
+            {% if databases is not empty %}
+                <table class="table table-bordered table-hover" id="db-table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Version</th>
+                            <th>Created</th>
+                            <th>Shared</th>
+                            <th>Shared With</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for db in databases %}
+                        <tr>
+                            <td>{{ db.name ?: '-' }}</td>
+                            <td>{{ db.version ?: '-' }}</td>
+                            <td>{{ db.dateCreated|date_skeleton('MMMdjm') }}</td>
+                            <td>{{ db.shared ? 'Yes' : 'No' }}</td>
+                            <td>{{ db.sharedWith ?: '-' }}</td>
+                            <td>
+                                {% if db.orgId == orgId %}
+                                    <button class="btn btn-sm btn-outline-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editModal{{ db.id }}">Edit</button>
+
+                                    <form method="POST"
+                                        action="{{ path('dbadmin_delete_database', { id: db.id }) }}"
+                                        onsubmit="return confirm('Are you sure you want to delete the selected database?');"
+                                        style="display: inline-block;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('dbadmin_delete_' ~ db.id) }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </button>
+                                    </form>
+                                {% else %}
+                                    <form method="POST"
+                                        action="{{ path('dbadmin_unshare_database', { id: db.id }) }}"
+                                        onsubmit="return confirm('Are you sure you want to remove this shared database from your organization view?');"
+                                        style="display: inline-block;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('dbadmin_unshare_' ~ db.id) }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                            Unshare
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        {% if db.orgId == orgId %}
+                            <div class="modal fade" id="editModal{{ db.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ db.id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <form method="POST" action="{{ path('dbadmin_edit_database', { id: db.id }) }}">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('dbadmin_edit_' ~ db.id) }}">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel{{ db.id }}">Edit Database</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Database Name</label>
+                                                    <input type="text" class="form-control" name="name" value="{{ db.name }}">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Version</label>
+                                                    <input type="text" class="form-control" name="version" value="{{ db.version }}">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Shared</label>
+                                                    <select class="form-select" name="shared">
+                                                        <option value="1" {{ db.shared ? 'selected' : '' }}>Yes</option>
+                                                        <option value="0" {{ not db.shared ? 'selected' : '' }}>No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3 position-relative">
+                                                    <label class="form-label">Shared With</label>
+                                                    <input type="text"
+                                                           class="form-control orgid-autocomplete"
+                                                           name="sharedWith"
+                                                           id="editSharedWith{{ db.id }}"
+                                                           value="{{ db.sharedWith }}"
+                                                           data-orgids='{{ orgIds|json_encode()|e('html_attr') }}'>
+                                                    <div class="autocomplete-suggestions position-absolute bg-white border rounded shadow-sm mt-1 d-none"
+                                                         style="z-index: 9999;"
+                                                         id="suggestions-editSharedWith{{ db.id }}"></div>
+                                                    <small class="form-text text-muted">Add valid comma-separated organization ids. Invalid ids are ignored.</small>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Save Changes</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No databases found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

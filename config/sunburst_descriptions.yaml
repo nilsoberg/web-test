@@ -1,0 +1,38 @@
+parameters:
+    app.sunburst_descriptions:
+        'ESTGenerateAccessionJob': >
+            <p>Lists of UniProt, UniRef90, and UniRef50 IDs and FASTA-formatted sequences can be downloaded.</p>
+            <p>The lists of UniProt, UniRef90, and UniRef50 IDs can be transferred to the Accession IDs option (Option D) of EFI-EST to generate an SSN. The Accession IDs option provides both Filter by Family and Filter by Taxonomy that should be used to remove internal UniProt IDs that are not members of the input families and selected taxonomy category.</p>
+            <p>The lists also can be transferred to the GND Viewer to obtain GNDs.</p>
+
+        'ESTGenerateBlastJob': >
+            <p>List of UniProt IDs and FASTA-formatted sequences can be downloaded.</p>
+            <p>The list of IDs can be transferred to the Accession IDs option (Option D) of EFI-EST to generate an SSN. The Accession IDs option provides Filter by Taxonomy that should be used to remove internal UniProt IDs that are not members of the selected taxonomy category.</p>
+            <p>The list also can be transferred to the GND Viewer to obtain GNDs.</p>
+
+        'ESTGenerateFamiliesJob': >
+            <p>Lists of UniProt, UniRef90, and UniRef50 IDs and FASTA-formatted sequences can be downloaded.</p>
+            <p>The lists of UniProt, UniRef90, and UniRef50 IDs can be transferred to the Accession IDs option (Option D) of EFI-EST to generate an SSN. The Accession IDs option provides both Filter by Family and Filter by Taxonomy that should be used to remove internal UniProt IDs that are not members of the input families and selected taxonomy category.</p>
+            <p>The lists also can be transferred to the GND Viewer to obtain GNDs.</p>
+
+        'ESTGenerateFastaJob': >
+            <p>The UniProt IDs and FASTA-formatted sequences can be downloaded.</p>
+            <p>The list of UniProt IDs can be transferred to the Accession IDs option (Option D) of EFI-EST to generate an SSN. The Accession IDs option provides both Filter by Family and Filter by Taxonomy that should be used to remove UniProt IDs that are not members of desired families and the selected taxonomy category.</p>
+
+        # Duplicate of 'Accession'
+        'TaxonomyAccessionJob': >
+            <p>Lists of UniProt, UniRef90, and UniRef50 IDs and FASTA-formatted sequences can be downloaded.</p>
+            <p>The lists of UniProt, UniRef90, and UniRef50 IDs can be transferred to the Accession IDs option (Option D) of EFI-EST to generate an SSN. The Accession IDs option provides both Filter by Family and Filter by Taxonomy that should be used to remove internal UniProt IDs that are not members of the input families and selected taxonomy category.</p>
+            <p>The lists also can be transferred to the GND Viewer to obtain GNDs.</p>
+
+        # Duplicate of 'Families'
+        'TaxonomyFamiliesJob': >
+            <p>Lists of UniProt, UniRef90, and UniRef50 IDs and FASTA-formatted sequences can be downloaded.</p>
+            <p>The lists of UniProt, UniRef90, and UniRef50 IDs can be transferred to the Accession IDs option (Option D) of EFI-EST to generate an SSN. The Accession IDs option provides both Filter by Family and Filter by Taxonomy that should be used to remove internal UniProt IDs that are not members of the input families and selected taxonomy category.</p>
+            <p>The lists also can be transferred to the GND Viewer to obtain GNDs.</p>
+
+        # Duplicate of 'FASTA'
+        'TaxonomyFastaJob': >
+            <p>The UniProt IDs and FASTA-formatted sequences can be downloaded.</p>
+            <p>The list of UniProt IDs can be transferred to the Accession IDs option (Option D) of EFI-EST to generate an SSN. The Accession IDs option provides both Filter by Family and Filter by Taxonomy that should be used to remove UniProt IDs that are not members of desired families and the selected taxonomy category.</p>
+

@@ -1,0 +1,21 @@
+twig:
+    globals:
+        enable_website: '%app.enable_website%'
+        enable_submission: '%app.enable_submission%'
+        show_funding: '%app.show_funding%'
+        show_citation: '%app.show_citation%'
+        max_file_upload_size_text: '%app.max_file_upload_size_text%'
+        instance_title: '%instance.title%'
+        use_jotform_contact_form: '%instance.use_jotform_contact_form%'
+        jotform_id: '%instance.jotform_id%'
+    file_name_pattern: '*.twig'
+    form_themes:
+        - 'bootstrap_5_layout.html.twig'
+        - '@Dropzone/form_theme.html.twig'
+    date:
+        timezone: '%app.timezone%'
+
+when@test:
+    twig:
+        strict_variables: true
+

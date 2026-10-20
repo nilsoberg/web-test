@@ -1,0 +1,21 @@
+
+{% if useGlobalScope|default(false) %}
+{%     set fieldAttr = {
+                    'class': 'form-select form-select-sm uniref-version-field w-25',
+                    'data-action': 'input->external-family-field#broadcast'|raw,
+                    'data-controller': 'external-family-field',
+                    'data-external-family-field-form-id-value': familyFormId,
+                    'data-external-family-field-field-name-value': 'unirefVersion',
+       }
+%}
+{% else %}
+{%     set fieldAttr = {
+                    'class': 'form-select form-select-sm uniref-version-field w-25',
+                    'data-family-input-target': 'unirefVersion',
+                    'data-action': 'change->family-input#processChange'|raw,
+       }
+%}
+{% endif %}
+
+{{ form_widget(form.unirefVersion, { 'attr': fieldAttr }) }}
+

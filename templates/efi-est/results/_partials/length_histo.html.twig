@@ -1,0 +1,54 @@
+
+<twig:plotly_result_chart
+    image_url="{{ result_image }}"
+    plot_url="{{ plot_url|default('') }}"
+    alt="Number of Sequences at Each Length"
+    chart_key="length_histogram"
+    job_number="{{ job_number|default(null) }}"
+/>
+
+{% if is_domain is defined and uniref_version is defined %}
+
+<p>This histogram describes the length distribution for all trimmed domains 
+(from all UniProt IDs) in the input dataset.  </p>
+<p>Inspection of the histogram permits identification of fragments and 
+full-length domains.  This histogram is used to select Minimum and Maximum 
+"Sequence Length Restrictions" in the "SSN Finalization" tab to remove 
+fragments and select desired domain lengths in the input UniRef dataset.  The 
+sequences in the "Sequences as a Function of Domain-Length Histogram (UniRef90 
+Cluster IDs)" (last plot) are used to calculate the edges.</p>
+
+{% elseif is_domain is defined %}
+
+<p>This histogram describes the length distribution for all of the trimmed 
+domains (from all UniProt IDs) in the input dataset; the sequences in this 
+histogram are used to calculate the edges. </p>
+<p>Inspection of the histogram permits identification of fragments and 
+full-length domains.  The domain dataset for the BLAST can be length-filtered 
+using the Minimum and Maximum "Sequence Length Restrictions" in the "SSN 
+Finalization" tab to select desired domain lengths. </p>
+
+{% elseif uniref_version is defined %}
+
+<p>This histogram describes the length distribution for all sequences (UniProt 
+IDs) in the input dataset.  </p>
+<p>Inspection of the histogram permits identification of fragments, single 
+domain proteins, and multidomain fusion proteins. This histogram is used to 
+select Minimum and Maximum "Sequence Length Restrictions" in the "SSN 
+Finalization" tab to remove fragments, select only single domain proteins, or 
+select multidomain proteins.  The sequences in the "Sequences as a Function of 
+Full-Length Histogram (UniRef90 Cluster IDs)" (last histogram) are used to 
+calculate the edges.</p>
+
+{% else %}
+
+<p>This histogram describes the length distribution for all sequences (UniProt 
+IDs) in the input dataset; the sequences in this histogram are used to 
+calculate the edges.  </p>
+<p>Inspection of the histogram permits identification of fragments, single 
+domain proteins, and multidomain fusion proteins. The dataset can be 
+length-filtered using the Minimum and Maximum "Sequence Length Restrictions" in 
+the "SSN Finalization" tab to remove fragments, select single domain proteins, 
+or select multidomain fusion proteins. </p>
+
+{% endif %}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Genome Neighborhood Diagrams{% block viewer_title %}{% endblock %}</title>
+        {{ importmap('gnd_app_styles') }}
+    </head>
+
+    <body>
+
+        {% include('efi-gnt/gnd/header.html.twig') with { params } %}
+
+        {% include('@EfiGndViewer/viewer.html.twig') with { params } %}
+
+    </body>
+</html>
+

@@ -1,0 +1,127 @@
+
+<div>
+
+    {% if show_citation %}
+        {% include 'core/citation.html.twig' %}
+    {% endif %}
+
+    {% if page.colorSsn is defined %}
+        <h4>Colored Sequence Similarity Network (SSN)</h4>
+    
+        <p>
+        Each cluster in the submitted SSN has been identified and assigned a unique
+        number and color. Node attributes for "Neighbor Pfam Families" and
+        "Neighbor InterPro Families" have been added.
+        </p>
+    
+        <table class="pretty tbl-center">
+            <thead>
+                <tr>
+                    <th></th>
+                    {% if page.colorSsn.nodes is defined %}<th>Nodes</th>{% endif %}
+                    {% if page.colorSsn.edges is defined %}<th>Edges</th>{% endif %}
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a class="btn btn-primary btn-sm" href="{{ page.colorSsn.route }}">Download ZIP</a></td>
+                    {% if page.colorSsn.nodes is defined %}<td>{{ page.colorSsn.nodes|number_format }}</td>{% endif %}
+                    {% if page.colorSsn.edges is defined %}<td>{{ page.colorSsn.edges|number_format }}</td>{% endif %}
+                    <td>{{ page.colorSsn.size }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h4>Genome Neighborhood Networks (GNNs)</h4>
+
+    <p>
+    GNNs provide a representation of the neighboring Pfam families for each SSN
+    cluster identified in the colored SSN. To be displayed, neighboring Pfams
+    families must be detected in the specified window and at a co-occurrence
+    frequency higher than the specified minimum.
+    </p>
+
+    <h5>SSN Cluster Hub-Nodes: Genome Neighborhood Network (GNN)</h5>
+
+    <p>
+    Each hub-node in the network represents a SSN cluster. The spoke nodes
+    represent Pfam families that have been identified as neighbors of the
+    sequences from the center hub.
+    </p>
+
+    <table class="pretty tbl-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a class="btn btn-primary btn-sm" href="{{ page.ssnGnn.route }}">Download ZIP</a></td>
+                <td>{{ page.ssnGnn.size }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h5>Pfam Family Hub-Nodes Genome Neighborhood Network (GNN)</h5>
+
+    <p>
+    Each hub-node in the network represents a Pfam family identified as a
+    neighbor. The spokes nodes represent SSN clusters that identified the Pfam
+    family from the center hub.
+    </p>
+
+    <table class="pretty tbl-center">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a class="btn btn-primary btn-sm" href="{{ page.pfamGnn.route }}">Download ZIP</a></td>
+                <td>{{ page.pfamGnn.size }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h4>Genome Neighborhood Diagrams (GNDs)</h4>
+
+    <p>
+    Diagrams representing genomic regions around the genes encoded for the
+    sequences from the submitted SSN are generated. All genes present in the
+    specified window can be visualized (no minimal co-occurrence frequency
+    filter or neighborhood size threshold is applied). Diagram data can be
+    downloaded in .sqlite file format for later review in the View Saved
+    Diagrams tab. 
+    </p>
+
+    <table class="pretty tbl-center">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th></th>
+                <th>Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a class="btn btn-primary btn-sm" href="{{ page.gndViewerRoute }}">View diagrams</a></td>
+                <td colspan="2">Opens GND explorer in a new tab.</td>
+            </tr>
+            <tr>
+                <td><a class="btn btn-primary btn-sm" href="{{ page.gndDownloadRoute }}">Download ZIP</a></td>
+                <td>Diagram data for later review</td>
+                <td>{{ page.gndDownloadSize }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+

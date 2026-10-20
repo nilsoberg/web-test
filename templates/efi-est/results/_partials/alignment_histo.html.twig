@@ -1,0 +1,38 @@
+
+<twig:plotly_result_chart
+    image_url="{{ result_image }}"
+    plot_url="{{ plot_url|default('') }}"
+    alt="Alignment Length vs Alignment Score"
+    chart_key="alignment_length"
+    job_number="{{ job_number|default(null) }}"
+/>
+
+{% if is_domain %}
+
+<p>This box plot describes the relationship between the query-subject alignment 
+lengths (for the trimmed domains) used by BLAST (y-axis) to calculate the 
+alignment scores (x-axis). </p>
+<p>The value of the "Alignment Score Threshold" for generating the SSN (entered 
+in the "SSN Finalization" tab) should be selected (from the "Percent Identity 
+vs Alignment Score Box Plot"; next box plot) at an "Alignment Length" &ge; the 
+minimum length of full-length domains in the input dataset (determined by 
+inspection of the "Sequences as a Function of Length Histogram"; first 
+histogram).  In that region, the "Alignment Length" should independent of the 
+"Alignment Score" in this box plot. </p>
+
+{% else %}
+
+<p>This box plot describes the relationship between the query-subject alignment 
+lengths used by BLAST (y-axis) to calculate the alignment scores (x-axis). </p>
+<p>This plot shows a monophasic increase in alignment length to a constant 
+value for single domain proteins; this plot shows multiphasic increases in 
+alignment length for datasets with multidomain proteins (one phase for each 
+fusion length).  The value of the "Alignment Score Threshold" for generating 
+the SSN (entered in the "SSN Finalization" tab) should be selected (from the 
+"Percent Identity vs Alignment Score Box Plot"; next box plot) at an alignment 
+length &ge; the minimum length of single domain proteins in the dataset 
+(determined by inspection of the "Sequences as a Function of Full-Length 
+Histogram"; previous histogram). In that region, the 
+"Alignment Length" should be independent of the "Alignment Score".</p>
+
+{% endif %}

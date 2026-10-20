@@ -1,0 +1,13 @@
+<div id="TRAININGoptionB">
+
+    <h2>{{ patentsCount }} Patents </h2>
+
+    <div class="training-patents">
+        {% for patent in patents %}
+            {{ patent.author }}, <i>{{ patent.title }}</i>. {{patent.publisher}}, {{ patent.year }}. {{patent.volume}}
+            <br>
+            <br>
+        {% endfor %}
+    </div>
+
+</div>

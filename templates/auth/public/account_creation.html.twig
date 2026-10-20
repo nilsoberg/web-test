@@ -1,0 +1,29 @@
+
+{% set page_title = "EFI - User Account Creation" %}
+{% extends "auth/public/core.html.twig" %}
+
+{% block auth_content %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+<div class="container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <legend class="h5 mb-3 border-bottom pb-2">Account Details</legend>
+        {{ form_row(form.fullName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.timezone) }}
+        {{ form_row(form.passwordFields) }}
+    </fieldset>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

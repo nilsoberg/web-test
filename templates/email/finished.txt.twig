@@ -1,0 +1,13 @@
+
+{% extends 'email/email_base.txt.twig' %}
+
+{% block email_body %}
+Your EFI job has finished processing.
+
+{% if base.results_link is defined %}
+To access the results, please go to {{ base.results_link }}
+{% endif %}
+This data will be retained for {{ base.retention_days }} days.
+
+{% endblock %}
+

@@ -1,0 +1,47 @@
+
+<div>
+    <h4>Length Histograms</h4>
+
+    <div>
+        {% for row in page.lengthHistograms %}
+            {% set items = {
+                'UniProt Full': row.uniprot,
+                'UniRef90 Full': row.uniref90,
+                'UniRef50 Full': row.uniref50,
+                'UniProt Domain': row.uniprotDomain,
+                'UniRef90 Domain': row.uniref90Domain,
+                'UniRef50 Domain': row.uniref50Domain
+            } %}
+            <div>
+                <h4>{{ row.clusterName }}</h4>
+                <div class="my-2 text-muted">
+                    Number of IDs:
+                    {% if row.numUniprotIds %}
+                        UniProt: {{ row.numUniprotIds }}
+                    {% endif %}
+                    {% if row.numUniref90Ids %}
+                        | UniRef90: {{ row.numUniref90Ids }}
+                    {% endif %}
+                    {% if row.numUniref50Ids %}
+                        | UniRef50: {{ row.numUniref50Ids }}
+                    {% endif %}
+                </div>
+
+                <div class="container px-0 mt-3">
+                    <div class="row g-4">
+                        {% for label, item in items %}
+                            {% if item %}
+                                <div class="col-6">
+                                    <div class="mb-2"><b>{{ label }} Sequences</b></div>
+                                    <div><img src="{{ item.imagePath }}" width="100%" loading="lazy" /></div>
+                                    <div class="mb-2"><a class="btn btn-sm btn-primary" href="{{ item.imageDownloadUrl }}">PNG <i class="bi bi-download"></i></a></div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+

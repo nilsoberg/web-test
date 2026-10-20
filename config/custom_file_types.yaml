@@ -1,0 +1,473 @@
+parameters:
+    # These are examples, adjust them to your actual file names and desired aliases
+    app.job_file_types:
+        # Alias used in URL => { actual server filename, suffix for download, extension }
+        'alignment_length':
+            server_filename: 'alignment_length.png'         # The real name of the file on disk
+            download_suffix: 'alignment_length'             # Used to build JobID-suffix.ext
+            extension: 'png'                                # The extension for the download filename
+        'alignment_length_json':
+            server_filename: 'alignment_length.json'
+            download_suffix: 'alignment_length'
+            extension: 'json'
+        'number_of_edges':
+            server_filename: 'number_of_edges.png'
+            download_suffix: 'number_of_edges'
+            extension: 'png'
+        'number_of_edges_json':
+            server_filename: 'number_of_edges.json'
+            download_suffix: 'number_of_edges'
+            extension: 'json'
+        'percent_identity':
+            server_filename: 'percent_identity.png'
+            download_suffix: 'percent_identity'
+            extension: 'png'
+        'percent_identity_json':
+            server_filename: 'percent_identity.json'
+            download_suffix: 'percent_identity'
+            extension: 'json'
+        # This is a special case for legacy BLAST jobs
+        'length_histogram':
+            server_filename: 'length_histogram.png'
+            download_suffix: 'length_histogram'
+            extension: 'png'
+        'length_histogram_uniprot':
+            server_filename: 'length_histogram_uniprot.png'
+            download_suffix: 'length_histogram_uniprot'
+            extension: 'png'
+        'length_histogram_uniprot_json':
+            server_filename: 'length_histogram_uniprot.json'
+            download_suffix: 'length_histogram_uniprot'
+            extension: 'json'
+        'length_histogram_uniref90':
+            server_filename: 'length_histogram_uniref90.png'
+            download_suffix: 'length_histogram_uniref90'
+            extension: 'png'
+        'length_histogram_uniref90_json':
+            server_filename: 'length_histogram_uniref90.json'
+            download_suffix: 'length_histogram_uniref90'
+            extension: 'json'
+        'length_histogram_uniref50':
+            server_filename: 'length_histogram_uniref50.png'
+            download_suffix: 'length_histogram_uniref50'
+            extension: 'png'
+        'length_histogram_uniref50_json':
+            server_filename: 'length_histogram_uniref50.json'
+            download_suffix: 'length_histogram_uniref50'
+            extension: 'json'
+        'length_histogram_uniprot_domain':
+            server_filename: 'length_histogram_uniprot_domain.png'
+            download_suffix: 'length_histogram_uniprot_domain'
+            extension: 'png'
+        'length_histogram_uniprot_domain_json':
+            server_filename: 'length_histogram_uniprot_domain.json'
+            download_suffix: 'length_histogram_uniprot_domain'
+            extension: 'json'
+        'length_histogram_uniref90_domain':
+            server_filename: 'length_histogram_uniref90_domain.png'
+            download_suffix: 'length_histogram_uniref90_domain'
+            extension: 'png'
+        'length_histogram_uniref90_domain_json':
+            server_filename: 'length_histogram_uniref90_domain.json'
+            download_suffix: 'length_histogram_uniref90_domain'
+            extension: 'json'
+        'length_histogram_uniref50_domain':
+            server_filename: 'length_histogram_uniref50_domain.png'
+            download_suffix: 'length_histogram_uniref50_domain'
+            extension: 'png'
+        'length_histogram_uniref50_domain_json':
+            server_filename: 'length_histogram_uniref50_domain.json'
+            download_suffix: 'length_histogram_uniref50_domain'
+            extension: 'json'
+        'est_edges':
+            server_filename: 'evalue.tab'
+            download_suffix: 'evalue'
+            extension: 'tab'
+        'sunburst_fasta':
+            download_suffix: ''
+            extension: 'fasta'
+        'sunburst_id_list':
+            download_suffix: ''
+            extension: ''
+        'sunburst_json':
+            server_filename: 'sunburst_tax.json'
+            download_suffix: 'sunburst_json'
+            extension: 'json'
+        'full_ssn_network':
+            server_filename: 'full_ssn.xgmml.zip'
+            download_suffix: 'full_ssn'
+            extension: 'xgmml.zip'
+        'repnode_40_network':
+            server_filename: 'repnode_40_ssn.xgmml.zip'
+            download_suffix: 'repnode_40_ssn'
+            extension: 'xgmml.zip'
+        'repnode_45_network':
+            server_filename: 'repnode_45_ssn.xgmml.zip'
+            download_suffix: 'repnode_45_ssn'
+            extension: 'xgmml.zip'
+        'repnode_50_network':
+            server_filename: 'repnode_50_ssn.xgmml.zip'
+            download_suffix: 'repnode_50_ssn'
+            extension: 'xgmml.zip'
+        'repnode_55_network':
+            server_filename: 'repnode_55_ssn.xgmml.zip'
+            download_suffix: 'repnode_55_ssn'
+            extension: 'xgmml.zip'
+        'repnode_60_network':
+            server_filename: 'repnode_60_ssn.xgmml.zip'
+            download_suffix: 'repnode_60_ssn'
+            extension: 'xgmml.zip'
+        'repnode_65_network':
+            server_filename: 'repnode_65_ssn.xgmml.zip'
+            download_suffix: 'repnode_65_ssn'
+            extension: 'xgmml.zip'
+        'repnode_70_network':
+            server_filename: 'repnode_70_ssn.xgmml.zip'
+            download_suffix: 'repnode_70_ssn'
+            extension: 'xgmml.zip'
+        'repnode_75_network':
+            server_filename: 'repnode_75_ssn.xgmml.zip'
+            download_suffix: 'repnode_75_ssn'
+            extension: 'xgmml.zip'
+        'repnode_80_network':
+            server_filename: 'repnode_80_ssn.xgmml.zip'
+            download_suffix: 'repnode_80_ssn'
+            extension: 'xgmml.zip'
+        'repnode_85_network':
+            server_filename: 'repnode_85_ssn.xgmml.zip'
+            download_suffix: 'repnode_85_ssn'
+            extension: 'xgmml.zip'
+        'repnode_90_network':
+            server_filename: 'repnode_90_ssn.xgmml.zip'
+            download_suffix: 'repnode_90_ssn'
+            extension: 'xgmml.zip'
+        'repnode_95_network':
+            server_filename: 'repnode_95_ssn.xgmml.zip'
+            download_suffix: 'repnode_95_ssn'
+            extension: 'xgmml.zip'
+        'repnode_100_network':
+            server_filename: 'repnode_100_ssn.xgmml.zip'
+            download_suffix: 'repnode_100_ssn'
+            extension: 'xgmml.zip'
+        'full_ssn_nc_scale':
+            server_filename: 'full_nc_legend.png'
+            download_suffix: 'full_nc_legend'
+            extension: 'png'
+        'repnode_40_nc_scale':
+            server_filename: 'repnode_40_nc_legend.png'
+            download_suffix: 'repnode_40_nc_legend'
+            extension: 'png'
+        'repnode_45_nc_scale':
+            server_filename: 'repnode_45_nc_legend.png'
+            download_suffix: 'repnode_45_nc_legend'
+            extension: 'png'
+        'repnode_50_nc_scale':
+            server_filename: 'repnode_50_nc_legend.png'
+            download_suffix: 'repnode_50_nc_legend'
+            extension: 'png'
+        'repnode_55_nc_scale':
+            server_filename: 'repnode_55_nc_legend.png'
+            download_suffix: 'repnode_55_nc_legend'
+            extension: 'png'
+        'repnode_60_nc_scale':
+            server_filename: 'repnode_60_nc_legend.png'
+            download_suffix: 'repnode_60_nc_legend'
+            extension: 'png'
+        'repnode_65_nc_scale':
+            server_filename: 'repnode_65_nc_legend.png'
+            download_suffix: 'repnode_65_nc_legend'
+            extension: 'png'
+        'repnode_70_nc_scale':
+            server_filename: 'repnode_70_nc_legend.png'
+            download_suffix: 'repnode_70_nc_legend'
+            extension: 'png'
+        'repnode_75_nc_scale':
+            server_filename: 'repnode_75_nc_legend.png'
+            download_suffix: 'repnode_75_nc_legend'
+            extension: 'png'
+        'repnode_80_nc_scale':
+            server_filename: 'repnode_80_nc_legend.png'
+            download_suffix: 'repnode_80_nc_legend'
+            extension: 'png'
+        'repnode_85_nc_scale':
+            server_filename: 'repnode_85_nc_legend.png'
+            download_suffix: 'repnode_85_nc_legend'
+            extension: 'png'
+        'repnode_90_nc_scale':
+            server_filename: 'repnode_90_nc_legend.png'
+            download_suffix: 'repnode_90_nc_legend'
+            extension: 'png'
+        'repnode_95_nc_scale':
+            server_filename: 'repnode_95_nc_legend.png'
+            download_suffix: 'repnode_95_nc_legend'
+            extension: 'png'
+        'repnode_100_nc_scale':
+            server_filename: 'repnode_100_nc_legend.png'
+            download_suffix: 'repnode_100_nc_legend'
+            extension: 'png'
+        'est_dataset_summary':
+            download_suffix: 'dataset_summary'
+            extension: 'txt'
+        'est_analysis_summary':
+            download_suffix: 'analysis_summary'
+            extension: 'txt'
+        'color_util_ssn':
+            server_filename: 'color_ssn.xgmml.zip'
+            download_suffix: 'color_ssn'
+            extension: 'zip'
+        'color_util_cluster_num_map':
+            server_filename: 'mapping_table.txt'
+            download_suffix: 'cluster_num_map'
+            extension: 'txt'
+        'color_util_internal_mapping':
+            server_filename: 'cluster_num_map.txt'
+            download_suffix: 'cluster_num_map'
+            extension: 'txt'
+        'color_util_cluster_sizes':
+            server_filename: 'cluster_size.txt'
+            download_suffix: 'cluster_sizes'
+            extension: 'txt'
+        'color_util_conv_ratio':
+            server_filename: 'conv_ratio.tab'
+            download_suffix: 'conv_ratio'
+            extension: 'tab'
+        'color_util_uniprot_fasta':
+            server_filename: 'fasta_uniprot.zip'
+            download_suffix: 'fasta_uniprot'
+            extension: 'zip'
+        'color_util_uniref50_fasta':
+            server_filename: 'fasta_uniref50.zip'
+            download_suffix: 'fasta_uniref50'
+            extension: 'zip'
+        'color_util_uniref90_fasta':
+            server_filename: 'fasta_uniref90.zip'
+            download_suffix: 'fasta_uniref90'
+            extension: 'zip'
+        'color_util_swissprot_clusters':
+            server_filename: 'swissprot_clusters_desc.txt'
+            download_suffix: 'swissprot_clusters_desc'
+            extension: 'txt'
+        'color_util_uniprot_ids':
+            server_filename: 'ids_uniprot.zip'
+            download_suffix: 'uniprot_ids'
+            extension: 'zip'
+        'color_util_uniref50_ids':
+            server_filename: 'ids_uniref50.zip'
+            download_suffix: 'uniref50_ids'
+            extension: 'zip'
+        'color_util_uniref90_ids':
+            server_filename: 'ids_uniref90.zip'
+            download_suffix: 'uniref90_ids'
+            extension: 'zip'
+        'color_util_summary':
+            download_suffix: 'utility_summary'
+            extension: 'txt'
+        'nb_conn_ssn':
+            server_filename: 'ssn.xgmml.zip'
+            download_suffix: 'neighborhood_connectivity'
+            extension: 'zip'
+        'nb_conn_nc_scale':
+            server_filename: 'legend.png'
+            download_suffix: 'neighborhood_connectivity_scale'
+            extension: 'png'
+        'nb_conn_nc_table':
+            server_filename: 'nc.tab'
+            download_suffix: 'neighborhood_connectivity_table'
+            extension: 'tab'
+        'conv_ratio_table':
+            server_filename: 'conv_ratio.tab'
+            download_suffix: 'convergence_ratio_table'
+            extension: 'tab'
+        'ca_hmm':
+            server_filename: 'cluster-\d+(-\d+)*.hmm'
+            download_suffix: 'hmm'
+            extension: 'hmm'
+        'ca_msa':
+            server_filename: 'cluster-\d+(-\d+)*.msa'
+            download_suffix: 'msa'
+            extension: 'afa'
+        'ca_weblogo':
+            server_filename: 'cluster-\d+(-\d+)*.png'
+            download_suffix: 'weblogo'
+            extension: 'png'
+        'ca_length_histogram':
+            server_filename: 'cluster-\d+(-\d+)*.png'
+            download_suffix: 'length_histogram'
+            extension: 'png'
+        'ca_cluster_size':
+            server_filename: 'cluster_size.txt'
+            download_suffix: 'cluster_size'
+            extension: 'tab'
+        'ca_weblogo_full_zip':
+            server_filename: 'weblogos_full.zip'
+            download_suffix: 'weblogos_full'
+            extension: 'zip'
+        'ca_weblogo_domain_zip':
+            server_filename: 'weblogos_domain.zip'
+            download_suffix: 'weblogos_domain'
+            extension: 'zip'
+        'ca_pim_full_zip':
+            server_filename: 'clustal_pims_full.zip'
+            download_suffix: 'cons_res_pim_full'
+            extension: 'zip'
+        'ca_pim_domain_zip':
+            server_filename: 'clustal_pims_domain.zip'
+            download_suffix: 'cons_res_pim_domain'
+            extension: 'zip'
+        'ca_cons_res':
+            server_filename: 'ConsensusResidue_[A-Z]_Position_Summary_Full.txt'
+            download_suffix: ''
+            extension: 'tab'
+        'ca_hmm_full_zip':
+            server_filename: 'hmms_full.zip'
+            download_suffix: 'hmm_full'
+            extension: 'zip'
+        'ca_hmm_domain_zip':
+            server_filename: 'hmms_domain.zip'
+            download_suffix: 'hmm_domain'
+            extension: 'zip'
+        'ca_length_histo_full_zip':
+            server_filename: 'length_histo.zip'
+            download_suffix: 'length_histograms_full'
+            extension: 'zip'
+        'taxonomy_length_histogram_uniprot':
+            server_filename: 'length_histogram_uniprot.png'
+            download_suffix: 'length_histogram_uniprot'
+            extension: 'png'
+        'taxonomy_length_histogram_uniref90':
+            server_filename: 'length_histogram_uniref90.png'
+            download_suffix: 'length_histogram_uniref90'
+            extension: 'png'
+        'taxonomy_length_histogram_uniref50':
+            server_filename: 'length_histogram_uniref50.png'
+            download_suffix: 'length_histogram_uniref50'
+            extension: 'png'
+        'taxonomy_summary':
+            download_suffix: 'taxonomy_summary'
+            extension: 'txt'
+        'gnn_color_ssn':
+            server_filename: 'color_ssn.xgmml.zip'
+            download_suffix: 'color_ssn'
+            extension: 'zip'
+        'gnn_ssn_cluster_gnn':
+            server_filename: 'ssn_cluster_gnn.xgmml.zip'
+            download_suffix: 'ssn_cluster_gnn'
+            extension: 'zip'
+        'gnn_pfam_family_gnn':
+            server_filename: 'pfam_family_gnn.xgmml.zip'
+            download_suffix: 'pfam_family_gnn'
+            extension: 'zip'
+        'gnn_gnd_download':
+            server_filename: 'gnd.sqlite.zip'
+            download_suffix: 'gnd'
+            extension: 'zip'
+        'gnn_gnd_gene_graphics':
+            server_filename: 'gg.txt'
+            download_suffix: 'gene_graphics'
+            extension: 'tsv'
+        'gnn_gnd_database':
+            server_filename: 'gnd.sqlite'
+            download_suffix: 'gnd'
+            extension: 'sqlite'
+        'gnn_all_pfam_mapping':
+            server_filename: 'all_pfam_mapping.zip'
+            download_suffix: 'all_pfam_mapping'
+            extension: 'zip'
+        'gnn_all_split_pfam_mapping':
+            server_filename: 'all_split_pfam_mapping.zip'
+            download_suffix: 'all_split_pfam_mapping'
+            extension: 'zip'
+        'gnn_pfam_mapping':
+            server_filename: 'pfam_mapping.zip'
+            download_suffix: 'pfam_mapping'
+            extension: 'zip'
+        'gnn_split_pfam_mapping':
+            server_filename: 'split_pfam_mapping.zip'
+            download_suffix: 'split_pfam_mapping'
+            extension: 'zip'
+        'gnn_no_pfam_neighbors':
+            server_filename: 'no_pfam_neighbors.zip'
+            download_suffix: 'no_pfam_neighbors'
+            extension: 'zip'
+        'gnn_cluster_sizes':
+            server_filename: 'cluster_sizes.txt'
+            download_suffix: 'cluster_sizes'
+            extension: 'txt'
+        'gnn_cooc_table':
+            server_filename: 'cooc_table.txt'
+            download_suffix: 'cooc_table'
+            extension: 'txt'
+        'gnn_hub_count':
+            server_filename: 'hub_count.txt'
+            download_suffix: 'hub_count'
+            extension: 'txt'
+        'gnn_nomatches_noneighbors':
+            server_filename: 'nomatches_noneighbors.txt'
+            download_suffix: 'nomatches_noneighbors'
+            extension: 'txt'
+        'gnn_swissprot_clusters_desc':
+            server_filename: 'swissprot_clusters_desc.txt'
+            download_suffix: 'swissprot_clusters_desc'
+            extension: 'txt'
+        'gnn_swissprot_singletons_desc':
+            server_filename: 'swissprot_singletons_desc.txt'
+            download_suffix: 'swissprot_singletons_desc'
+            extension: 'txt'
+        'gnn_summary':
+            download_suffix: 'gnn_summary'
+            extension: 'txt'
+        'identify_ssn':
+            server_filename: 'marker_ssn.xgmml.zip'
+            download_suffix: 'marker_ssn'
+            extension: 'zip'
+        'identify_cdhit':
+            server_filename: 'cdhit.tab'
+            download_suffix: 'shortbred_families'
+            extension: 'tab'
+        'identify_markers':
+            server_filename: 'markers.faa'
+            download_suffix: 'shortbred_markers'
+            extension: 'faa'
+        'identify_summary':
+            download_suffix: 'marker_summary'
+            extension: 'txt'
+        'quantify_ssn':
+            server_filename: 'quantify_ssn.xgmml.zip'
+            download_suffix: 'quantify_ssn'
+            extension: 'zip'
+        'quantify_desc':
+            server_filename: 'metagenome_desc.txt'
+            download_suffix: 'metagenome_desc'
+            extension: 'txt'
+        'quantify_protein_abundance_median':
+            server_filename: 'protein_abundance.txt'
+            download_suffix: 'protein_abundance_median'
+            extension: 'txt'
+        'quantify_protein_abundance_genome_normalized_median':
+            server_filename: 'protein_abundance_genome_normalized.txt'
+            download_suffix: 'protein_abundance_genome_normalized_median'
+            extension: 'txt'
+        'quantify_cluster_abundance_median':
+            server_filename: 'cluster_abundance.txt'
+            download_suffix: 'cluster_abundance_median'
+            extension: 'txt'
+        'quantify_cluster_abundance_genome_normalized_median':
+            server_filename: 'cluster_abundance_genome_normalized.txt'
+            download_suffix: 'cluster_abundance_genome_normalized_median'
+            extension: 'txt'
+        'quantify_protein_abundance_mean':
+            server_filename: 'protein_abundance_mean.txt'
+            download_suffix: 'protein_abundance_mean'
+            extension: 'txt'
+        'quantify_protein_abundance_genome_normalized_mean':
+            server_filename: 'protein_abundance_genome_normalized_mean.txt'
+            download_suffix: 'protein_abundance_genome_normalized_mean'
+            extension: 'txt'
+        'quantify_cluster_abundance_mean':
+            server_filename: 'cluster_abundance_mean.txt'
+            download_suffix: 'cluster_abundance_mean'
+            extension: 'txt'
+        'quantify_cluster_abundance_genome_normalized_mean':
+            server_filename: 'cluster_abundance_genome_normalized_mean.txt'
+            download_suffix: 'cluster_abundance_genome_normalized_mean'
+            extension: 'txt'

@@ -1,0 +1,88 @@
+
+<div class="job-form-container" data-job-type-config="Families-form">
+
+    <p class="tab-p-heading">Retrieve taxonomy for families.</p>
+    <p>The UniProt IDs for family members are identified in UniProtKB with a list of Pfam families, InterPro families, and/or Pfam clans.</p>
+
+	{{ form_start(familiesForm) }}
+
+    <div>
+        <twig:family_input form="{{ familiesForm.familyInput }}" disableForcedUniref="true" defaultDatabaseId="{{ defaultDatabaseId }}" />
+        <div>
+
+            <p>
+             Filter by Taxonomy can be used to remove UniProt IDs that do not
+             match the specified taxonomy categories.
+            </p>
+
+            <p>
+             The remaining UniProt IDs are used to generate the sunburst.
+            </p>
+
+            <p>
+             UniRef90 and UniRef50 clusters that contain the UniProt IDs are
+             retrieved from the UniRef90 andUniRef50 databases using the lookup
+             table provided by UniProt/UniRef. Clusters for which the cluster
+             ID (representative sequence) matches the list of families are
+             retained.
+            </p>
+
+            <p>
+             The numbers of UniProt IDs and both UniRef90 cluster and UniRef50
+             cluster IDs are displayed on the sunburst; the UniProt IDs and
+             both UniRef90 cluster and UniRef50 cluster IDs are available for
+             download and/or transfer to the Accession ID option (Option D) of
+             EFI-EST to generate SSNs.
+            </p>
+
+            <p><b>
+             If the lists of UniRef90 or UniRef50 cluster IDs are used to
+             generate SSNs with the Accession IDs option (Option D) of EFI-EST,
+             the lists should (must!) be filtered with the same list of
+             families (Filter by Family) and any specified taxonomy categories
+             (Filter by Taxonomy) used to generate the lists.</b>
+            </p>
+
+            <p>
+             This filtering removes the UniRef90 and UniRef50 clusters with
+             cluster IDs ("representative sequences") or internal UniProt IDs
+             that are not members of the specified families or have the
+             selected taxonomy categories. 
+            </p>
+        </div>
+    </div>
+
+    <div id="Families-form-exclude-fragments" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Fragment Option</h3>
+        <div class="accordion-content">
+            <twig:exclude_fragments form="{{ familiesForm.excludeFragments }}" />
+        </div>
+    </div>
+
+    <div id="Families-form-tax-search" data-controller="accordion" data-accordion-initially-open-value="true">
+        <h3>Filter by Taxonomy</h3>
+        <div class="accordion-content">
+            {% include('_partials/taxonomy_filtering_text.html.twig') %}
+
+            <twig:taxonomy_filtering filterForm="{{ familiesForm.taxSearch }}" />
+
+            {# Ensure that Symfony doesn't render this field later #}
+            {% do familiesForm.taxSearch.setRendered() %}
+        </div>
+    </div>
+
+    <div id="Families-form-length-filter" data-controller="accordion">
+        <h3>Length Filter</h3>
+        <div class="accordion-content">
+            {{ form_row(familiesForm.minLength) }}
+            {{ form_row(familiesForm.maxLength) }}
+        </div>
+    </div>
+
+    <div>
+        <twig:job_submit_input form="{{ familiesForm }}" mainFormId="Families-form" />
+    </div>
+
+	{{ form_end(familiesForm) }}
+
+</div>

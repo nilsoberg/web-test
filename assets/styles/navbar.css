@@ -1,0 +1,81 @@
+
+/* Custom CSS to set the container max-width to 1000px */
+/* This overrides Bootstrap's default container breakpoints for your specific need */
+nav.container {
+    width: 1050px; /* Ensure it's responsive below 1000px */
+    height: 45px;
+}
+
+nav.navbar {
+    height: 45px;
+    padding: 0;
+}
+
+.navbar {
+	padding: 0;
+}
+
+.navbar-container {
+    height: 100%;
+	width: 1050px;
+}
+
+.navbar-nav {
+    height: 100%;
+}
+
+/* Custom styles for nav-items to ensure they expand and show their background colors */
+.navbar-nav .nav-item {
+    margin: 0 !important; /* Remove margin between blocks */
+    border-radius: 0 !important; /* Remove rounding */
+	border-right: 1px solid white;
+}
+
+.navbar-nav .nav-item .nav-link {
+	height: 100%;
+    color: white !important; /* Ensure the link text is white for contrast */
+    border-bottom: none !important;
+	font-weight: bold;
+}
+
+.navbar-nav .nav-item .nav-link.active {
+    /* Specific styling for the active link within its colored block */
+    font-weight: bold;
+}
+
+/* Optional: Hover effect for nav items */
+.navbar-nav .nav-item:hover {
+    opacity: 0.8; /* Slight opacity change on hover */
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Ensure the dropdown menu items also have white text on dark background */
+.navbar .dropdown-menu .dropdown-item {
+    color: white !important;
+}
+
+/* Adjust dropdown divider color for dark theme */
+.dropdown-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.initials-circle {
+    background-color: #ccc;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Fully rounded */
+	margin-top: 5px;
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+.initials-circle:hover {
+    background-color: #ddd;
+}
+

@@ -1,0 +1,21 @@
+
+<twig:alignment_edge_plot
+    data_url="{{ edge_count_data_url }}"
+    job_number="{{ job_number|default(null) }}"
+/>
+
+<p>This plot shows the number of edges in the full SSN for the input dataset (a 
+node of each sequence) as a function of alignment score. By moving the cursor 
+over the plot, the number of edges for each alignment score is displayed. </p>
+<p>This plot helps determine if the full SSN generated using the initial 
+alignment score can be opened with Cytoscape on the user’s computer. As a rough guide, 
+SSNs with ~2M edges can be opened with 16GB RAM, ~4M edges with 32GB RAM, ~8M 
+edges with 64GB RAM, ~15M edges with 128GB RAM, and ~30M edges with 256GB RAM. 
+</p>
+<p>If the number of edges for the full SSN is too large to be opened, a 
+representative node (rep node) SSN can be opened. In a rep node SSN, sequences 
+are grouped into metanodes based on pairwise sequence identity (from 40 to 100% 
+identity, in 5% intervals). The download tables on the "Download Network Files" 
+page provide the numbers of metanodes and edges in rep node SSNs. The rep node 
+SSNs are lower resolution than full SSNs; clusters of interest in rep node SSNs 
+can be expanded to provide the full SSNs. </p>

@@ -1,0 +1,42 @@
+.cluster-size-sm {
+    font-size: 0.9em;
+}
+.cluster-size {
+    text-transform: uppercase;
+}
+.float-right {
+    float: right !important;
+}
+
+.form-check-inline {
+    display: inline-flex;
+    align-items: center;
+    padding-left: 0;
+    margin-right: 0.75rem;
+}
+.form-check {
+    position: relative;
+}
+
+.sunburst-level {
+/*    text-shadow: 1px 1px 10px white, 1px 1px 10px white,1px 1px 10px white,1px 1px 10px white, 1px 1px 10px white;*/
+    color: black;
+    padding: 3px 15px;
+    margin-bottom: 1px;
+    width: 100px;
+}
+
+/* Semi-opaque overlay to block interaction */
+.download-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-opaque black */
+    z-index: 9999; /* Stay on top of everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

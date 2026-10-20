@@ -1,0 +1,114 @@
+
+<div data-controller="metagenome-selector" 
+     data-metagenome-selector-fetch-url-value="{{ path('api_database_metagenomes') }}">
+
+    {{ form_start(form) }}
+
+    <div class="mb-4">
+        {{ form_label(form.metagenomeDatabase, 'Select Metagenome Database:', {'label_attr': {'class': 'fw-bold'}}) }}
+        {{ form_widget(form.metagenomeDatabase, {
+            'attr': {
+                'data-metagenome-selector-target': 'databaseSelect',
+                'data-action': 'change->metagenome-selector#loadDatabase'
+            }
+        }) }}
+        {{ form_errors(form.metagenomeDatabase) }}
+    </div>
+
+    <!-- Dual List Container (Hidden by default until DB is selected) -->
+    <div class="card p-3 shadow-sm d-none" data-metagenome-selector-target="container">
+        <div class="row align-items-center">
+            
+            <!-- Left Column: Available Metagenomes -->
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Available metagenomes:</label>
+                <input type="text" 
+                       class="form-control mb-2" 
+                       placeholder="Search..." 
+                       data-metagenome-selector-target="availableSearch"
+                       data-action="input->metagenome-selector#filterAvailable">
+                
+                <select multiple 
+                        class="form-select" 
+                        style="height: 220px;" 
+                        data-metagenome-selector-target="availableSelect">
+                </select>
+            </div>
+
+            <!-- Middle Column: Action Buttons -->
+            <div class="col-md-2 d-flex flex-column align-items-center gap-2 my-3 my-md-0">
+                <button type="button" class="btn btn-outline-secondary w-75" data-action="click->metagenome-selector#addAll" title="Move all right">
+                    &raquo;
+                </button>
+                <button type="button" class="btn btn-outline-secondary w-75" data-action="click->metagenome-selector#addSelected" title="Move selected right">
+                    &rsaquo;
+                </button>
+                <button type="button" class="btn btn-outline-secondary w-75" data-action="click->metagenome-selector#removeSelected" title="Move selected left">
+                    &lsaquo;
+                </button>
+                <button type="button" class="btn btn-outline-secondary w-75" data-action="click->metagenome-selector#removeAll" title="Move all left">
+                    &laquo;
+                </button>
+            </div>
+
+            <!-- Right Column: Target Metagenomes -->
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Metagenomes used for quantification:</label>
+                <input type="text" 
+                       class="form-control mb-2" 
+                       placeholder="Search..." 
+                       data-metagenome-selector-target="selectedSearch"
+                       data-action="input->metagenome-selector#filterSelected">
+                
+                <select multiple 
+                        class="form-select" 
+                        style="height: 220px;" 
+                        data-metagenome-selector-target="selectedSelect">
+                </select>
+            </div>
+
+            {{ form_widget(form.metagenomes, {
+                'attr': {
+                    'data-metagenome-selector-target': 'selectedMetagenomes'
+                }
+            }) }}
+
+        </div>
+    </div>
+
+    {{ form_widget(form.parent_reference) }}
+
+    <div id="CGFP-search-type" data-controller="accordion">
+        <h3>Marker Quantification Options</h3>
+        <div class="accordion-content">
+            <div>
+                <span class="input-heading">Search type:</span>
+                <span>{{ form_widget(form.quantifySearchType) }}</span>
+                <span>(default: USEARCH)</span>
+            </div>
+            <div class="input-description">
+                Select the algorithm for determining marker abundances in the selected metagenomes.
+            </div>
+            <div class="submission-error">{{ form_errors(form.quantifySearchType) }}</div>
+        </div>
+    </div>
+
+    <div class="my-3">
+        <div>
+            <span class="input-heading">Job name:</span>
+            {{ form_widget(form.jobName) }}
+        </div>
+        <div class="submission-error">{{ form_errors(form.jobName) }}</div>
+    </div>
+
+    <div class="my-3">
+        You will receive an e-mail when your network has been processed.
+    </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit">Quantify Markers</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+

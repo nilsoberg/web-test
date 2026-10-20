@@ -1,0 +1,61 @@
+
+{% set page_title = "EFI - User Account Profile" %}
+
+{% extends "auth/public/core.html.twig" %}
+
+{% block content %}
+
+{% include '_partials/app_flashes.html.twig' %}
+
+<div class="container">
+    {{ user.fullName }}
+    <br><br>
+    {{ user.email }}
+    <br><br>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.timezone) }}
+    {{ form_row(form.sendJobStatusEmail) }}
+
+    <div>
+        <button type="submit" class="btn btn-primary">Save Profile</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+<div class="container my-3">
+    <a href="{{ path('account_change_password') }}" class="btn btn-primary">Change Password</a>
+</div>
+
+<hr>
+
+<div class="container my-3">
+    {{ form_start(deactivate_form, {'attr': {'id': 'deactivate-account-form'}}) }}
+        <button class="btn btn-danger" type="button" id="deactivate-account">
+            Deactivate Account
+        </button>
+    {{ form_end(deactivate_form) }}
+</div>
+
+<script>
+    document.getElementById('deactivate-account').addEventListener('click', async (event) => {
+        event.preventDefault();
+
+        const confirmResult = await Swal.fire({
+            title: "Account Deactivation",
+            text: "Do you wish to permanently deactivate your account?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "gray",
+            confirmButtonText: "Deactivate"
+        });
+
+        if (confirmResult.isConfirmed) {
+            document.getElementById('deactivate-account-form').submit();
+        }
+    });
+</script>
+
+{% endblock %}

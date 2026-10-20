@@ -1,0 +1,35 @@
+<div id="{{ prefix }}-{{ suffix }}-{{ ending }}">
+
+    <p>
+        In the mean method for reporting abundances, the average value the abundances
+        identified by the markers for each CD-HIT consensus sequence marker is used to
+        report abundance. This method reports the presence of "any" hit for a marker
+        for a seed sequence. An asymmetric distribution of hits a seed sequence with
+        multiple markers is expected for "false positives," so the mean method should
+        be used with caution.
+    </p>
+
+    <p>Files detailing the abundance information are available for download.</p>
+
+    <h4>Raw Abundance Data</h4>
+
+    <p>
+        Raw results for the individual proteins in the SSN (Protein abundance data (mean))
+        as well as summarized by SSN cluster (Cluster abundance data (mean))
+        are provided.  Units are in reads per kilobase of sequence per million sample reads (RPKM).
+    </p>
+
+    {{ render(controller('App\\Home\\Controller\\DownloadController::renderDownloadTable', { 'keys': 'sbq_protein_abundance_mean,sbq_cluster_abundance_mean' })) }}
+
+    <h4>Average Genome Size-Normalized Abundance Data</h4>
+
+    <p>
+        Data are provided using Average Genome Size (AGS) normalization for
+        individual proteins in the SSN 
+        as well as summarized by SSN cluster.
+        Units are have been converted from RPKM to counts per microbial genome, using AGS estimated by MicrobeCensus.
+    </p>
+
+    {{ render(controller('App\\Home\\Controller\\DownloadController::renderDownloadTable', { 'keys': 'sbq_protein_abundance_genome_norm_mean,sbq_cluster_abundance_genome_norm_mean' })) }}
+ 
+</div>

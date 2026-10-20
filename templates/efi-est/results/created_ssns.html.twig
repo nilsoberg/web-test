@@ -1,0 +1,11 @@
+
+<div>
+    <p>A list of the SSNs generated from this initial dataset.</p>
+    
+    <ul>
+        {% for ssn in ssns %}
+        <li><a href="{{ ssn.route }}">{{ ssn.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+

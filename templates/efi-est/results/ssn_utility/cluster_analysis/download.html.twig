@@ -1,0 +1,28 @@
+<div>
+
+    {% if show_citation %}
+    {% include 'core/citation.html.twig' %}
+    {% endif %}
+
+    <h4>Colored SSN</h4>
+
+    <p>
+    Each cluster in the submitted SSN has been identified and assigned a unique number and color.
+    </p>
+
+    <p>
+    <a class="btn btn-primary" href="{{ page.ssnDownloadRoute }}">Download ZIP ({{ page.displaySsnFileSize }})</a>
+    <!--<a class="btn btn-primary" href="{{ page.convergenceRatioRoute }}">Transfer to CR</a>-->
+    </p>
+
+    <h4>Supplementary Files</h4>
+
+    {% include 'efi-est/results/ssn_utility/download_table.html.twig' with { files: page.files } %}
+
+    <!--
+    <p>
+    <a class="btn btn-primary" href="{{ page.cgfpRoute }}">Run CGFP on Colored SSN</a>
+    </p>
+    -->
+</div>
+

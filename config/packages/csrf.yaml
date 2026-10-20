@@ -1,0 +1,7 @@
+# Enable stateless CSRF protection for forms and logins/logouts
+framework:
+    csrf_protection: ~ # Enable globally
+    form:
+        csrf_protection:
+            enabled: true
+

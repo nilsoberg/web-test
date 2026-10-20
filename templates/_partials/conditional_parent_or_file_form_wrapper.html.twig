@@ -1,0 +1,63 @@
+
+{% set isChildJob = form.parent_reference is defined %}
+
+<div class="job-form-container" data-job-type-config="{{ job_type_config }}" {% if not isChildJob %}data-controller="upload-progress"{% endif %}>
+
+    {% block description %}{% endblock %}
+
+    {{ form_start(form, {
+        'attr': isChildJob ? {} : {
+            'data-upload-progress-target': 'form',
+            'data-action': 'submit->upload-progress#upload'
+        }
+    }) }}
+
+    <div>
+        <div class="input-description">
+            {% if isChildJob %}
+                {{ form_widget(form.parent_reference) }}
+                <div class="input-description">
+                    {% set metadata = form.parent_reference.vars.parent_metadata %}
+
+                    <div>
+                        {% if metadata %}
+                            <b>{{ metadata|raw }}</b>
+                        {% else %}
+                            <b>Using Job #{{ form.parent_reference.vars.parent_id }} as the parent job.</b>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <a href="?f={{ form_name }}" class="btn btn-primary">Reset to SSN file</a> Reset the form to use a SSN file instead of a parent job
+                    </div>
+                </div>
+            {% else %}
+                <div>
+                    <span class="input-heading">{{ file_heading|default('SSN File:') }}</span> 
+                    {% include('_partials/upload_file_size_tooltip.html.twig') %}
+                </div>
+                <div>{{ form_widget(form.ssnFile) }}</div>
+
+                {% block file_help %}
+                    Cytoscape-edited SSN can serve as input. The accepted format is XGMML (or compressed XGMML as zip).
+                {% endblock %}
+
+                <div class="submission-error">{{ form_errors(form.ssnFile) }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% block additional_fields %}{% endblock %}
+
+    <div>
+        {% set suggested_name = form.parent_reference is defined ? form.parent_reference.vars.suggested_name|default('') : '' %}
+        <twig:job_submit_input form="{{ form }}" defaultJobName="{{ suggested_name }}" />
+    </div>
+
+    {% if not isChildJob %}
+        {% include('_partials/file_upload_progress.html.twig') %}
+    {% endif %}
+
+    {{ form_end(form) }}
+</div>
+

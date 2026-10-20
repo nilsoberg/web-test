@@ -1,0 +1,20 @@
+Dear User,
+Your {{ jobType }} job status has been updated.
+
+Job Summary:
+- Job ID: {{ jobId }}
+- Job Name: {{ jobName }}
+- Job Type: {{ jobClass }}
+- Current Status: {{ statusLabel }}
+- Submitted At: {{ timeCreated }}
+- Started At: {{ timeStarted }}
+- Completed At: {{ timeCompleted }}
+- Timezone: {{ timezone }}
+
+{% if status == 'finished' %}
+Your analysis results should now be available in the EFI web interface.
+{% elseif status == 'failed' %}
+Your job has failed. Please review your submission parameters and try again.
+{% endif %}
+
+{{ signature }}
